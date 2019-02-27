@@ -52,3 +52,4 @@ const std::string TroopsPath       = DataPath + "Troops.rxdata";
 const std::string WeaponsPath      = DataPath + "Weapons.rxdata";
 
 std::vector<u8> loadFileIntoMemory(const std::string& filename);
+std::vector<std::string> split(const std::string& str, char delimiter);
