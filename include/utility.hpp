@@ -1,5 +1,11 @@
 #pragma once
 
+#pragma warning(disable: 4996)
+
+#define FMT_HEADER_ONLY
+
+#include "fmt/format.h"
+
 #include <algorithm>
 #include <conio.h>
 #include <cstdint>
@@ -9,8 +15,6 @@
 #include <map>
 #include <string>
 #include <vector>
-
-#pragma warning(disable: 4996)
 
 using u8  = uint8_t;
 using u16 = uint16_t;

@@ -208,4 +208,6 @@ int main()
     }
 
     */
+
+    fmt::print("Ultimate answer to the universe: {}\n", 42);
 }

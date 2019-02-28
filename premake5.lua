@@ -6,7 +6,7 @@ project "MarshalToCpp"
   language "C++"
   targetdir "bin/%{cfg.buildcfg}"
 
-  files {"**.hpp", "**.cpp"}
+  files {"**.hpp", "**.h", "**.cpp"}
 
   includedirs "include"
 
