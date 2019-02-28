@@ -8,6 +8,8 @@ project "MarshalToCpp"
 
   files {"**.hpp", "**.cpp"}
 
+  includedirs "include"
+
   filter "configurations:Debug"
     defines "DEBUG"
     symbols "On"

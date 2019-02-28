@@ -23,7 +23,7 @@ std::vector<u8> loadFileIntoMemory(const std::string& filename)
     return bytes;
 }
 
-std::vector<std::string> split(const std::string& str, char delimiter)
+std::vector<std::string> split(const std::string & str, char delimiter)
 {
     if (str.length() == 0) return {};
 
@@ -40,4 +40,9 @@ std::vector<std::string> split(const std::string& str, char delimiter)
     }
 
     return lines;
+}
+
+bool startsWith(const std::string & str, const std::string & substr)
+{
+    return str.size() >= substr.size() && str.substr(0, substr.size()) == substr;
 }

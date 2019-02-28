@@ -1,4 +1,4 @@
-#include "reader.hpp"
+#include "explorer.hpp"
 
 void print(const Value& value)
 {
@@ -139,11 +139,44 @@ void handleLsCommand(Value* pointer)
 
 void handleCdCommand(const std::string& command, Value* pointer)
 {
+    auto elements = split(command, ' ');
 
+    try 
+    {
+        switch (pointer->getType())
+        {
+            case Value::Type::Nil:
+            case Value::Type::Bool:
+            case Value::Type::Fixnum:
+            case Value::Type::Float:
+            case Value::Type::String:
+            case Value::Type::Symbol:
+            case Value::Type::Symlink:
+                throw std::runtime_error("Invalid current type");
+        }
+
+        if (elements.size() != 2)
+            throw std::runtime_error("Invalid command syntax");
+
+
+    }
+    catch (const std::runtime_error& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
+    catch (const std::invalid_argument& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
+    catch (const std::out_of_range& ex)
+    {
+        std::cout << ex.what() << '\n';
+    }
 }
 
 int main()
 {
+    /*
     MarshalReader reader{ loadFileIntoMemory(TroopsPath) };
     auto value = reader.parse();
     auto* pointer = &value;
@@ -166,11 +199,13 @@ int main()
                 handleSizeCommand(pointer);
             else if (command == "ls")
                 handleLsCommand(pointer);
-            else if (command.rfind("cd", 0) == 0)
+            else if (startsWith(command, "cd"))
                 handleCdCommand(command, pointer);
             else
                 std::cout << "'" << command << "' is not recognized as an command." << '\n';
 
         }
     }
+
+    */
 }

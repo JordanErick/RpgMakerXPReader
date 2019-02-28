@@ -1,6 +1,7 @@
 #pragma once
 
 #include <algorithm>
+#include <conio.h>
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
@@ -53,3 +54,4 @@ const std::string WeaponsPath      = DataPath + "Weapons.rxdata";
 
 std::vector<u8> loadFileIntoMemory(const std::string& filename);
 std::vector<std::string> split(const std::string& str, char delimiter);
+bool startsWith(const std::string& str, const std::string& substr);
