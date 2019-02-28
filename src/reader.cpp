@@ -1,75 +1,77 @@
 #include "reader.hpp"
 
-MarshalReader::MarshalReader(std::vector<u8> bytes)
-: mBytes{bytes}
-, mIndex{0}
+Reader::Reader(std::vector<u8> bytes)
+: mIndex{0}
+, mBytes{bytes}
 , mSymbolCache{}
 {
-    if (read<u8>() != 4 || read<u8>() != 8)
-        throw std::runtime_error("invalid marshal version");
+    readVersion();
 }
 
-Value MarshalReader::parse()
+Any Reader::parse()
 {
     auto type = read<u8>();
 
     switch (type)
     {
-        case '0': // TYPE_NIL
-            return Value{ Value::Type::Nil, nullptr };
-        case 'T': // TYPE_TRUE
-            return Value{ Value::Type::Bool, new bool{true} };
-        case 'F': // TYPE_FALSE
-            return Value{ Value::Type::Bool, new bool{false} };
-        case 'i': // TYPE_FIXNUM
-            return Value{ Value::Type::Fixnum, new int{readFixnum()} };
-        case 'f': // TYPE_FLOAT
-            return Value{ Value::Type::Float, nullptr };
-        case '"': // TYPE_STRING
-            return Value{ Value::Type::String, new std::string{readString()} };
-        case ':': // TYPE_SYMBOL
-            return Value{ Value::Type::Symbol, new std::string{readSymbol()} };
-        case ';': // TYPE_SYMLINK
-            return Value{ Value::Type::Symlink, new std::string{readSymlink()} };
-        case '[': // TYPE_ARRAY
-            return Value{ Value::Type::Array, new std::vector<Value>{readArray()} };
-        case '{': // TYPE_HASH
-            return Value{ Value::Type::Hash, new std::map<Value, Value>(readHash()) };
-        case 'o': // TYPE_OBJECT
-            return Value{ Value::Type::Object, new std::map<Value, Value>(readObject()) };
-
-        case 'l': // TYPE_BIGNUM
-            return Value{ Value::Type::Bignum, nullptr };
-        case 'c': // TYPE_CLASS
-            return Value{ Value::Type::Class, nullptr };
-        case 'd': // TYPE_DATA
-            return Value{ Value::Type::Data, nullptr };
-        case 'e': // TYPE_EXTENDED
-            return Value{ Value::Type::Extended, nullptr };
-        case 'I': // TYPE_IVAR
-            return Value{ Value::Type::Ivar, nullptr };
-        case '@': // TYPE_LINK
-            return Value{ Value::Type::Link, nullptr };
-        case 'M': // TYPE_MODULE_OLD
-            return Value{ Value::Type::ModuleOld, nullptr };
-        case 'm': // TYPE_MODULE
-            return Value{ Value::Type::Module, nullptr };
-        case '/': // TYPE_REGEXP
-            return Value{ Value::Type::Regexp, nullptr };
-        case 'S': // TYPE_STRUCT
-            return Value{ Value::Type::Struct, nullptr };
-        case 'u': // TYPE_USERDEF
-            return Value{ Value::Type::UserDef, new Table(readUserDef()) };
-        case 'U': // TYPE_USRMARSHAL
-            return Value{ Value::Type::UsrMarshal, nullptr };
+        case '[': // Array
+            return Any{ Type::Array, new Array{readArray()} };
+        case 'l': // Bignum
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'F': // Bool
+            return Any{ Type::Bool, new bool{false} };
+        case 'T': // Bool
+            return Any{ Type::Bool, new bool{true} };
+        case 'c': // Class
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'd': // Data
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'e': // Extended
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'i': // Fixnum
+            return Any{ Type::Fixnum, new int{readFixnum()} };
+        case 'f': // Float
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case '{': // Hash
+            return Any{ Type::Hash, new Hash(readHash()) };
+        case '}': // HashDef
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'I': // Ivar
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case '@': // Link
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'm': // Module
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'M': // ModuleOld
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case '0': // Nil
+            return Any{ Type::Nil, nullptr };
+        case 'o': // Object
+            return Any{ Type::Object, new Object(readObject()) };
+        case '/': // Regexp
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case '"': // String
+            return Any{ Type::String, new std::string{readString()} };
+        case 'S': // Struct
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case ':': // Symbol
+            return Any{ Type::Symbol, new std::string{readSymbol()} };
+        case ';': // Symlink
+            return Any{ Type::Symlink, new std::string{readSymlink()} };
+        case 'C': // Uclass
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        case 'u': // UserDef
+            return Any{ Type::UserDef, new Table(readUserDef()) };
+        case 'U': // UserMarshal
+            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+        default: // Unknown
+            throw std::runtime_error(fmt::format("Unknown type: {}", type));
     }
-
-    return Value{};
 }
 
-int MarshalReader::readFixnum()
+i32 Reader::readFixnum()
 {
-    i8 byte = read<i8>();
+    auto byte = read<i8>();
 
     if (byte == 0) return 0;
 
@@ -77,12 +79,12 @@ int MarshalReader::readFixnum()
     {
         if (4 < byte && byte < 128) return byte - 5;
 
-        if (byte > static_cast<i8>(sizeof(int)))
-            throw std::runtime_error("too big int");
+        if (byte > static_cast<i8>(sizeof(i32)))
+            throw std::runtime_error("Too big int");
 
-        int value = 0;
-        for (int i = 0; i < byte; i++)
-            value |= static_cast<int>(read<u8>()) << (8 * i);
+        i32 value = 0;
+        for (i32 i = 0; i < byte; i++)
+            value |= static_cast<i32>(read<u8>()) << (8 * i);
 
         return value;
     }
@@ -92,41 +94,41 @@ int MarshalReader::readFixnum()
 
         byte = -byte;
 
-        if (byte > static_cast<i8>(sizeof(int)))
+        if (byte > static_cast<i8>(sizeof(i32)))
             throw std::runtime_error("too big int");
 
-        int value = -1;
-        for (int i = 0; i < byte; i++)
+        i32 value = -1;
+        for (i32 i = 0; i < byte; i++)
         {
-            value &= ~(static_cast<int>(0xff) << (8 * i));
-            value |= static_cast<int>(read<u8>()) << (8 * i);
+            value &= ~(static_cast<i32>(0xff) << (8 * i));
+            value |= static_cast<i32>(read<u8>()) << (8 * i);
         }
 
         return value;
     }
 }
 
-std::string MarshalReader::readString()
+std::string Reader::readString()
 {
-    int length = readFixnum();
+    i32 length = readFixnum();
 
     std::string value;
     value.reserve(length);
 
-    for (int i = 0; i < length; i++)
+    for (i32 i = 0; i < length; i++)
         value += read<i8>();
 
     return value;
 }
 
-std::string MarshalReader::readSymbol()
+std::string Reader::readSymbol()
 {
-    int length = readFixnum();
+    i32 length = readFixnum();
 
     std::string value;
     value.reserve(length);
 
-    for (int i = 0; i < length; i++)
+    for (i32 i = 0; i < length; i++)
         value += read<i8>();
 
     if (std::find(mSymbolCache.begin(), mSymbolCache.end(), value) == mSymbolCache.end())
@@ -135,31 +137,39 @@ std::string MarshalReader::readSymbol()
     return value;
 }
 
-std::vector<Value> MarshalReader::readArray()
+void Reader::readVersion()
 {
-    int length = readFixnum();
+    auto major = read<u8>();
+    auto minor = read<u8>();
 
-    std::vector<Value> values;
-    values.reserve(length);
-
-    for (int i = 0; i < length; i++)
-        values.push_back(parse());
-
-    return values;
+    if (major != 4 || minor != 8)
+        throw std::runtime_error(fmt::format("Invalid marshal version: {}.{]", major, minor));
 }
 
-std::map<Value, Value> MarshalReader::readObject()
+Array Reader::readArray()
+{
+    i32 length = readFixnum();
+
+    Array array;
+
+    for (i32 i = 0; i < length; i++)
+        array.push_back(parse());
+
+    return array;
+}
+
+Object Reader::readObject()
 {
     auto className = parse();
 
-    if (className.getType() != Value::Type::Symbol && className.getType() != Value::Type::Symlink)
-        throw std::runtime_error("invalid class name type");
+    if (className.type() != Type::Symbol && className.type() != Type::Symlink)
+        throw std::runtime_error("Invalid class name type");
 
     auto ivarCount = readFixnum();
 
-    std::map<Value, Value> object;
+    Object object;
 
-    for (int i = 0; i < ivarCount; i++)
+    for (i32 i = 0; i < ivarCount; i++)
     {
         auto key = parse();
         auto value = parse();
@@ -169,13 +179,13 @@ std::map<Value, Value> MarshalReader::readObject()
     return object;
 }
 
-std::map<Value, Value> MarshalReader::readHash()
+Hash Reader::readHash()
 {
-    std::map<Value, Value> hash;
+    Hash hash;
 
-    auto entriesCount = readFixnum();
+    i32 entriesCount = readFixnum();
 
-    for (int i = 0; i < entriesCount; i++)
+    for (i32 i = 0; i < entriesCount; i++)
     {
         auto key = parse();
         auto value = parse();
@@ -183,20 +193,18 @@ std::map<Value, Value> MarshalReader::readHash()
     }
 
     return hash;
-
-    return std::map<Value, Value>();
 }
 
-std::string MarshalReader::readSymlink()
+std::string Reader::readSymlink()
 {
-    auto cacheIndex = readFixnum();
+    i32 cacheIndex = readFixnum();
     return mSymbolCache[cacheIndex];
 }
 
-Table MarshalReader::readUserDef()
+Table Reader::readUserDef()
 {
     auto name = parse();
-    auto size = readFixnum();
+    i32 size = readFixnum();
 
     Table table;
     
@@ -207,7 +215,7 @@ Table MarshalReader::readUserDef()
     table.indices = read<i32>();
     table.data.reserve((size - 20) / 2);
 
-    for (int i = 0; i < (size - 20) / 2; i++)
+    for (i32 i = 0; i < (size - 20) / 2; i++)
         table.data.push_back(read<i16>());
 
     return table;

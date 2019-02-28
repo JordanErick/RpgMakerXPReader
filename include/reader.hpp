@@ -1,18 +1,24 @@
 #pragma once
 
-#include "value.hpp"
+#include "any.hpp"
 
-class MarshalReader
+class Reader
 {
 public:
-    MarshalReader(std::vector<u8> bytes);
-
-    Value parse();
-
-    void seek(size_t index) { mIndex = index; }
-    size_t tell() { return mIndex; }
+    Reader(std::vector<u8> bytes);
+    Any parse();
 
 private:
+    void readVersion();
+    Array readArray();
+    i32 readFixnum();
+    Hash readHash();
+    Object readObject();
+    std::string readString();
+    std::string readSymbol();
+    std::string readSymlink();
+    Table readUserDef();
+
     template<typename T>
     T read()
     {
@@ -25,18 +31,8 @@ private:
         return value;
     }
 
-    int readFixnum();
-    std::string readString();
-    std::string readSymbol();
-    std::vector<Value> readArray();
-    std::map<Value, Value> readObject();
-    std::map<Value, Value> readHash();
-    std::string readSymlink();
-    Table readUserDef();
-
 private:
-    std::vector<u8> mBytes;
     size_t mIndex;
-
+    std::vector<u8> mBytes;
     std::vector<std::string> mSymbolCache;
 };

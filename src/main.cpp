@@ -1,38 +1,38 @@
-#include "explorer.hpp"
+#include "reader.hpp"
 
-void print(const Value& value)
+void print(const Any& any)
 {
-    switch (value.getType())
+    switch (any.type().toValue())
     {
-        case Value::Type::Nil:
+        case Type::Nil:
             std::cout << "nil";
             break;
 
-        case Value::Type::Bool:
-            std::cout << (*static_cast<bool*>(value.getValue()) ? "true" : "false");
+        case Type::Bool:
+            std::cout << (*any.as<bool>() ? "true" : "false");
             break;
 
-        case Value::Type::Fixnum:
-            std::cout << *(static_cast<int*>(value.getValue()));
+        case Type::Fixnum:
+            std::cout << *any.as<i32>();
             break;
 
-        case Value::Type::String:
-        case Value::Type::Symbol:
-        case Value::Type::Symlink:
-            std::cout << '"' << *(static_cast<std::string*>(value.getValue())) << '"';
+        case Type::String:
+        case Type::Symbol:
+        case Type::Symlink:
+            std::cout << '"' << *any.as<std::string>() << '"';
             break;
 
-        case Value::Type::Array:
+        case Type::Array:
         {
-            auto* values = static_cast<std::vector<Value>*>(value.getValue());
+            auto* array = any.as<Array>();
 
             std::cout << '[';
 
-            for (size_t i = 0; i < values->size(); i++)
+            for (size_t i = 0; i < array->size(); i++)
             {
-                print(values->at(i));
+                print(array->at(i));
 
-                if (i != values->size() - 1)
+                if (i != array->size() - 1)
                     std::cout << ' ';
             }
 
@@ -40,31 +40,92 @@ void print(const Value& value)
 
         } break;
 
-        case Value::Type::Object:
-        case Value::Type::Hash:
-        {
-            auto* object = static_cast<std::map<Value, Value>*>(value.getValue());
-            std::cout << "{\n";
-            for (const auto& pair : *object)
-            {
-                print(pair.first);
-                std::cout << " -> ";
-                print(pair.second);
-                std::cout << '\n';
-            }
-            std::cout << "}\n";
-        } break;
+    case Type::Object:
+    {
+        auto* object = any.as<Object>();
 
-        case Value::Type::UserDef:
-        {
-            std::cout << "userdef(" << static_cast<Table*>(value.getValue())->indices << ")";
-        } break;
+        std::cout << "{\n";
 
-        default:
-            std::cout << "Unknown";
-            break;
+        for (const auto& pair : *object)
+        {
+            print(pair.first);
+            std::cout << " -> ";
+            print(pair.second);
+            std::cout << "\n";
+        }
+        std::cout << "}\n";
+    } break;
+
+    case Type::Hash:
+    {
+        auto* hash = any.as<Hash>();
+
+        std::cout << "{\n";
+
+        for (const auto& pair : *hash)
+        {
+            print(pair.first);
+            std::cout << " -> ";
+            print(pair.second);
+            std::cout << "\n";
+        }
+        std::cout << "}\n";
+
+    } break;
+
+    case Type::UserDef:
+        std::cout << "userdef(" << any.as<Table>()->indices << ")";
+        break;
+
+    default:
+        std::cout << "Unknown";
+        break;
     }
 }
+
+int main()
+{
+    Reader reader{ loadFileIntoMemory(MapInfosPath) };
+    auto any = reader.parse();
+    print(any);
+
+    /*
+    MarshalReader reader{ loadFileIntoMemory(TroopsPath) };
+    auto value = reader.parse();
+    auto* pointer = &value;
+
+    std::cout << "Marshal To Cpp Explorer [Version 0.1]" << '\n';
+    std::cout << "(c) 2019 Heaven31415. All rights reserved." << '\n';
+
+    while (true)
+    {
+        std::string command;
+        std::cout << "\n(" << pointer->getType() << ")" << ">";
+        std::getline(std::cin, command);
+
+        if (command == "q" || command == "quit" || command == "exit") break;
+        else
+        {
+            if (command == "cls")
+                system("cls");
+            else if (command == "size")
+                handleSizeCommand(pointer);
+            else if (command == "ls")
+                handleLsCommand(pointer);
+            else if (startsWith(command, "cd"))
+                handleCdCommand(command, pointer);
+            else
+                std::cout << "'" << command << "' is not recognized as an command." << '\n';
+
+        }
+    }
+
+    */
+}
+
+/*
+
+#include "explorer.hpp"
 
 void handleSizeCommand(Value* pointer)
 {
@@ -141,7 +202,7 @@ void handleCdCommand(const std::string& command, Value* pointer)
 {
     auto elements = split(command, ' ');
 
-    try 
+    try
     {
         switch (pointer->getType())
         {
@@ -174,40 +235,4 @@ void handleCdCommand(const std::string& command, Value* pointer)
     }
 }
 
-int main()
-{
-    /*
-    MarshalReader reader{ loadFileIntoMemory(TroopsPath) };
-    auto value = reader.parse();
-    auto* pointer = &value;
-
-    std::cout << "Marshal To Cpp Explorer [Version 0.1]" << '\n';
-    std::cout << "(c) 2019 Heaven31415. All rights reserved." << '\n';
-
-    while (true)
-    {
-        std::string command;
-        std::cout << "\n(" << pointer->getType() << ")" << ">";
-        std::getline(std::cin, command);
-
-        if (command == "q" || command == "quit" || command == "exit") break;
-        else
-        {
-            if (command == "cls")
-                system("cls");
-            else if (command == "size")
-                handleSizeCommand(pointer);
-            else if (command == "ls")
-                handleLsCommand(pointer);
-            else if (startsWith(command, "cd"))
-                handleCdCommand(command, pointer);
-            else
-                std::cout << "'" << command << "' is not recognized as an command." << '\n';
-
-        }
-    }
-
-    */
-
-    fmt::print("Ultimate answer to the universe: {}\n", 42);
-}
+*/
