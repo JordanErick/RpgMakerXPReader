@@ -249,13 +249,13 @@ bool Any::operator==(const Any& other) const
     switch (mType.toValue())
     {
         case Type::Array:
-            return *as<Array>() != *other.as<Array>();
+            return *as<Array>() == *other.as<Array>();
 
         case Type::Bignum:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
         case Type::Bool:
-            return *as<bool>() != *other.as<bool>();
+            return *as<bool>() == *other.as<bool>();
 
         case Type::Class:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
@@ -267,13 +267,13 @@ bool Any::operator==(const Any& other) const
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
         case Type::Fixnum:
-            return *as<i32>() != *other.as<i32>();
+            return *as<i32>() == *other.as<i32>();
 
         case Type::Float:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
         case Type::Hash:
-            return *as<Hash>() != *other.as<Hash>();
+            return *as<Hash>() == *other.as<Hash>();
 
         case Type::HashDef:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
@@ -294,22 +294,22 @@ bool Any::operator==(const Any& other) const
             return true;
 
         case Type::Object:
-            return *as<Object>() != *other.as<Object>();
+            return *as<Object>() == *other.as<Object>();
 
         case Type::Regexp:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
         case Type::String:
-            return *as<std::string>() != *other.as<std::string>();
+            return *as<std::string>() == *other.as<std::string>();
 
         case Type::Struct:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
         case Type::Symbol:
-            return *as<std::string>() != *other.as<std::string>();
+            return *as<std::string>() == *other.as<std::string>();
 
         case Type::Symlink:
-            return *as<std::string>() != *other.as<std::string>();
+            return *as<std::string>() == *other.as<std::string>();
 
         case Type::Uclass:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
