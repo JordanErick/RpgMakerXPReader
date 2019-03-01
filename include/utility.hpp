@@ -3,7 +3,6 @@
 #pragma warning(disable: 4996)
 
 #define FMT_HEADER_ONLY
-
 #include "fmt/format.h"
 
 #include <algorithm>
@@ -11,7 +10,6 @@
 #include <cstdint>
 #include <cstdio>
 #include <iostream>
-#include <iomanip>
 #include <map>
 #include <string>
 #include <vector>
