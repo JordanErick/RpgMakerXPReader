@@ -111,7 +111,7 @@ Any::Any(const Any& other)
             break;
 
         case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
+            mValue = new Table{ *other.as<Table>() };
             break;
 
         case Type::UserMarshal:
@@ -223,7 +223,7 @@ Any& Any::operator=(const Any& other)
             break;
 
         case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
+            mValue = new Table{ *other.as<Table>() };
             break;
 
         case Type::UserMarshal:
@@ -318,7 +318,7 @@ bool Any::operator==(const Any& other) const
             throw std::runtime_error(fmt::format("Unknown type: {}", mType));
 
         case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
+            return *as<Table>() == *other.as<Table>();
 
         case Type::UserMarshal:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
@@ -443,7 +443,7 @@ void Any::destructor()
             break;
 
         case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
+            delete as<Table>();
             break;
 
         case Type::UserMarshal:
@@ -516,4 +516,19 @@ std::string Object::className()
 std::map<std::string, Any> Object::variables()
 {
     return mVariables;
+}
+
+bool Table::operator==(const Table& other) const
+{
+    return dimensions == other.dimensions && 
+        xLength == other.xLength &&
+        yLength == other.yLength && 
+        zLength == other.zLength && 
+        indices == other.indices && 
+        data == other.data;
+}
+
+bool Table::operator!=(const Table& other) const
+{
+    return !operator==(other);
 }

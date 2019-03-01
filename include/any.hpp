@@ -68,4 +68,7 @@ struct Table
     i32 zLength;
     i32 indices;
     std::vector<i16> data;
+
+    bool operator==(const Table& other) const;
+    bool operator!=(const Table& other) const;
 };
