@@ -59,3 +59,13 @@ private:
     std::string mClassName;
     std::map<std::string, Any> mVariables;
 };
+
+struct Table
+{
+    i32 dimensions;
+    i32 xLength;
+    i32 yLength;
+    i32 zLength;
+    i32 indices;
+    std::vector<i16> data;
+};

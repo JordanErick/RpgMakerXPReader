@@ -22,27 +22,3 @@ std::vector<u8> loadFileIntoMemory(const std::string& filename)
     fclose(file);
     return bytes;
 }
-
-std::vector<std::string> split(const std::string & str, char delimiter)
-{
-    if (str.length() == 0) return {};
-
-    std::vector<std::string> lines;
-
-    size_t actual = 0;
-    while (true)
-    {
-        size_t pos = str.find(delimiter, actual);
-        if (pos - actual != 0) lines.push_back(str.substr(actual, pos - actual));
-
-        if (pos == std::string::npos || pos + 1 >= str.length()) break;
-        else actual = pos + 1;
-    }
-
-    return lines;
-}
-
-bool startsWith(const std::string & str, const std::string & substr)
-{
-    return str.size() >= substr.size() && str.substr(0, substr.size()) == substr;
-}
