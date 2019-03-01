@@ -173,7 +173,7 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
     }
 }
 
-int main(int argc, char** argv)
+int marshalToText(int argc, char** argv)
 {
     if (argc != 3)
     {
@@ -184,7 +184,7 @@ int main(int argc, char** argv)
     const std::string inputFilename{ argv[1] };
     const std::string outputFilename{ argv[2] };
 
-    try 
+    try
     {
         auto bytes = loadFileIntoMemory(inputFilename);
 
@@ -202,4 +202,9 @@ int main(int argc, char** argv)
     }
 
     return 0;
+}
+
+int main(int argc, char** argv)
+{
+    return marshalToText(argc, argv);
 }
