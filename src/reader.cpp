@@ -163,17 +163,21 @@ Object Reader::readObject()
     auto className = parse();
 
     if (className.type() != Type::Symbol && className.type() != Type::Symlink)
-        throw std::runtime_error("Invalid class name type");
+        throw std::runtime_error(fmt::format("Invalid class name type: {}", className.type()));
 
-    auto ivarCount = readFixnum();
+    Object object{ *className.as<std::string>() };
 
-    Object object;
+    auto variablesCount = readFixnum();
 
-    for (i32 i = 0; i < ivarCount; i++)
+    for (i32 i = 0; i < variablesCount; i++)
     {
         auto key = parse();
+
+        if(key.type() != Type::Symbol && key.type() != Type::Symlink)
+            throw std::runtime_error(fmt::format("Invalid key type: {}", key.type()));
+
         auto value = parse();
-        object[key] = value;
+        object[*key.as<std::string>()] = value;
     }
 
     return object;

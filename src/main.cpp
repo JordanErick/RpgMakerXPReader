@@ -48,7 +48,7 @@ void print(const Any& any)
 
         for (const auto& pair : *object)
         {
-            print(pair.first);
+            std::cout << pair.first;
             std::cout << " -> ";
             print(pair.second);
             std::cout << "\n";
@@ -85,7 +85,7 @@ void print(const Any& any)
 
 int main()
 {
-    Reader reader{ loadFileIntoMemory(MapInfosPath) };
+    Reader reader{ loadFileIntoMemory(SystemPath) };
     auto any = reader.parse();
     print(any);
 
