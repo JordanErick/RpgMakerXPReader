@@ -1,4 +1,4 @@
-#include "..\include\type.hpp"
+#include "type.hpp"
 
 Type::Type(Type::Value value)
 : mValue{ value }
