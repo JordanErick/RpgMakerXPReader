@@ -2,6 +2,7 @@
 /bin
 /Data
 /obj
+/output
 *.sln
 *.vcxproj
 *.filters
