@@ -107,7 +107,7 @@ Any::Any(const Any& other)
             break;
 
         case Type::Unknown:
-            throw std::runtime_error(fmt::format("Unknown type: {}", mType));
+            mValue = nullptr;
             break;
 
         case Type::UserDef:
@@ -219,7 +219,7 @@ Any& Any::operator=(const Any& other)
             break;
 
         case Type::Unknown:
-            throw std::runtime_error(fmt::format("Unknown type: {}", mType));
+            mValue = nullptr;
             break;
 
         case Type::UserDef:
@@ -315,7 +315,7 @@ bool Any::operator==(const Any& other) const
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
         case Type::Unknown:
-            throw std::runtime_error(fmt::format("Unknown type: {}", mType));
+            return true;
 
         case Type::UserDef:
             return *as<Table>() == *other.as<Table>();
