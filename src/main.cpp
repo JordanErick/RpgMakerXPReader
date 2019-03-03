@@ -56,7 +56,7 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         case Type::Hash:
         {
-            Hash* hash = any.as<Hash>();
+            auto* hash = any.as<Hash>();
 
             str += fmt::format("Hash{{\n");
 
@@ -99,18 +99,24 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         case Type::Object:
         {
-            Object* object = any.as<Object>();
+            auto* object = any.as<Object>();
 
             str += fmt::format("{}(\n", object->className());
 
+            std::vector<std::string> keys;
             for (const auto& element : *object)
+                keys.push_back(element.first);
+
+            std::sort(keys.begin(), keys.end());
+
+            for (size_t i = 0; i < keys.size(); ++i)
             {
-                str += whitespace(indent) + fmt::format("  {} -> ", element.first);
-                writeToString(str, element.second, indent + 2);
-                str += fmt::format("\n");
+                str += whitespace(indent + 2) + fmt::format("{} = ", keys[i]);
+                writeToString(str, (*object)[keys[i]], indent + 2);
+                str += "\n";
             }
 
-            str += whitespace(indent) + fmt::format(")");
+            str += whitespace(indent) + ")\n";
 
         } break;
 
@@ -144,23 +150,22 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         case Type::UserDef:
         {
-            Table* table = any.as<Table>();
+            auto* table = any.as<Table>();
 
             str += fmt::format("Table[\n");
-
-            str += whitespace(indent) + fmt::format("  {} -> {}\n", "xLength", table->xLength);
-            str += whitespace(indent) + fmt::format("  {} -> {}\n", "yLength", table->yLength);
-            str += whitespace(indent) + fmt::format("  {} -> {}\n", "zLength", table->zLength);
-            str += whitespace(indent) + fmt::format("  {} -> {}\n", "indices", table->indices);
+            str += whitespace(indent + 2) + fmt::format("indices = {}\n", table->indices);
+            str += whitespace(indent + 2) + fmt::format("xLength = {}\n", table->xLength);
+            str += whitespace(indent + 2) + fmt::format("yLength = {}\n", table->yLength);
+            str += whitespace(indent + 2) + fmt::format("zLength = {}\n", table->zLength);
 
             for (i32 i = 0; i < table->indices; i++)
             {
-                str += whitespace(indent) + fmt::format("  {} -> ", i);
+                str += whitespace(indent + 2) + fmt::format("{} = ", i);
                 str += fmt::format("{}", table->data.at(i));
-                str += fmt::format("\n");
+                str += "\n";
             }
 
-            str += whitespace(indent) + fmt::format("]\n");
+            str += whitespace(indent) + "]\n";
 
         } break;
            
