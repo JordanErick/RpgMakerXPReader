@@ -1,51 +1,6 @@
-#include "..\include\system.hpp"
+#include "system.hpp"
 
-AudioFile::AudioFile()
-: mName{""}
-, mPitch{100.f}
-, mVolume{100.f}
-{
-}
-
-AudioFile::AudioFile(const Any* any)
-: mName{""}
-, mPitch{100.f}
-, mVolume{100.f}
-{
-    fromAny(any);
-}
-
-void AudioFile::fromAny(const Any* any)
-{
-    if (any->type() != Type::Object)
-        throw std::runtime_error(fmt::format("Invalid any type: {}", any->type()));
-
-    if (any->as<Object>()->className() != "RPG::AudioFile")
-        throw std::runtime_error(fmt::format("Invalid class name: {}", any->as<Object>()->className()));
-
-    auto* object = any->as<Object>();
-
-    mName = *(*object)["@name"].as<std::string>();
-    mPitch = static_cast<float>(*(*object)["@pitch"].as<i32>());
-    mVolume = static_cast<float>(*(*object)["@volume"].as<i32>());
-}
-
-const std::string & AudioFile::name() const
-{
-    return mName;
-}
-
-float AudioFile::pitch() const
-{
-    return mPitch;
-}
-
-float AudioFile::volume() const
-{
-    return mVolume;
-}
-
-System::System(const Any * any)
+System::System(const Any* any)
 : mActorCollapseSE{}
 , mBattleBGM{}
 , mBattleEndME{}
@@ -145,167 +100,167 @@ System::System(const Any * any)
         mWords[e.first.substr(1)] = *e.second.as<std::string>();
 }
 
-AudioFile System::actorCollapseSE()
+const AudioFile& System::actorCollapseSE() const
 {
     return mActorCollapseSE;
 }
 
-AudioFile System::battleBGM()
+const AudioFile& System::battleBGM() const
 {
     return mBattleBGM;
 }
 
-AudioFile System::battleEndME()
+const AudioFile& System::battleEndME() const
 {
     return mBattleEndME;
 }
 
-AudioFile System::battleStartSE()
+const AudioFile& System::battleStartSE() const
 {
     return mBattleStartSE;
 }
 
-std::string System::battleTransition()
+const std::string& System::battleTransition() const
 {
     return mBattleTransition;
 }
 
-std::string System::battlebackName()
+const std::string& System::battlebackName() const
 {
     return mBattlebackName;
 }
 
-i32 System::battlerHue()
+i32 System::battlerHue() const
 {
     return mBattlerHue;
 }
 
-std::string System::battlerName()
+const std::string& System::battlerName() const
 {
     return mBattlerName;
 }
 
-AudioFile System::buzzerSE()
+const AudioFile& System::buzzerSE() const
 {
     return mBuzzerSE;
 }
 
-AudioFile System::cancelSE()
+const AudioFile& System::cancelSE() const
 {
     return mCancelSE;
 }
 
-AudioFile System::cursorSE()
+const AudioFile& System::cursorSE() const
 {
     return mCursorSE;
 }
 
-AudioFile System::decisionSE()
+const AudioFile& System::decisionSE() const
 {
     return mDecisionSE;
 }
 
-i32 System::editMapID()
+i32 System::editMapID() const
 {
     return mEditMapID;
 }
 
-std::vector<std::string> System::elements()
+const std::vector<std::string>& System::elements() const
 {
     return mElements;
 }
 
-AudioFile System::enemyCollapseSE()
+const AudioFile& System::enemyCollapseSE() const
 {
     return mEnemyCollapseSE;
 }
 
-AudioFile System::equipSE()
+const AudioFile& System::equipSE() const
 {
     return mEquipSE;
 }
 
-AudioFile System::escapeSE()
+const AudioFile& System::escapeSE() const
 {
     return mEscapeSE;
 }
 
-AudioFile System::gameoverME()
+const AudioFile& System::gameoverME() const
 {
     return mGameoverME;
 }
 
-std::string System::gameoverName()
+const std::string& System::gameoverName() const
 {
     return mGameoverName;
 }
 
-AudioFile System::loadSE()
+const AudioFile& System::loadSE() const
 {
     return mLoadSE;
 }
 
-i32 System::magicNumber()
+i32 System::magicNumber() const
 {
     return mMagicNumber;
 }
 
-std::vector<i32> System::partyMembers()
+const std::vector<i32>& System::partyMembers() const
 {
     return mPartyMembers;
 }
 
-AudioFile System::saveSE()
+const AudioFile& System::saveSE() const
 {
     return mSaveSE;
 }
 
-AudioFile System::shopSE()
+const AudioFile& System::shopSE() const
 {
     return mShopSE;
 }
 
-i32 System::startMapID()
+i32 System::startMapID() const
 {
     return mStartMapID;
 }
 
-i32 System::startX()
+i32 System::startX() const
 {
     return mStartX;
 }
 
-i32 System::startY()
+i32 System::startY() const
 {
     return mStartY;
 }
 
-std::vector<std::string> System::switches()
+const std::vector<std::string>& System::switches() const
 {
     return mSwitches;
 }
 
-i32 System::testTroopID()
+i32 System::testTroopID() const
 {
     return mTestTroopID;
 }
 
-AudioFile System::titleBGM()
+const AudioFile& System::titleBGM() const
 {
     return mTitleBGM;
 }
 
-std::string System::titleName()
+const std::string& System::titleName() const
 {
     return mTitleName;
 }
 
-std::vector<std::string> System::variables()
+const std::vector<std::string>& System::variables() const
 {
     return mVariables;
 }
 
-std::string System::windowskinName()
+const std::string& System::windowskinName() const
 {
     return mWindowskinName;
 }

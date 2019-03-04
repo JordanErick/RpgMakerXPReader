@@ -1,59 +1,45 @@
-#include "any.hpp"
+#pragma once
 
-class AudioFile
-{
-public:
-    AudioFile();
-    AudioFile(const Any* any);
-    
-    void               fromAny(const Any* any);
-    const std::string& name() const;
-    float              pitch() const;
-    float              volume() const;
-private:
-    std::string        mName;
-    float              mPitch;
-    float              mVolume;
-};
+#include "common.hpp"
 
 class System
 {
 public:
-    System(const Any* any);
+                                       System(const Any* any);
 
-    AudioFile                          actorCollapseSE();
-    AudioFile                          battleBGM();
-    AudioFile                          battleEndME();
-    AudioFile                          battleStartSE();
-    std::string                        battleTransition();
-    std::string                        battlebackName();
-    i32                                battlerHue();
-    std::string                        battlerName();
-    AudioFile                          buzzerSE();
-    AudioFile                          cancelSE();
-    AudioFile                          cursorSE();
-    AudioFile                          decisionSE();
-    i32                                editMapID();
-    std::vector<std::string>           elements();
-    AudioFile                          enemyCollapseSE();
-    AudioFile                          equipSE();
-    AudioFile                          escapeSE();
-    AudioFile                          gameoverME();
-    std::string                        gameoverName();
-    AudioFile                          loadSE();
-    i32                                magicNumber();
-    std::vector<i32>                   partyMembers();
-    AudioFile                          saveSE();
-    AudioFile                          shopSE();
-    i32                                startMapID();
-    i32                                startX();
-    i32                                startY();
-    std::vector<std::string>           switches();
-    i32                                testTroopID();
-    AudioFile                          titleBGM();
-    std::string                        titleName();
-    std::vector<std::string>           variables();
-    std::string                        windowskinName();
+    const AudioFile&                   actorCollapseSE() const;
+    const AudioFile&                   battleBGM() const;
+    const AudioFile&                   battleEndME() const;
+    const AudioFile&                   battleStartSE() const;
+    const std::string&                 battleTransition() const;
+    const std::string&                 battlebackName() const;
+    i32                                battlerHue() const;
+    const std::string&                 battlerName() const;
+    const AudioFile&                   buzzerSE() const;
+    const AudioFile&                   cancelSE() const;
+    const AudioFile&                   cursorSE() const;
+    const AudioFile&                   decisionSE() const;
+    i32                                editMapID() const;
+    const std::vector<std::string>&    elements() const;
+    const AudioFile&                   enemyCollapseSE() const;
+    const AudioFile&                   equipSE() const;
+    const AudioFile&                   escapeSE() const;
+    const AudioFile&                   gameoverME() const;
+    const std::string&                 gameoverName() const;
+    const AudioFile&                   loadSE() const;
+    i32                                magicNumber() const;
+    const std::vector<i32>&            partyMembers() const;
+    const AudioFile&                   saveSE() const;
+    const AudioFile&                   shopSE() const;
+    i32                                startMapID() const;
+    i32                                startX() const;
+    i32                                startY() const;
+    const std::vector<std::string>&    switches() const;
+    i32                                testTroopID() const;
+    const AudioFile&                   titleBGM() const;
+    const std::string&                 titleName() const;
+    const std::vector<std::string>&    variables() const;
+    const std::string&                 windowskinName() const;
 
 private:
     AudioFile                          mActorCollapseSE;
