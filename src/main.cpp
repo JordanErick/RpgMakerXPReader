@@ -1,4 +1,5 @@
 #include "reader.hpp"
+#include "system.hpp"
 
 std::string whitespace(int count)
 {
@@ -23,7 +24,7 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
                 for (size_t i = 0; i < array->size(); i++)
                 {
-                    str += whitespace(indent + 2) + fmt::format("{} -> ", i);
+                    str += whitespace(indent + 2) + fmt::format("'{}' = ", i);
                     writeToString(str, array->at(i), indent + 2);
                     str += "\n";
                 }
@@ -69,9 +70,9 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
             for (const auto& element : *hash)
             {
-                str += whitespace(indent + 2);
+                str += whitespace(indent + 2) + "'";
                 writeToString(str, element.first, 0);
-                str += " -> ";
+                str += "' -> ";
 
                 writeToString(str, element.second, indent + 2);
                 str += "\n";
@@ -112,7 +113,7 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
             for (const auto& element : *object)
             {
-                str += whitespace(indent + 2) + fmt::format("{} = ", element.first);
+                str += whitespace(indent + 2) + fmt::format("'{}' = ", element.first);
                 writeToString(str, element.second, indent + 2);
                 str += "\n";
             }
@@ -162,10 +163,10 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             auto* color = any.as<Color>();
 
             str += "Color[\n";
-            str += whitespace(indent + 2) + fmt::format("red = {}\n", color->red);
-            str += whitespace(indent + 2) + fmt::format("green = {}\n", color->green);
-            str += whitespace(indent + 2) + fmt::format("blue = {}\n", color->blue);
-            str += whitespace(indent + 2) + fmt::format("alpha = {}\n", color->alpha);
+            str += whitespace(indent + 2) + fmt::format("'red' = {}\n", color->red);
+            str += whitespace(indent + 2) + fmt::format("'green' = {}\n", color->green);
+            str += whitespace(indent + 2) + fmt::format("'blue' = {}\n", color->blue);
+            str += whitespace(indent + 2) + fmt::format("'alpha' = {}\n", color->alpha);
             str += whitespace(indent) + "]\n";
 
         } break;
@@ -175,14 +176,14 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             auto* table = any.as<Table>();
 
             str += "Table[\n";
-            str += whitespace(indent + 2) + fmt::format("totalSize = {}\n", table->totalSize);
-            str += whitespace(indent + 2) + fmt::format("xSize = {}\n", table->xSize);
-            str += whitespace(indent + 2) + fmt::format("ySize = {}\n", table->ySize);
-            str += whitespace(indent + 2) + fmt::format("zSize = {}\n", table->zSize);
+            str += whitespace(indent + 2) + fmt::format("'totalSize' = {}\n", table->totalSize);
+            str += whitespace(indent + 2) + fmt::format("'xSize' = {}\n", table->xSize);
+            str += whitespace(indent + 2) + fmt::format("'ySize' = {}\n", table->ySize);
+            str += whitespace(indent + 2) + fmt::format("'zSize' = {}\n", table->zSize);
 
             for (i32 i = 0; i < table->totalSize; i++)
             {
-                str += whitespace(indent + 2) + fmt::format("{} = ", i);
+                str += whitespace(indent + 2) + fmt::format("'{}' = ", i);
                 str += fmt::format("{}", table->data.at(i));
                 str += "\n";
             }
@@ -196,10 +197,10 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             auto* tone = any.as<Tone>();
 
             str += "Tone[\n";
-            str += whitespace(indent + 2) + fmt::format("red = {}\n", tone->red);
-            str += whitespace(indent + 2) + fmt::format("green = {}\n", tone->green);
-            str += whitespace(indent + 2) + fmt::format("blue = {}\n", tone->blue);
-            str += whitespace(indent + 2) + fmt::format("grey = {}\n", tone->grey);
+            str += whitespace(indent + 2) + fmt::format("'red' = {}\n", tone->red);
+            str += whitespace(indent + 2) + fmt::format("'green' = {}\n", tone->green);
+            str += whitespace(indent + 2) + fmt::format("'blue' = {}\n", tone->blue);
+            str += whitespace(indent + 2) + fmt::format("'grey' = {}\n", tone->grey);
             str += whitespace(indent) + "]\n";
 
         } break;
