@@ -31,7 +31,11 @@ public:
         Uclass,      // C
         Unknown,     // 
         UserDef,     // u
-        UserMarshal  // U
+        UserMarshal, // U
+
+        // User defined classes from RPG Maker XP
+        Table,
+        Tone,
     };
 
     Type() = default;

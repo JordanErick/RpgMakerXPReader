@@ -4,6 +4,7 @@ Reader::Reader(std::vector<u8> bytes)
 : mIndex{0}
 , mBytes{bytes}
 , mSymbolCache{}
+, mObjectCache{}
 {
     readVersion();
 }
@@ -12,16 +13,22 @@ Any Reader::parse()
 {
     auto type = read<u8>();
 
+    Any any{};
+
     switch (type)
     {
         case '[': // Array
-            return Any{ Type::Array, new Array{readArray()} };
+            any = Any{ Type::Array, new Array{readArray()} };
+            mObjectCache.push_back(any);
+            break;
         case 'l': // Bignum
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'F': // Bool
-            return Any{ Type::Bool, new bool{false} };
+            any = Any{ Type::Bool, new bool{false} };
+            break;
         case 'T': // Bool
-            return Any{ Type::Bool, new bool{true} };
+            any = Any{ Type::Bool, new bool{true} };
+            break;
         case 'c': // Class
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'd': // Data
@@ -29,44 +36,61 @@ Any Reader::parse()
         case 'e': // Extended
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'i': // Fixnum
-            return Any{ Type::Fixnum, new int{readFixnum()} };
+            any = Any{ Type::Fixnum, new int{readFixnum()} };
+            break;
         case 'f': // Float
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case '{': // Hash
-            return Any{ Type::Hash, new Hash(readHash()) };
+            any = Any{ Type::Hash, new Hash(readHash()) };
+            mObjectCache.push_back(any);
+            break;
         case '}': // HashDef
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'I': // Ivar
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case '@': // Link
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
+            any = Any{ Type::String, new std::string{readLink()} };
+            mObjectCache.push_back(any);
+            break;
         case 'm': // Module
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'M': // ModuleOld
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case '0': // Nil
-            return Any{ Type::Nil, nullptr };
+            any = Any{ Type::Nil, nullptr };
+            break;
         case 'o': // Object
-            return Any{ Type::Object, new Object(readObject()) };
+            any = Any{ Type::Object, new Object(readObject()) };
+            mObjectCache.push_back(any);
+            break;
         case '/': // Regexp
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case '"': // String
-            return Any{ Type::String, new std::string{readString()} };
+            any = Any{ Type::String, new std::string{readString()} };
+            mObjectCache.push_back(any);
+            break;
         case 'S': // Struct
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case ':': // Symbol
-            return Any{ Type::Symbol, new std::string{readSymbol()} };
+            any = Any{ Type::Symbol, new std::string{readSymbol()} };
+            break;
         case ';': // Symlink
-            return Any{ Type::Symlink, new std::string{readSymlink()} };
+            any = Any{ Type::Symlink, new std::string{readSymlink()} };
+            mObjectCache.push_back(any);
+            break;
         case 'C': // Uclass
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'u': // UserDef
-            return Any{ Type::UserDef, new Table(readUserDef()) };
+            any = readUserDef();
+            mObjectCache.push_back(any);
+            break;
         case 'U': // UserMarshal
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         default: // Unknown
             throw std::runtime_error(fmt::format("Unknown type: {}", type));
     }
+
+    return any;
 }
 
 i32 Reader::readFixnum()
@@ -205,22 +229,49 @@ std::string Reader::readSymlink()
     return mSymbolCache[cacheIndex];
 }
 
-Table Reader::readUserDef()
+Any Reader::readUserDef()
 {
     auto name = parse();
+
+    if (name.type() != Type::Symbol && name.type() != Type::Symlink)
+        throw std::runtime_error(fmt::format("Invalid name type: {}", name.type()));
+
     i32 size = readFixnum();
 
-    Table table;
-    
-    table.dimensions = read<i32>();
-    table.xLength = read<i32>();
-    table.yLength = read<i32>();
-    table.zLength = read<i32>();
-    table.indices = read<i32>();
-    table.data.reserve((size - 20) / 2);
+    if (*name.as<std::string>() == "Table")
+    {
+        i32 count = (size - 5 * sizeof(i32)) / sizeof(i16);
 
-    for (i32 i = 0; i < (size - 20) / 2; i++)
-        table.data.push_back(read<i16>());
+        auto dimensions = read<i32>();
+        auto xSize = read<i32>();
+        auto ySize = read<i32>();
+        auto zSize = read<i32>();
+        auto totalSize = read<i32>();
 
-    return table;
+        std::vector<i16> data;
+        data.reserve(count);
+
+        for (i32 i = 0; i < count; i++)
+            data.push_back(read<i16>());
+
+        return Any{ Type::Table, new Table{dimensions, xSize, ySize, zSize, totalSize, std::move(data)} };
+    }
+    else if (*name.as<std::string>() == "Tone")
+    {
+        auto red = read<double>();
+        auto green = read<double>();
+        auto blue = read<double>();
+        auto grey = read<double>();
+
+        return Any{ Type::Tone, new Tone{red, green, blue, grey} };
+    }
+    else
+        throw std::runtime_error(fmt::format("Unsupported user defined class: {}", *name.as<std::string>()));
+}
+
+std::string Reader::readLink()
+{
+    // TODO: Fix me
+    i32 cacheIndex = readFixnum();
+    return fmt::format("LINK_{}_{}", cacheIndex, mObjectCache[cacheIndex].type());
 }

@@ -74,6 +74,10 @@ std::string Type::toString() const
             return "UserDef";
         case UserMarshal:
             return "UserMarshal";
+        case Table:
+            return "Table";
+        case Tone:
+            return "Tone";
         default:
             throw std::runtime_error(fmt::format("Invalid enum value: {}", static_cast<i32>(mValue)));
     }

@@ -11,18 +11,25 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
     {
         case Type::Array:
         {
-            Array* array = any.as<Array>();
+            auto* array = any.as<Array>();
 
-            str += fmt::format("Array[\n");
-
-            for(size_t i = 0 ; i < array->size(); i++)
+            if (array->empty())
             {
-                str += whitespace(indent) + fmt::format("  {} -> ", i);
-                writeToString(str, array->at(i), indent + 2);
-                str += fmt::format("\n");
+                str += "Array[]";
             }
+            else
+            {
+                str += "Array[\n";
 
-            str += whitespace(indent) + fmt::format("]\n");
+                for (size_t i = 0; i < array->size(); i++)
+                {
+                    str += whitespace(indent + 2) + fmt::format("{} -> ", i);
+                    writeToString(str, array->at(i), indent + 2);
+                    str += "\n";
+                }
+
+                str += whitespace(indent) + "]\n";
+            }
 
         } break;
             
@@ -58,7 +65,7 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
         {
             auto* hash = any.as<Hash>();
 
-            str += fmt::format("Hash{{\n");
+            str += "Hash{\n";
 
             for (const auto& element : *hash)
             {
@@ -67,10 +74,10 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
                 str += " -> ";
 
                 writeToString(str, element.second, indent + 2);
-                str += fmt::format("\n");
+                str += "\n";
             }
 
-            str += whitespace(indent) + fmt::format("}}");
+            str += whitespace(indent) + "}";
         } break;
 
         case Type::HashDef:
@@ -103,16 +110,10 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
             str += fmt::format("{}(\n", object->className());
 
-            std::vector<std::string> keys;
             for (const auto& element : *object)
-                keys.push_back(element.first);
-
-            std::sort(keys.begin(), keys.end());
-
-            for (size_t i = 0; i < keys.size(); ++i)
             {
-                str += whitespace(indent + 2) + fmt::format("{} = ", keys[i]);
-                writeToString(str, (*object)[keys[i]], indent + 2);
+                str += whitespace(indent + 2) + fmt::format("{} = ", element.first);
+                writeToString(str, element.second, indent + 2);
                 str += "\n";
             }
 
@@ -149,16 +150,24 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             break;
 
         case Type::UserDef:
+            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
+            break;
+           
+        case Type::UserMarshal:
+            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
+            break;
+
+        case Type::Table:
         {
             auto* table = any.as<Table>();
 
-            str += fmt::format("Table[\n");
-            str += whitespace(indent + 2) + fmt::format("indices = {}\n", table->indices);
-            str += whitespace(indent + 2) + fmt::format("xLength = {}\n", table->xLength);
-            str += whitespace(indent + 2) + fmt::format("yLength = {}\n", table->yLength);
-            str += whitespace(indent + 2) + fmt::format("zLength = {}\n", table->zLength);
+            str += "Table[\n";
+            str += whitespace(indent + 2) + fmt::format("totalSize = {}\n", table->totalSize);
+            str += whitespace(indent + 2) + fmt::format("xSize = {}\n", table->xSize);
+            str += whitespace(indent + 2) + fmt::format("ySize = {}\n", table->ySize);
+            str += whitespace(indent + 2) + fmt::format("zSize = {}\n", table->zSize);
 
-            for (i32 i = 0; i < table->indices; i++)
+            for (i32 i = 0; i < table->totalSize; i++)
             {
                 str += whitespace(indent + 2) + fmt::format("{} = ", i);
                 str += fmt::format("{}", table->data.at(i));
@@ -168,10 +177,19 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             str += whitespace(indent) + "]\n";
 
         } break;
-           
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
+
+        case Type::Tone:
+        {
+            auto* tone = any.as<Tone>();
+
+            str += "Tone[\n";
+            str += whitespace(indent + 2) + fmt::format("red = {}\n", tone->red);
+            str += whitespace(indent + 2) + fmt::format("green = {}\n", tone->green);
+            str += whitespace(indent + 2) + fmt::format("blue = {}\n", tone->blue);
+            str += whitespace(indent + 2) + fmt::format("grey = {}\n", tone->grey);
+            str += whitespace(indent) + "]\n";
+
+        } break;
 
         default:
             throw std::runtime_error(fmt::format("Invalid type: {}", any.type()));
@@ -189,23 +207,18 @@ int marshalToText(int argc, char** argv)
     const std::string inputFilename{ argv[1] };
     const std::string outputFilename{ argv[2] };
 
-    try
     {
         auto bytes = loadFileIntoMemory(inputFilename);
 
         Reader reader{ bytes };
-        Any any = reader.parse();
+        auto any = reader.parse();
 
         std::string output;
         writeToString(output, any);
 
         writeStringToFile(outputFilename, output);
     }
-    catch (const std::runtime_error& exception)
-    {
-        fmt::print("Error: {}", exception.what());
-    }
-
+  
     return 0;
 }
 

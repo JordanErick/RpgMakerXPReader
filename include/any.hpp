@@ -63,12 +63,25 @@ private:
 struct Table
 {
     i32 dimensions;
-    i32 xLength;
-    i32 yLength;
-    i32 zLength;
-    i32 indices;
+    i32 xSize;
+    i32 ySize;
+    i32 zSize;
+    i32 totalSize;
     std::vector<i16> data;
 
     bool operator==(const Table& other) const;
     bool operator!=(const Table& other) const;
+    bool operator<(const Table& other) const;
+};
+
+struct Tone
+{
+    double red;
+    double green;
+    double blue;
+    double grey;
+
+    bool operator==(const Tone& other) const;
+    bool operator!=(const Tone& other) const;
+    bool operator<(const Tone& other) const;
 };

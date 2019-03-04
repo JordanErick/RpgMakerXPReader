@@ -17,7 +17,9 @@ private:
     std::string readString();
     std::string readSymbol();
     std::string readSymlink();
-    Table readUserDef();
+    Any readUserDef();
+
+    std::string readLink();
 
     template<typename T>
     T read()
@@ -35,4 +37,5 @@ private:
     size_t mIndex;
     std::vector<u8> mBytes;
     std::vector<std::string> mSymbolCache;
+    std::vector<Any> mObjectCache;
 };
