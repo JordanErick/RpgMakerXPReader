@@ -238,7 +238,16 @@ Any Reader::readUserDef()
 
     i32 size = readFixnum();
 
-    if (*name.as<std::string>() == "Table")
+    if (*name.as<std::string>() == "Color")
+    {
+        auto red = read<double>();
+        auto green = read<double>();
+        auto blue = read<double>();
+        auto alpha = read<double>();
+
+        return Any{ Type::Color, new Color{red, green, blue, alpha} };
+    }
+    else if (*name.as<std::string>() == "Table")
     {
         i32 count = (size - 5 * sizeof(i32)) / sizeof(i16);
 

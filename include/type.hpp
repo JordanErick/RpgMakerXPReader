@@ -34,6 +34,7 @@ public:
         UserMarshal, // U
 
         // User defined classes from RPG Maker XP
+        Color,
         Table,
         Tone,
     };

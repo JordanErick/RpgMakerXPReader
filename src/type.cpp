@@ -74,6 +74,8 @@ std::string Type::toString() const
             return "UserDef";
         case UserMarshal:
             return "UserMarshal";
+        case Color:
+            return "Color";
         case Table:
             return "Table";
         case Tone:

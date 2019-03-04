@@ -118,6 +118,10 @@ Any::Any(const Any& other)
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
             break;
 
+        case Type::Color:
+            mValue = new Color{ *other.as<Color>() };
+            break;
+
         case Type::Table:
             mValue = new Table{ *other.as<Table>() };
             break;
@@ -238,6 +242,10 @@ Any& Any::operator=(const Any& other)
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
             break;
 
+        case Type::Color:
+            mValue = new Color{ *other.as<Color>() };
+            break;
+
         case Type::Table:
             mValue = new Table{ *other.as<Table>() };
             break;
@@ -339,6 +347,9 @@ bool Any::operator==(const Any& other) const
         case Type::UserMarshal:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
+        case Type::Color:
+            return *as<Color>() == *other.as<Color>();
+
         case Type::Table:
             return *as<Table>() == *other.as<Table>();
 
@@ -438,6 +449,9 @@ bool Any::operator<(const Any& other) const
 
         case Type::UserMarshal:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
+
+        case Type::Color:
+            return *as<Color>() < *other.as<Color>();
 
         case Type::Table:
             return *as<Table>() < *other.as<Table>();
@@ -562,6 +576,10 @@ void Any::destructor()
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
             break;
 
+        case Type::Color:
+            delete as<Color>();
+            break;
+
         case Type::Table:
             delete as<Table>();
             break;
@@ -674,4 +692,22 @@ bool Tone::operator!=(const Tone& other) const
 bool Tone::operator<(const Tone& other) const
 {
     return red + green + blue + grey < other.red + other.green + other.blue + other.grey;
+}
+
+bool Color::operator==(const Color & other) const
+{
+    return red == other.red
+        && green == other.green
+        && blue == other.blue
+        && alpha == other.alpha;
+}
+
+bool Color::operator!=(const Color & other) const
+{
+    return !operator==(other);
+}
+
+bool Color::operator<(const Color & other) const
+{
+    return red + green + blue + alpha < other.red + other.green + other.blue + other.alpha;
 }
