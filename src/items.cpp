@@ -166,17 +166,17 @@ i32 Item::variance() const
     return mVariance;
 }
 
-bool Item::operator==(const Item & other) const
+bool Item::operator==(const Item& other) const
 {
     return mID == other.mID;
 }
 
-bool Item::operator!=(const Item & other) const
+bool Item::operator!=(const Item& other) const
 {
     return !operator==(other);
 }
 
-bool Item::operator<(const Item & other) const
+bool Item::operator<(const Item& other) const
 {
     return mID < other.mID;
 }
