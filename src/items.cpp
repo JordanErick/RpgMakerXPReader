@@ -1,21 +1,21 @@
 #include "items.hpp"
 
 Item::Item(const Any* any)
-: mAnimation1ID{}
-, mAnimation2ID{}
+: mUserAnimationID{}
+, mTargetAnimationID{}
 , mCommonEventID{}
 , mConsumable{}
 , mDescription{}
 , mHit{}
 , mIconName{}
 , mID{}
-, mMDef{}
+, mMagicalDefense{}
 , mMenuSE{}
 , mName{}
 , mOccasion{}
 , mParameterPoints{}
 , mParameterType{}
-, mPDef{}
+, mPhysicalDefense{}
 , mPrice{}
 , mRecoverHP{}
 , mRecoverHPRate{}
@@ -32,38 +32,53 @@ Item::Item(const Any* any)
 
     auto* object = any->as<Object>();
 
-    mAnimation1ID = *(*object)["@animation1_id"].as<i32>();
-    mAnimation2ID = *(*object)["@animation2_id"].as<i32>();
+    mUserAnimationID = *(*object)["@animation1_id"].as<i32>();
+    mTargetAnimationID = *(*object)["@animation2_id"].as<i32>();
     mCommonEventID = *(*object)["@common_event_id"].as<i32>();
     mConsumable = *(*object)["@consumable"].as<bool>();
     mDescription = *(*object)["@description"].as<std::string>();
+
+    auto* elementSet = (*object)["@element_set"].as<Array>();
+    for (const auto& e : *elementSet)
+        mElementSet.push_back(*e.as<i32>());
+
     mHit = *(*object)["@hit"].as<i32>();
     mIconName = *(*object)["@icon_name"].as<std::string>();
     mID = *(*object)["@id"].as<i32>();
-    mMDef = *(*object)["@mdef_f"].as<i32>();
+    mMagicalDefense = *(*object)["@mdef_f"].as<i32>();
     mMenuSE.fromAny(&(*object)["@menu_se"]);
+
+    auto* minusStateSet = (*object)["@minus_state_set"].as<Array>();
+    for (const auto& e : *minusStateSet)
+        mMinusStateSet.push_back(*e.as<i32>());
+
     mName = *(*object)["@name"].as<std::string>();
-    mOccasion = *(*object)["@occasion"].as<i32>();
+    mOccasion = static_cast<Occasion>(*(*object)["@occasion"].as<i32>());
     mParameterPoints = *(*object)["@parameter_points"].as<i32>();
-    mParameterType = *(*object)["@parameter_type"].as<i32>();
-    mPDef = *(*object)["@pdef_f"].as<i32>();
+    mParameterType = static_cast<Parameter>(*(*object)["@parameter_type"].as<i32>());
+    mPhysicalDefense = *(*object)["@pdef_f"].as<i32>();
+
+    auto* plusStateSet = (*object)["@plus_state_set"].as<Array>();
+    for (const auto& e : *plusStateSet)
+        mPlusStateSet.push_back(*e.as<i32>());
+
     mPrice = *(*object)["@price"].as<i32>();
     mRecoverHP = *(*object)["@recover_hp"].as<i32>();
     mRecoverHPRate = *(*object)["@recover_hp_rate"].as<i32>();
     mRecoverSP = *(*object)["@recover_sp"].as<i32>();
     mRecoverSPRate = *(*object)["@recover_sp_rate"].as<i32>();
-    mScope = *(*object)["@scope"].as<i32>();
+    mScope = static_cast<Scope>(*(*object)["@scope"].as<i32>());
     mVariance = *(*object)["@variance"].as<i32>();
 }
 
-i32 Item::animation1ID() const
+i32 Item::userAnimationID() const
 {
-    return mAnimation1ID;
+    return mUserAnimationID;
 }
 
-i32 Item::animation2ID() const
+i32 Item::targetAnimationID() const
 {
-    return mAnimation2ID;
+    return mTargetAnimationID;
 }
 
 i32 Item::commonEventID() const
@@ -96,9 +111,9 @@ i32 Item::ID() const
     return mID;
 }
 
-i32 Item::mDef() const
+i32 Item::magicalDefense() const
 {
-    return mMDef;
+    return mMagicalDefense;
 }
 
 const AudioFile& Item::menuSE() const
@@ -111,7 +126,7 @@ const std::string& Item::name() const
     return mName;
 }
 
-i32 Item::occasion() const
+Item::Occasion Item::occasion() const
 {
     return mOccasion;
 }
@@ -121,14 +136,14 @@ i32 Item::parameterPoints() const
     return mParameterPoints;
 }
 
-i32 Item::parameterType() const
+Item::Parameter Item::parameterType() const
 {
     return mParameterType;
 }
 
-i32 Item::pDef() const
+i32 Item::physicalDefense() const
 {
-    return mPDef;
+    return mPhysicalDefense;
 }
 
 i32 Item::price() const
@@ -156,7 +171,7 @@ i32 Item::recoverSPRate() const
     return mRecoverSPRate;
 }
 
-i32 Item::scope() const
+Item::Scope Item::scope() const
 {
     return mScope;
 }
