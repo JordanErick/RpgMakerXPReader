@@ -9,7 +9,7 @@ std::string whitespace(int count)
 
 void writeToString(std::string& str, const Any& any, int indent = 0)
 {
-    switch (any.type().toValue())
+    switch (any.type())
     {
         case Type::Array:
         {

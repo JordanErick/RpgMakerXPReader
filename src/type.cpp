@@ -1,91 +1,66 @@
 #include "type.hpp"
 
-Type::Type(Type::Value value)
-: mValue{ value }
+std::string toString(const Type& type)
 {
-}
-
-bool Type::operator==(Type other) const
-{
-    return mValue == other.mValue;
-}
-
-bool Type::operator!=(Type other) const
-{
-    return mValue != other.mValue;
-}
-
-bool Type::operator<(Type other) const
-{
-    return mValue < other.mValue;
-}
-
-std::string Type::toString() const
-{
-    switch (mValue)
+    switch (type)
     {
-        case Array:
+        case Type::Array: 
             return "Array";
-        case Bignum:
+        case Type::Bignum:
             return "Bignum";
-        case Bool:
+        case Type::Bool:
             return "Bool";
-        case Class:
+        case Type::Class:
             return "Class";
-        case Data:
+        case Type::Data:
             return "Data";
-        case Extended:
+        case Type::Extended:
             return "Extended";
-        case Fixnum:
+        case Type::Fixnum:
             return "Fixnum";
-        case Float:
+        case Type::Float:
             return "Float";
-        case Hash:
+        case Type::Hash:
             return "Hash";
-        case HashDef:
+        case Type::HashDef:
             return "HashDef";
-        case Ivar:
+        case Type::Ivar:
             return "Ivar";
-        case Link:
+        case Type::Link:
             return "Link";
-        case Module:
+        case Type::Module:
             return "Module";
-        case ModuleOld:
+        case Type::ModuleOld:
             return "ModuleOld";
-        case Nil:
+        case Type::Nil:
             return "Nil";
-        case Object:
+        case Type::Object:
             return "Object";
-        case Regexp:
+        case Type::Regexp:
             return "Regexp";
-        case String:
+        case Type::String:
             return "String";
-        case Struct:
+        case Type::Struct:
             return "Struct";
-        case Symbol:
+        case Type::Symbol:
             return "Symbol";
-        case Symlink:
+        case Type::Symlink:
             return "Symlink";
-        case Uclass:
+        case Type::Uclass:
             return "Uclass";
-        case Unknown:
+        case Type::Unknown:
             return "Unknown";
-        case UserDef:
+        case Type::UserDef:
             return "UserDef";
-        case UserMarshal:
+        case Type::UserMarshal:
             return "UserMarshal";
-        case Color:
+        case Type::Color:
             return "Color";
-        case Table:
+        case Type::Table:
             return "Table";
-        case Tone:
+        case Type::Tone:
             return "Tone";
         default:
-            throw std::runtime_error(fmt::format("Invalid enum value: {}", static_cast<i32>(mValue)));
+            throw std::runtime_error(fmt::format("Invalid enum value: {}", static_cast<i32>(type)));
     }
-}
-
-i32 Type::toValue() const
-{
-    return static_cast<i32>(mValue);
 }

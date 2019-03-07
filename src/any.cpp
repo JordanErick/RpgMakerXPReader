@@ -16,7 +16,7 @@ Any::Any(const Any& other)
 : mType{other.type()}
 , mValue{nullptr}
 {
-    switch (mType.toValue())
+    switch (mType)
     {
         case Type::Array:
             mValue = new Array{ *other.as<Array>() };
@@ -140,7 +140,7 @@ Any& Any::operator=(const Any& other)
     destructor();
     mType = other.type();
 
-    switch (mType.toValue())
+    switch (mType)
     {
         case Type::Array:
             mValue = new Array{ *other.as<Array>() };
@@ -270,7 +270,7 @@ bool Any::operator==(const Any& other) const
 {
     if (mType != other.mType) return false;
 
-    switch (mType.toValue())
+    switch (mType)
     {
         case Type::Array:
             return *as<Array>() == *other.as<Array>();
@@ -373,7 +373,7 @@ bool Any::operator<(const Any& other) const
     if (mType != other.mType)
         return mType < other.mType;
 
-    switch (mType.toValue())
+    switch (mType)
     {
         case Type::Array:
             return *as<Array>() < *other.as<Array>();
@@ -476,7 +476,7 @@ void* Any::value() const
 
 void Any::destructor()
 {
-    switch (mType.toValue())
+    switch (mType)
     {
         case Type::Array:
             delete as<Array>();
