@@ -1,7 +1,7 @@
 #include "any.hpp"
 
 Any::Any()
-: mType{Type::Unknown}
+: mType{Type::Nil}
 , mValue{nullptr}
 {
 }
@@ -104,10 +104,6 @@ Any::Any(const Any& other)
 
         case Type::Uclass:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Unknown:
-            mValue = nullptr;
             break;
 
         case Type::UserDef:
@@ -230,10 +226,6 @@ Any& Any::operator=(const Any& other)
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
             break;
 
-        case Type::Unknown:
-            mValue = nullptr;
-            break;
-
         case Type::UserDef:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
             break;
@@ -338,9 +330,6 @@ bool Any::operator==(const Any& other) const
         case Type::Uclass:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
-        case Type::Unknown:
-            return true;
-
         case Type::UserDef:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
 
@@ -440,9 +429,6 @@ bool Any::operator<(const Any& other) const
 
         case Type::Uclass:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Unknown:
-            return true;
 
         case Type::UserDef:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
@@ -563,9 +549,6 @@ void Any::destructor()
 
         case Type::Uclass:
             throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Unknown:
             break;
 
         case Type::UserDef:

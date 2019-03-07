@@ -48,8 +48,6 @@ std::string toString(const Type& type)
             return "Symlink";
         case Type::Uclass:
             return "Uclass";
-        case Type::Unknown:
-            return "Unknown";
         case Type::UserDef:
             return "UserDef";
         case Type::UserMarshal:

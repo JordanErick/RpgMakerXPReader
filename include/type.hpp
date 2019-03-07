@@ -26,7 +26,6 @@ enum class Type : i32
     Symbol,      // :
     Symlink,     // ;
     Uclass,      // C
-    Unknown,     // 
     UserDef,     // u
     UserMarshal, // U
 

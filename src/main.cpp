@@ -147,10 +147,6 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
             break;
 
-        case Type::Unknown:
-            throw std::runtime_error(fmt::format("Unknown type: {}", any.type()));
-            break;
-
         case Type::UserDef:
             throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
             break;
