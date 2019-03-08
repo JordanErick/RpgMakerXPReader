@@ -7,8 +7,8 @@ class AudioFile
 {
 public:
                        AudioFile();
-                       AudioFile(const Any* any);
-    void               fromAny(const Any* any);
+                       AudioFile(const Object& object);
+    void               load(const Object& object);
 
     const std::string& name() const;
     float              pitch() const;

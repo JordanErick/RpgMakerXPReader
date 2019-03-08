@@ -1,6 +1,6 @@
 #include "types/map.hpp"
 
-Map::Map(const Any* any)
+Map::Map(const Object& object)
 : mAutoplayBGM{}
 , mAutoplayBGS{}
 , mBGM{}
@@ -11,23 +11,18 @@ Map::Map(const Any* any)
 , mTilesetID{}
 , mWidth{}
 {
-    if (any->type() != Type::Object)
-        throw std::runtime_error(fmt::format("Invalid any type: {}", any->type()));
+    if (object.className() != "RPG::Map")
+        throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
 
-    if (any->as<Object>()->className() != "RPG::Map")
-        throw std::runtime_error(fmt::format("Invalid class name: {}", any->as<Object>()->className()));
-
-    auto* object = any->as<Object>();
-
-    mAutoplayBGM = *(*object)["@autoplay_bgm"].as<bool>();
-    mAutoplayBGS = *(*object)["@autoplay_bgs"].as<bool>();
-    mBGM.fromAny(&(*object)["@bgm"]);
-    mBGS.fromAny(&(*object)["@bgs"]);
-    mData = *(*object)["@data"].as<Table>();
-    mEncounterStep = *(*object)["@encounter_step"].as<i32>();
-    mHeight = *(*object)["@height"].as<i32>();
-    mTilesetID = *(*object)["@tileset_id"].as<i32>();
-    mWidth = *(*object)["@width"].as<i32>();
+    mAutoplayBGM = *object["@autoplay_bgm"].as<bool>();
+    mAutoplayBGS = *object["@autoplay_bgs"].as<bool>();
+    mBGM.load(*object["@bgm"].as<Object>());
+    mBGS.load(*object["@bgs"].as<Object>());
+    mData = *object["@data"].as<Table>();
+    mEncounterStep = *object["@encounter_step"].as<i32>();
+    mHeight = *object["@height"].as<i32>();
+    mTilesetID = *object["@tileset_id"].as<i32>();
+    mWidth = *object["@width"].as<i32>();
 }
 
 bool Map::autoplayBGM() const

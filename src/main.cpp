@@ -155,7 +155,7 @@ int marshalToText(int argc, char** argv)
         Reader reader{ bytes };
         auto any = reader.parse();
 
-		Items items{ &any }; // test
+		Items items{ *any.as<Array>() }; // test
 
         std::string output;
         writeToString(output, any);

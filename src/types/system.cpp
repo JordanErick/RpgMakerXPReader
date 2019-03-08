@@ -1,6 +1,6 @@
 #include "types/system.hpp"
 
-System::System(const Any* any)
+System::System(const Object& object)
 : mActorCollapseSE{}
 , mBattleBGM{}
 , mBattleEndME{}
@@ -36,66 +36,62 @@ System::System(const Any* any)
 , mWindowskinName{}
 , mWords{}
 {
-    if (any->type() != Type::Object)
-        throw std::runtime_error(fmt::format("Invalid any type: {}", any->type()));
+    if (object.className() != "RPG::System")
+        throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
 
-    if (any->as<Object>()->className() != "RPG::System")
-        throw std::runtime_error(fmt::format("Invalid class name: {}", any->as<Object>()->className()));
+    mActorCollapseSE.load(*object["@actor_collapse_se"].as<Object>());
+    mBattleBGM.load(*object["@battle_bgm"].as<Object>());
+    mBattleEndME.load(*object["@battle_end_me"].as<Object>());
+    mBattleStartSE.load(*object["@battle_start_se"].as<Object>());
+    mBattleTransition = *object["@battle_transition"].as<std::string>();
+    mBattlebackName = *object["@battleback_name"].as<std::string>();
+    mBattlerHue = *object["@battler_hue"].as<i32>();
+    mBattlerName = *object["@battler_name"].as<std::string>();
+    mBuzzerSE.load(*object["@buzzer_se"].as<Object>());
+    mCancelSE.load(*object["@cancel_se"].as<Object>());
+    mCursorSE.load(*object["@cursor_se"].as<Object>());
+    mDecisionSE.load(*object["@decision_se"].as<Object>());
+    mEditMapID = *object["@edit_map_id"].as<i32>();
 
-    auto* object = any->as<Object>();
-    mActorCollapseSE.fromAny(&(*object)["@actor_collapse_se"]);
-    mBattleBGM.fromAny(&(*object)["@battle_bgm"]);
-    mBattleEndME.fromAny(&(*object)["@battle_end_me"]);
-    mBattleStartSE.fromAny(&(*object)["@battle_start_se"]);
-    mBattleTransition = *(*object)["@battle_transition"].as<std::string>();
-    mBattlebackName = *(*object)["@battleback_name"].as<std::string>();
-    mBattlerHue = *(*object)["@battler_hue"].as<i32>();
-    mBattlerName = *(*object)["@battler_name"].as<std::string>();
-    mBuzzerSE.fromAny(&(*object)["@buzzer_se"]);
-    mCancelSE.fromAny(&(*object)["@cancel_se"]);
-    mCursorSE.fromAny(&(*object)["@cursor_se"]);
-    mDecisionSE.fromAny(&(*object)["@decision_se"]);
-    mEditMapID = *(*object)["@edit_map_id"].as<i32>();
-
-    auto* elements = (*object)["@elements"].as<Array>();
+    auto* elements = object["@elements"].as<Array>();
     for (const auto& e : *elements)
         mElements.push_back(*e.as<std::string>());
 
-    mEnemyCollapseSE.fromAny(&(*object)["@enemy_collapse_se"]);
-    mEquipSE.fromAny(&(*object)["@equip_se"]);
-    mEscapeSE.fromAny(&(*object)["@escape_se"]);
-    mGameoverME.fromAny(&(*object)["@gameover_me"]);
-    mGameoverName = *(*object)["@gameover_name"].as<std::string>();
-    mLoadSE.fromAny(&(*object)["@load_se"]);
-    mMagicNumber = *(*object)["@magic_number"].as<i32>();
+    mEnemyCollapseSE.load(*object["@enemy_collapse_se"].as<Object>());
+    mEquipSE.load(*object["@equip_se"].as<Object>());
+	mEscapeSE.load(*object["@escape_se"].as<Object>());
+    mGameoverME.load(*object["@gameover_me"].as<Object>());
+    mGameoverName = *object["@gameover_name"].as<std::string>();
+    mLoadSE.load(*object["@load_se"].as<Object>());
+    mMagicNumber = *object["@magic_number"].as<i32>();
 
-    auto* partyMembers = (*object)["@party_members"].as<Array>();
+    auto* partyMembers = object["@party_members"].as<Array>();
     for (const auto& e : *partyMembers)
         mPartyMembers.push_back(*e.as<i32>());
 
-    mSaveSE.fromAny(&(*object)["@save_se"]);
-    mShopSE.fromAny(&(*object)["@shop_se"]);
-    mStartMapID = *(*object)["@start_map_id"].as<i32>();
-    mStartX = *(*object)["@start_x"].as<i32>();
-    mStartY = *(*object)["@start_y"].as<i32>();
+    mSaveSE.load(*object["@save_se"].as<Object>());
+    mShopSE.load(*object["@shop_se"].as<Object>());
+    mStartMapID = *object["@start_map_id"].as<i32>();
+    mStartX = *object["@start_x"].as<i32>();
+    mStartY = *object["@start_y"].as<i32>();
 
-    auto* switches = (*object)["@switches"].as<Array>();
+    auto* switches = object["@switches"].as<Array>();
     // Avoid first element which is always a nil
     for(size_t i = 1; i < switches->size(); i++)
         mSwitches.push_back(*(*switches)[i].as<std::string>());
 
-    mTestTroopID = *(*object)["@test_troop_id"].as<i32>();
-    mTitleBGM.fromAny(&(*object)["@title_bgm"]);
-    mTitleName = *(*object)["@title_name"].as<std::string>();
+    mTestTroopID = *object["@test_troop_id"].as<i32>();
+    mTitleBGM.load(*object["@title_bgm"].as<Object>());
+    mTitleName = *object["@title_name"].as<std::string>();
 
-    auto* variables = (*object)["@variables"].as<Array>();
+    auto* variables = object["@variables"].as<Array>();
     // Avoid first element which is always a nil
     for (size_t i = 1; i < variables->size(); i++)
         mVariables.push_back(*(*variables)[i].as<std::string>());
 
-    mWindowskinName = *(*object)["@windowskin_name"].as<std::string>();
+    mWindowskinName = *object["@windowskin_name"].as<std::string>();
 
-    auto* words = (*object)["@words"].as<Object>();
+    auto* words = object["@words"].as<Object>();
     for (const auto& e : *words)
         mWords[e.first.substr(1)] = *e.second.as<std::string>();
 }

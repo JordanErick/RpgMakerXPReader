@@ -34,7 +34,7 @@ public:
         User,
     };
 
-                       Item(const Any* any);
+                       Item(const Object& object);
 
     i32                userAnimationID() const;
     i32                targetAnimationID() const;
@@ -94,7 +94,7 @@ private:
 class Items
 {
 public:
-                                      Items(const Any* any);
+                                      Items(const Array& array);
 
     Item&                             operator[](size_t index);
 

@@ -5,7 +5,7 @@
 class System
 {
 public:
-                                       System(const Any* any);
+                                       System(const Object& object);
 
     const AudioFile&                   actorCollapseSE() const;
     const AudioFile&                   battleBGM() const;

@@ -7,30 +7,25 @@ AudioFile::AudioFile()
 {
 }
 
-AudioFile::AudioFile(const Any* any)
+AudioFile::AudioFile(const Object& object)
 : mName{ "" }
 , mPitch{ 100.f }
 , mVolume{ 100.f }
 {
-    fromAny(any);
+    load(object);
 }
 
-void AudioFile::fromAny(const Any* any)
+void AudioFile::load(const Object& object)
 {
-    if (any->type() != Type::Object)
-        throw std::runtime_error(fmt::format("Invalid any type: {}", any->type()));
+    if (object.className() != "RPG::AudioFile")
+        throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
 
-    if (any->as<Object>()->className() != "RPG::AudioFile")
-        throw std::runtime_error(fmt::format("Invalid class name: {}", any->as<Object>()->className()));
-
-    auto* object = any->as<Object>();
-
-    mName = *(*object)["@name"].as<std::string>();
-    mPitch = static_cast<float>(*(*object)["@pitch"].as<i32>());
-    mVolume = static_cast<float>(*(*object)["@volume"].as<i32>());
+    mName = *object["@name"].as<std::string>();
+    mPitch = static_cast<float>(*object["@pitch"].as<i32>());
+    mVolume = static_cast<float>(*object["@volume"].as<i32>());
 }
 
-const std::string & AudioFile::name() const
+const std::string& AudioFile::name() const
 {
     return mName;
 }
