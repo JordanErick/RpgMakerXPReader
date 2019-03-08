@@ -35,32 +35,12 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         } break;
             
-        case Type::Bignum:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
         case Type::Bool:
             str += fmt::format("{}", *any.as<bool>());
             break;
 
-        case Type::Class:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Data:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Extended:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Fixnum:
+        case Type::Int:
             str += fmt::format("{}", *any.as<i32>());
-            break;
-
-        case Type::Float:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
             break;
 
         case Type::Hash:
@@ -82,27 +62,7 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             str += whitespace(indent) + "}";
         } break;
 
-        case Type::HashDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Ivar:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Link:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Module:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::ModuleOld:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Nil:
+        case Type::Null:
             str += fmt::format("nil");
             break;
 
@@ -123,36 +83,8 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         } break;
 
-        case Type::Regexp:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
         case Type::String:
             str += fmt::format("\"{}\"", *any.as<std::string>());
-            break;
-
-        case Type::Struct:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::Symbol:
-            str += fmt::format("\"{}\"", *any.as<std::string>());
-            break;
-
-        case Type::Symlink:
-            str += fmt::format("\"{}\"", *any.as<std::string>());
-            break;
-
-        case Type::Uclass:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-
-        case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
-            break;
-           
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", any.type()));
             break;
 
         case Type::Color:

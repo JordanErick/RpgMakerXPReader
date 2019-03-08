@@ -4,35 +4,16 @@
 
 enum class Type : i32
 {
-    Array,       // [
-    Bignum,      // l
-    Bool,        // F T
-    Class,       // c
-    Data,        // d
-    Extended,    // e
-    Fixnum,      // i
-    Float,       // f
-    Hash,        // { 
-    HashDef,     // }
-    Ivar,        // I
-    Link,        // @
-    Module,      // m
-    ModuleOld,   // M
-    Nil,         // 0
-    Object,      // o
-    Regexp,      // /
-    String,      // "
-    Struct,      // S
-    Symbol,      // :
-    Symlink,     // ;
-    Uclass,      // C
-    UserDef,     // u
-    UserMarshal, // U
-
-    // User defined classes from RPG Maker XP
+    Null,
+    Bool,
+    Int,
+    String,
     Color,
-    Table,
     Tone,
+    Table,
+    Array,
+    Hash,
+    Object,
 };
 
 std::string toString(const Type& type);

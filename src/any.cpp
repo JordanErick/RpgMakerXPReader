@@ -1,7 +1,7 @@
 #include "any.hpp"
 
 Any::Any()
-: mType{Type::Nil}
+: mType{Type::Null}
 , mValue{nullptr}
 {
 }
@@ -13,242 +13,86 @@ Any::Any(Type type, void* value)
 }
 
 Any::Any(const Any& other)
-: mType{other.type()}
+: mType{other.mType}
 , mValue{nullptr}
 {
-    switch (mType)
+    switch (other.mType)
     {
-        case Type::Array:
-            mValue = new Array{ *other.as<Array>() };
+        case Type::Null:
             break;
-
-        case Type::Bignum:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::Bool:
             mValue = new bool{ *other.as<bool>() };
             break;
-
-        case Type::Class:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Data:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Extended:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Fixnum:
+        case Type::Int:
             mValue = new i32{ *other.as<i32>() };
             break;
-
-        case Type::Float:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Hash:
-            mValue = new Hash{ *other.as<Hash>() };
-            break;
-
-        case Type::HashDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Ivar:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Link:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Module:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::ModuleOld:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Nil:
-            mValue = nullptr;
-            break;
-
-        case Type::Object:
-            mValue = new Object{ *other.as<Object>() };
-            break;
-
-        case Type::Regexp:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::String:
             mValue = new std::string{ *other.as<std::string>() };
             break;
-
-        case Type::Struct:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Symbol:
-            mValue = new std::string{ *other.as<std::string>() };
-            break;
-
-        case Type::Symlink:
-            mValue = new std::string{ *other.as<std::string>() };
-            break;
-
-        case Type::Uclass:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::Color:
             mValue = new Color{ *other.as<Color>() };
             break;
-
-        case Type::Table:
-            mValue = new Table{ *other.as<Table>() };
-            break;
-
         case Type::Tone:
             mValue = new Tone{ *other.as<Tone>() };
             break;
-
+        case Type::Table:
+            mValue = new Table{ *other.as<Table>() };
+            break;
+        case Type::Array:
+            mValue = new Array{ *other.as<Array>() };
+            break;
+        case Type::Hash:
+            mValue = new Hash{ *other.as<Hash>() };
+            break;
+        case Type::Object:
+            mValue = new Object{ *other.as<Object>() };
+            break;
         default:
-            throw std::runtime_error(fmt::format("Invalid type: {}", mType));
-    }
+            throw std::runtime_error(fmt::format("Unsupported enum value: {}", static_cast<i32>(other.mType)));
+    };
 }
 
 Any& Any::operator=(const Any& other)
 {
     destructor();
-    mType = other.type();
 
-    switch (mType)
+    mType = other.mType;
+    mValue = nullptr;
+
+    switch (other.mType)
     {
-        case Type::Array:
-            mValue = new Array{ *other.as<Array>() };
+        case Type::Null:
             break;
-
-        case Type::Bignum:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::Bool:
             mValue = new bool{ *other.as<bool>() };
             break;
-
-        case Type::Class:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Data:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Extended:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Fixnum:
+        case Type::Int:
             mValue = new i32{ *other.as<i32>() };
             break;
-
-        case Type::Float:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Hash:
-            mValue = new Hash{ *other.as<Hash>() };
-            break;
-
-        case Type::HashDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Ivar:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Link:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Module:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::ModuleOld:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Nil:
-            mValue = nullptr;
-            break;
-
-        case Type::Object:
-            mValue = new Object{ *other.as<Object>() };
-            break;
-
-        case Type::Regexp:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::String:
             mValue = new std::string{ *other.as<std::string>() };
             break;
-
-        case Type::Struct:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Symbol:
-            mValue = new std::string{ *other.as<std::string>() };
-            break;
-
-        case Type::Symlink:
-            mValue = new std::string{ *other.as<std::string>() };
-            break;
-
-        case Type::Uclass:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::Color:
             mValue = new Color{ *other.as<Color>() };
             break;
-
-        case Type::Table:
-            mValue = new Table{ *other.as<Table>() };
-            break;
-
         case Type::Tone:
             mValue = new Tone{ *other.as<Tone>() };
             break;
-
+        case Type::Table:
+            mValue = new Table{ *other.as<Table>() };
+            break;
+        case Type::Array:
+            mValue = new Array{ *other.as<Array>() };
+            break;
+        case Type::Hash:
+            mValue = new Hash{ *other.as<Hash>() };
+            break;
+        case Type::Object:
+            mValue = new Object{ *other.as<Object>() };
+            break;
         default:
-            throw std::runtime_error(fmt::format("Invalid type: {}", mType));
-    }
+            throw std::runtime_error(fmt::format("Unsupported enum value: {}", static_cast<i32>(other.mType)));
+    };
 
     return *this;
 }
@@ -262,92 +106,31 @@ bool Any::operator==(const Any& other) const
 {
     if (mType != other.mType) return false;
 
-    switch (mType)
+    switch (other.mType)
     {
-        case Type::Array:
-            return *as<Array>() == *other.as<Array>();
-
-        case Type::Bignum:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
+        case Type::Null:
+            return true;
         case Type::Bool:
             return *as<bool>() == *other.as<bool>();
-
-        case Type::Class:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Data:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Extended:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Fixnum:
+        case Type::Int:
             return *as<i32>() == *other.as<i32>();
-
-        case Type::Float:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Hash:
-            return *as<Hash>() == *other.as<Hash>();
-
-        case Type::HashDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Ivar:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Link:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Module:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::ModuleOld:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Nil:
-            return true;
-
-        case Type::Object:
-            return *as<Object>() == *other.as<Object>();
-
-        case Type::Regexp:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
         case Type::String:
             return *as<std::string>() == *other.as<std::string>();
-
-        case Type::Struct:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Symbol:
-            return *as<std::string>() == *other.as<std::string>();
-
-        case Type::Symlink:
-            return *as<std::string>() == *other.as<std::string>();
-
-        case Type::Uclass:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
         case Type::Color:
             return *as<Color>() == *other.as<Color>();
-
-        case Type::Table:
-            return *as<Table>() == *other.as<Table>();
-
         case Type::Tone:
             return *as<Tone>() == *other.as<Tone>();
-
+        case Type::Table:
+            return *as<Table>() == *other.as<Table>();
+        case Type::Array:
+            return *as<Array>() == *other.as<Array>();
+        case Type::Hash:
+            return *as<Hash>() == *other.as<Hash>();
+        case Type::Object:
+            return *as<Object>() == *other.as<Object>();
         default:
-            throw std::runtime_error(fmt::format("Invalid type: {}", mType));
-    }
+            throw std::runtime_error(fmt::format("Unsupported enum value: {}", static_cast<i32>(other.mType)));
+    };
 }
 
 bool Any::operator!=(const Any& other) const
@@ -357,97 +140,34 @@ bool Any::operator!=(const Any& other) const
 
 bool Any::operator<(const Any& other) const
 {
-    // return mValue < other.mValue;
-
     if (mType != other.mType)
         return mType < other.mType;
 
-    switch (mType)
+    switch (other.mType)
     {
-        case Type::Array:
-            return *as<Array>() < *other.as<Array>();
-
-        case Type::Bignum:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
+        case Type::Null:
+            return true;
         case Type::Bool:
             return *as<bool>() < *other.as<bool>();
-
-        case Type::Class:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Data:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Extended:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Fixnum:
+        case Type::Int:
             return *as<i32>() < *other.as<i32>();
-
-        case Type::Float:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Hash:
-            return *as<Hash>() < *other.as<Hash>();
-
-        case Type::HashDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Ivar:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Link:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Module:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::ModuleOld:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Nil:
-            return true;
-
-        case Type::Object:
-            return *as<Object>() < *other.as<Object>();
-
-        case Type::Regexp:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
         case Type::String:
             return *as<std::string>() < *other.as<std::string>();
-
-        case Type::Struct:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::Symbol:
-            return *as<std::string>() < *other.as<std::string>();
-
-        case Type::Symlink:
-            return *as<std::string>() < *other.as<std::string>();
-
-        case Type::Uclass:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-
         case Type::Color:
             return *as<Color>() < *other.as<Color>();
-
-        case Type::Table:
-            return *as<Table>() < *other.as<Table>();
-
         case Type::Tone:
             return *as<Tone>() < *other.as<Tone>();
-
+        case Type::Table:
+            return *as<Table>() < *other.as<Table>();
+        case Type::Array:
+            return *as<Array>() < *other.as<Array>();
+        case Type::Hash:
+            return *as<Hash>() < *other.as<Hash>();
+        case Type::Object:
+            return *as<Object>() < *other.as<Object>();
         default:
-            throw std::runtime_error(fmt::format("Invalid type: {}", mType));
-    }
+            throw std::runtime_error(fmt::format("Unsupported enum value: {}", static_cast<i32>(other.mType)));
+    };
 }
 
 Type Any::type() const
@@ -464,118 +184,38 @@ void Any::destructor()
 {
     switch (mType)
     {
-        case Type::Array:
-            delete as<Array>();
+        case Type::Null:
             break;
-
-        case Type::Bignum:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::Bool:
             delete as<bool>();
             break;
-
-        case Type::Class:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Data:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Extended:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Fixnum:
+        case Type::Int:
             delete as<i32>();
             break;
-
-        case Type::Float:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Hash:
-            delete as<Hash>();
-            break;
-
-        case Type::HashDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Ivar:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Link:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Module:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::ModuleOld:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Nil:
-            break;
-
-        case Type::Object:
-            delete as<Object>();
-            break;
-
-        case Type::Regexp:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::String:
             delete as<std::string>();
             break;
-
-        case Type::Struct:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::Symbol:
-            delete as<std::string>();
-            break;
-
-        case Type::Symlink:
-            delete as<std::string>();
-            break;
-
-        case Type::Uclass:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::UserDef:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
-        case Type::UserMarshal:
-            throw std::runtime_error(fmt::format("Not implemented: {}", mType));
-            break;
-
         case Type::Color:
             delete as<Color>();
             break;
-
-        case Type::Table:
-            delete as<Table>();
-            break;
-
         case Type::Tone:
             delete as<Tone>();
             break;
-
+        case Type::Table:
+            delete as<Table>();
+            break;
+        case Type::Array:
+            delete as<Array>();
+            break;
+        case Type::Hash:
+            delete as<Hash>();
+            break;
+        case Type::Object:
+            delete as<Object>();
+            break;
         default:
-            throw std::runtime_error(fmt::format("Invalid type: {}", mType));
-    }
-
-    mValue = nullptr;
+            throw std::runtime_error(fmt::format("Unsupported enum value: {}", static_cast<i32>(mType)));
+    };
 }
 
 Object::Object(std::string className)

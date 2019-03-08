@@ -36,7 +36,7 @@ Any Reader::parse()
         case 'e': // Extended
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case 'i': // Fixnum
-            any = Any{ Type::Fixnum, new int{readFixnum()} };
+            any = Any{ Type::Int, new int{readFixnum()} };
             break;
         case 'f': // Float
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
@@ -57,7 +57,7 @@ Any Reader::parse()
         case 'M': // ModuleOld
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case '0': // Nil
-            any = Any{ Type::Nil, nullptr };
+            any = Any{ Type::Null, nullptr };
             break;
         case 'o': // Object
             any = Any{ Type::Object, new Object(readObject()) };
@@ -72,10 +72,10 @@ Any Reader::parse()
         case 'S': // Struct
             throw std::runtime_error(fmt::format("Not implemented: {}", type));
         case ':': // Symbol
-            any = Any{ Type::Symbol, new std::string{readSymbol()} };
+            any = Any{ Type::String, new std::string{readSymbol()} };
             break;
         case ';': // Symlink
-            any = Any{ Type::Symlink, new std::string{readSymlink()} };
+            any = Any{ Type::String, new std::string{readSymlink()} };
             mObjectCache.push_back(any);
             break;
         case 'C': // Uclass
@@ -186,7 +186,7 @@ Object Reader::readObject()
 {
     auto className = parse();
 
-    if (className.type() != Type::Symbol && className.type() != Type::Symlink)
+    if (className.type() != Type::String)
         throw std::runtime_error(fmt::format("Invalid class name type: {}", className.type()));
 
     Object object{ *className.as<std::string>() };
@@ -197,7 +197,7 @@ Object Reader::readObject()
     {
         auto key = parse();
 
-        if(key.type() != Type::Symbol && key.type() != Type::Symlink)
+        if(key.type() != Type::String)
             throw std::runtime_error(fmt::format("Invalid key type: {}", key.type()));
 
         auto value = parse();
@@ -233,7 +233,7 @@ Any Reader::readUserDef()
 {
     auto name = parse();
 
-    if (name.type() != Type::Symbol && name.type() != Type::Symlink)
+    if (name.type() != Type::String)
         throw std::runtime_error(fmt::format("Invalid name type: {}", name.type()));
 
     i32 size = readFixnum();
