@@ -167,7 +167,7 @@ Any Reader::readUserDef()
 		for (i32 i = 0; i < count; i++)
 			data.push_back(read<i16>());
 
-		auto any = Any{ Type::Table, new Table{dimensions, xSize, ySize, zSize, totalSize, std::move(data)} };
+		auto any = Any{ Type::Table, new Table{dimensions, xSize, ySize, zSize, totalSize, data} };
 		mObjectCache.push_back(any);
 
 		return any;

@@ -106,15 +106,15 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             auto* table = any.as<Table>();
 
             str += "Table[\n";
-            str += whitespace(indent + 2) + fmt::format("'totalSize' = {}\n", table->totalSize);
-            str += whitespace(indent + 2) + fmt::format("'xSize' = {}\n", table->xSize);
-            str += whitespace(indent + 2) + fmt::format("'ySize' = {}\n", table->ySize);
-            str += whitespace(indent + 2) + fmt::format("'zSize' = {}\n", table->zSize);
+            str += whitespace(indent + 2) + fmt::format("'totalSize' = {}\n", table->totalSize());
+            str += whitespace(indent + 2) + fmt::format("'xSize' = {}\n", table->xSize());
+            str += whitespace(indent + 2) + fmt::format("'ySize' = {}\n", table->ySize());
+            str += whitespace(indent + 2) + fmt::format("'zSize' = {}\n", table->zSize());
 
-            for (i32 i = 0; i < table->totalSize; i++)
+            for (i32 i = 0; i < table->totalSize(); i++)
             {
                 str += whitespace(indent + 2) + fmt::format("'{}' = ", i);
-                str += fmt::format("{}", table->data.at(i));
+                str += fmt::format("{}", table->data().at(i));
                 str += "\n";
             }
 
