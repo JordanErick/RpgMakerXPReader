@@ -1,5 +1,13 @@
 #include "tone.hpp"
 
+Tone::Tone()
+: mRed{}
+, mGreen{}
+, mBlue{}
+, mGrey{}
+{
+}
+
 Tone::Tone(double red, double green, double blue, double grey)
 : mRed{red}
 , mGreen{green}

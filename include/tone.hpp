@@ -3,6 +3,7 @@
 class Tone
 {
 public:
+	Tone();
 	Tone(double red, double green, double blue, double grey);
 
 	double red() const;

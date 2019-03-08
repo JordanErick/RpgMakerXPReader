@@ -1,5 +1,13 @@
 #include "color.hpp"
 
+Color::Color()
+: mRed{}
+, mGreen{}
+, mBlue{}
+, mAlpha{}
+{
+}
+
 Color::Color(double red, double green, double blue, double alpha)
 : mRed{red}
 , mGreen{green}
