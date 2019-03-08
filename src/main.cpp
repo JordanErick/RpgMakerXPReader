@@ -93,10 +93,10 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             auto* color = any.as<Color>();
 
             str += "Color[\n";
-            str += whitespace(indent + 2) + fmt::format("'red' = {}\n", color->red);
-            str += whitespace(indent + 2) + fmt::format("'green' = {}\n", color->green);
-            str += whitespace(indent + 2) + fmt::format("'blue' = {}\n", color->blue);
-            str += whitespace(indent + 2) + fmt::format("'alpha' = {}\n", color->alpha);
+            str += whitespace(indent + 2) + fmt::format("'red' = {}\n", color->red());
+            str += whitespace(indent + 2) + fmt::format("'green' = {}\n", color->green());
+            str += whitespace(indent + 2) + fmt::format("'blue' = {}\n", color->blue());
+            str += whitespace(indent + 2) + fmt::format("'alpha' = {}\n", color->alpha());
             str += whitespace(indent) + "]\n";
 
         } break;
