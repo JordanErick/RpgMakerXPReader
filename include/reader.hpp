@@ -6,7 +6,7 @@
 class Reader
 {
 public:
-    Reader(std::vector<u8> bytes);
+    Reader(const std::vector<u8>& bytes);
     Any parse();
 
 private:

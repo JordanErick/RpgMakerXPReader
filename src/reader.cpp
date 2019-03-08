@@ -1,6 +1,6 @@
 #include "reader.hpp"
 
-Reader::Reader(std::vector<u8> bytes)
+Reader::Reader(const std::vector<u8>& bytes)
 : mIndex{0}
 , mBytes{bytes}
 , mSymbolCache{}
@@ -11,86 +11,65 @@ Reader::Reader(std::vector<u8> bytes)
 
 Any Reader::parse()
 {
-    auto type = read<u8>();
-
-    Any any{};
-
-    switch (type)
-    {
-        case '[': // Array
-            any = Any{ Type::Array, new Array{readArray()} };
-            mObjectCache.push_back(any);
-            break;
-        case 'l': // Bignum
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'F': // Bool
-            any = Any{ Type::Bool, new bool{false} };
-            break;
-        case 'T': // Bool
-            any = Any{ Type::Bool, new bool{true} };
-            break;
-        case 'c': // Class
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'd': // Data
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'e': // Extended
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'i': // Fixnum
-            any = Any{ Type::Int, new int{readFixnum()} };
-            break;
-        case 'f': // Float
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case '{': // Hash
-            any = Any{ Type::Hash, new Hash(readHash()) };
-            mObjectCache.push_back(any);
-            break;
-        case '}': // HashDef
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'I': // Ivar
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case '@': // Link
-            any = Any{ Type::String, new std::string{readLink()} };
-            mObjectCache.push_back(any);
-            break;
-        case 'm': // Module
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'M': // ModuleOld
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case '0': // Nil
-            any = Any{ Type::Null, nullptr };
-            break;
-        case 'o': // Object
-            any = Any{ Type::Object, new Object(readObject()) };
-            mObjectCache.push_back(any);
-            break;
-        case '/': // Regexp
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case '"': // String
-            any = Any{ Type::String, new std::string{readString()} };
-            mObjectCache.push_back(any);
-            break;
-        case 'S': // Struct
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case ':': // Symbol
-            any = Any{ Type::String, new std::string{readSymbol()} };
-            break;
-        case ';': // Symlink
-            any = Any{ Type::String, new std::string{readSymlink()} };
-            mObjectCache.push_back(any);
-            break;
-        case 'C': // Uclass
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        case 'u': // UserDef
-            any = readUserDef();
-            mObjectCache.push_back(any);
-            break;
-        case 'U': // UserMarshal
-            throw std::runtime_error(fmt::format("Not implemented: {}", type));
-        default: // Unknown
-            throw std::runtime_error(fmt::format("Unknown type: {}", type));
-    }
-
-    return any;
+	auto type = read<u8>();
+	
+	switch (type)
+	{
+		case '0': // Nil
+			return Any{};
+		case 'F': // Bool
+			return Any{ Type::Bool, new bool{false} };
+		case 'T': // Bool
+			return Any{ Type::Bool, new bool{true} };
+		case 'i': // Fixnum
+			return Any{ Type::Int, new int{readFixnum()} };
+		case '"': // String
+		{
+			auto any = Any{ Type::String, new std::string{readString()} };
+			mObjectCache.push_back(any);
+			return any;
+		}
+		case ':': // Symbol
+			return Any{ Type::String, new std::string{readSymbol()} };
+		case ';': // Symlink
+		{
+			auto any = Any{ Type::String, new std::string{readSymlink()} };
+			mObjectCache.push_back(any);
+			return any;
+		}	
+		case 'u': // UserDef
+		{
+			auto any = readUserDef();
+			mObjectCache.push_back(any);
+			return any;
+		}
+		case '[': // Array
+		{
+			auto any = Any{ Type::Array, new Array{readArray()} };
+			mObjectCache.push_back(any);
+			return any;
+		}
+		case '{': // Hash
+		{
+			auto any = Any{ Type::Hash, new Hash(readHash()) };
+			mObjectCache.push_back(any);
+			return any;
+		}
+		case 'o': // Object
+		{
+			auto any = Any{ Type::Object, new Object(readObject()) };
+			mObjectCache.push_back(any);
+			return any;
+		}
+		case '@': // Link
+		{
+			auto any = Any{ Type::String, new std::string{readLink()} };
+			mObjectCache.push_back(any);
+			return any;
+		}
+		default:
+			throw std::runtime_error(fmt::format("Unsupported type specifier: {}", type));
+	}
 }
 
 i32 Reader::readFixnum()
