@@ -1,6 +1,9 @@
 #pragma once
 
+#include "color.hpp"
 #include "utility.hpp"
+#include "table.hpp"
+#include "tone.hpp"
 #include "type.hpp"
 
 class Any
@@ -32,41 +35,3 @@ private:
 
 using Array = std::vector<Any>;
 using Hash = std::map<Any, Any>;
-
-struct Table
-{
-    i32 dimensions;
-    i32 xSize;
-    i32 ySize;
-    i32 zSize;
-    i32 totalSize;
-    std::vector<i16> data;
-
-    bool operator==(const Table& other) const;
-    bool operator!=(const Table& other) const;
-    bool operator<(const Table& other) const;
-};
-
-struct Tone
-{
-    double red;
-    double green;
-    double blue;
-    double grey;
-
-    bool operator==(const Tone& other) const;
-    bool operator!=(const Tone& other) const;
-    bool operator<(const Tone& other) const;
-};
-
-struct Color
-{
-    double red;
-    double green;
-    double blue;
-    double alpha;
-
-    bool operator==(const Color& other) const;
-    bool operator!=(const Color& other) const;
-    bool operator<(const Color& other) const;
-};
