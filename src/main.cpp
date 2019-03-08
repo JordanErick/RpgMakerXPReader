@@ -127,10 +127,10 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             auto* tone = any.as<Tone>();
 
             str += "Tone[\n";
-            str += whitespace(indent + 2) + fmt::format("'red' = {}\n", tone->red);
-            str += whitespace(indent + 2) + fmt::format("'green' = {}\n", tone->green);
-            str += whitespace(indent + 2) + fmt::format("'blue' = {}\n", tone->blue);
-            str += whitespace(indent + 2) + fmt::format("'grey' = {}\n", tone->grey);
+            str += whitespace(indent + 2) + fmt::format("'red' = {}\n", tone->red());
+            str += whitespace(indent + 2) + fmt::format("'green' = {}\n", tone->green());
+            str += whitespace(indent + 2) + fmt::format("'blue' = {}\n", tone->blue());
+            str += whitespace(indent + 2) + fmt::format("'grey' = {}\n", tone->grey());
             str += whitespace(indent) + "]\n";
 
         } break;

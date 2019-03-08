@@ -1,11 +1,39 @@
 #include "tone.hpp"
 
+Tone::Tone(double red, double green, double blue, double grey)
+: mRed{red}
+, mGreen{green}
+, mBlue{blue}
+, mGrey{grey}
+{
+}
+
+double Tone::red() const
+{
+	return mRed;
+}
+
+double Tone::green() const
+{
+	return mGreen;
+}
+
+double Tone::blue() const
+{
+	return mBlue;
+}
+
+double Tone::grey() const
+{
+	return mGrey;
+}
+
 bool Tone::operator==(const Tone& other) const
 {
-	return red == other.red
-		&& green == other.green
-		&& blue == other.blue
-		&& grey == other.grey;
+	return mRed == other.mRed
+		&& mGreen == other.mGreen
+		&& mBlue == other.mBlue
+		&& mGrey == other.mGrey;
 }
 
 bool Tone::operator!=(const Tone& other) const
@@ -15,5 +43,5 @@ bool Tone::operator!=(const Tone& other) const
 
 bool Tone::operator<(const Tone& other) const
 {
-	return red + green + blue + grey < other.red + other.green + other.blue + other.grey;
+	return mRed + mGreen + mBlue + mGrey < other.mRed + other.mGreen + other.mBlue + other.mGrey;
 }
