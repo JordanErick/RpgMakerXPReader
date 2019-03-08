@@ -1,5 +1,6 @@
 #include "reader.hpp"
 #include "items.hpp"
+#include "map.hpp"
 #include "system.hpp"
 
 std::string whitespace(int count)
@@ -139,6 +140,21 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
     }
 }
 
+void itemsTest(const Any* any)
+{
+    Items items{ any };
+}
+
+void mapTest(const Any* any)
+{
+    Map map{ any };
+}
+
+void systemTest(const Any* any)
+{
+    System system{ any };
+}
+
 int marshalToText(int argc, char** argv)
 {
     if (argc != 3)
@@ -156,6 +172,8 @@ int marshalToText(int argc, char** argv)
         Reader reader{ bytes };
         auto any = reader.parse();
 
+        itemsTest(&any); // test
+
         std::string output;
         writeToString(output, any);
 
@@ -165,7 +183,10 @@ int marshalToText(int argc, char** argv)
     return 0;
 }
 
+
+
 int main(int argc, char** argv)
 {
     return marshalToText(argc, argv);
+    return 0;
 }

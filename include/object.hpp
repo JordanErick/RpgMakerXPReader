@@ -5,9 +5,10 @@
 class Object
 {
 public:
-	Object(std::string className);
+	Object(const std::string& className);
 
 	Any& operator[](const std::string& key);
+	const Any& operator[](const std::string& key) const;
 
 	std::map<std::string, Any>::iterator begin();
 	std::map<std::string, Any>::const_iterator begin() const;
@@ -19,11 +20,8 @@ public:
 	bool operator!=(const Object& other) const;
 	bool operator<(const Object& other) const;
 
-	size_t size();
-
-	std::string className();
-	std::map<std::string, Any> variables();
-
+	size_t size() const;
+	const std::string& className() const;
 private:
 	std::string mClassName;
 	std::map<std::string, Any> mVariables;
