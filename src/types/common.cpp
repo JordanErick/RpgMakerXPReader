@@ -1,4 +1,4 @@
-#include "common.hpp"
+#include "types/common.hpp"
 
 AudioFile::AudioFile()
 : mName{ "" }

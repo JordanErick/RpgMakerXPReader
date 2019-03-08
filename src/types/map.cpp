@@ -1,4 +1,4 @@
-#include "..\include\map.hpp"
+#include "types/map.hpp"
 
 Map::Map(const Any* any)
 : mAutoplayBGM{}
