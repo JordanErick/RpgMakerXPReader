@@ -22,65 +22,46 @@ Any Reader::parse()
 		case 'T': // Bool
 			return Any{ Type::Bool, new bool{true} };
 		case 'i': // Fixnum
-			return Any{ Type::Int, new int{readFixnum()} };
+			return readFixnum();
 		case '"': // String
-		{
-			auto any = Any{ Type::String, new std::string{readString()} };
-			mObjectCache.push_back(any);
-			return any;
-		}
+			return readString();
 		case ':': // Symbol
-			return Any{ Type::String, new std::string{readSymbol()} };
+			return readSymbol();
 		case ';': // Symlink
-		{
-			auto any = Any{ Type::String, new std::string{readSymlink()} };
-			mObjectCache.push_back(any);
-			return any;
-		}	
+			return readSymlink();
 		case 'u': // UserDef
-		{
-			auto any = readUserDef();
-			mObjectCache.push_back(any);
-			return any;
-		}
+			return readUserDef();
 		case '[': // Array
-		{
-			auto any = Any{ Type::Array, new Array{readArray()} };
-			mObjectCache.push_back(any);
-			return any;
-		}
+			return readArray();
 		case '{': // Hash
-		{
-			auto any = Any{ Type::Hash, new Hash(readHash()) };
-			mObjectCache.push_back(any);
-			return any;
-		}
+			return readHash();
 		case 'o': // Object
-		{
-			auto any = Any{ Type::Object, new Object(readObject()) };
-			mObjectCache.push_back(any);
-			return any;
-		}
+			return readObject();
 		case '@': // Link
-		{
-			auto any = Any{ Type::String, new std::string{readLink()} };
-			mObjectCache.push_back(any);
-			return any;
-		}
+			return readLink();
 		default:
 			throw std::runtime_error(fmt::format("Unsupported type specifier: {}", type));
 	}
 }
 
-i32 Reader::readFixnum()
+void Reader::readVersion()
+{
+	auto major = read<u8>();
+	auto minor = read<u8>();
+
+	if (major != 4 || minor != 8)
+		throw std::runtime_error(fmt::format("Invalid marshal version: {}.{]", major, minor));
+}
+
+Any Reader::readFixnum()
 {
     auto byte = read<i8>();
 
-    if (byte == 0) return 0;
+	if (byte == 0) return { Type::Int, new i32{0} };
 
     if (byte > 0)
     {
-        if (4 < byte && byte < 128) return byte - 5;
+		if (4 < byte && byte < 128) return { Type::Int, new i32{ byte - 5 } };
 
         if (byte > static_cast<i8>(sizeof(i32)))
             throw std::runtime_error("Too big int");
@@ -89,11 +70,11 @@ i32 Reader::readFixnum()
         for (i32 i = 0; i < byte; i++)
             value |= static_cast<i32>(read<u8>()) << (8 * i);
 
-        return value;
+		return { Type::Int, new i32{ value } };
     }
     else
     {
-        if (-129 < byte && byte < -4) return byte + 5;
+        if (-129 < byte && byte < -4) return { Type::Int, new i32{ byte + 5 } };
 
         byte = -byte;
 
@@ -107,70 +88,151 @@ i32 Reader::readFixnum()
             value |= static_cast<i32>(read<u8>()) << (8 * i);
         }
 
-        return value;
+		return { Type::Int, new i32{ value } };
     }
 }
 
-std::string Reader::readString()
+Any Reader::readString()
 {
-    i32 length = readFixnum();
+	i32 length = *readFixnum().as<i32>();
 
-    std::string value;
-    value.reserve(length);
+	auto* value = new std::string{};
+    value->reserve(length);
 
     for (i32 i = 0; i < length; i++)
-        value += read<i8>();
+        *value += read<i8>();
 
-    return value;
+	auto any = Any{ Type::String, value };
+	mObjectCache.push_back(any);
+
+	return any;
 }
 
-std::string Reader::readSymbol()
+Any Reader::readSymbol()
 {
-    i32 length = readFixnum();
+	i32 length = *readFixnum().as<i32>();
 
-    std::string value;
-    value.reserve(length);
+	auto* value = new std::string{};
+    value->reserve(length);
 
     for (i32 i = 0; i < length; i++)
-        value += read<i8>();
+        *value += read<i8>();
 
-    if (std::find(mSymbolCache.begin(), mSymbolCache.end(), value) == mSymbolCache.end())
-        mSymbolCache.push_back(value);
+    if (std::find(mSymbolCache.begin(), mSymbolCache.end(), *value) == mSymbolCache.end())
+        mSymbolCache.push_back(*value);
 
-    return value;
+	return Any{ Type::String, value };
 }
 
-void Reader::readVersion()
+Any Reader::readSymlink()
 {
-    auto major = read<u8>();
-    auto minor = read<u8>();
-
-    if (major != 4 || minor != 8)
-        throw std::runtime_error(fmt::format("Invalid marshal version: {}.{]", major, minor));
+	i32 cacheIndex = *readFixnum().as<i32>();
+	return { Type::String, new std::string{mSymbolCache[cacheIndex]} };
 }
 
-Array Reader::readArray()
+Any Reader::readUserDef()
 {
-    i32 length = readFixnum();
+	auto name = parse();
 
-    Array array;
+	if (name.type() != Type::String)
+		throw std::runtime_error(fmt::format("Invalid name type: {}", name.type()));
+
+	i32 size = *readFixnum().as<i32>();
+
+	if (*name.as<std::string>() == "Color")
+	{
+		auto red = read<double>();
+		auto green = read<double>();
+		auto blue = read<double>();
+		auto alpha = read<double>();
+
+		auto any = Any{ Type::Color, new Color{red, green, blue, alpha} };
+		mObjectCache.push_back(any);
+
+		return any;
+	}
+	else if (*name.as<std::string>() == "Table")
+	{
+		i32 count = (size - 5 * sizeof(i32)) / sizeof(i16);
+
+		auto dimensions = read<i32>();
+		auto xSize = read<i32>();
+		auto ySize = read<i32>();
+		auto zSize = read<i32>();
+		auto totalSize = read<i32>();
+
+		std::vector<i16> data;
+		data.reserve(count);
+
+		for (i32 i = 0; i < count; i++)
+			data.push_back(read<i16>());
+
+		auto any = Any{ Type::Table, new Table{dimensions, xSize, ySize, zSize, totalSize, std::move(data)} };
+		mObjectCache.push_back(any);
+
+		return any;
+	}
+	else if (*name.as<std::string>() == "Tone")
+	{
+		auto red = read<double>();
+		auto green = read<double>();
+		auto blue = read<double>();
+		auto grey = read<double>();
+
+		auto any = Any{ Type::Tone, new Tone{red, green, blue, grey} };
+		mObjectCache.push_back(any);
+
+		return any;
+	}
+	else
+		throw std::runtime_error(fmt::format("Unsupported user defined class: {}", *name.as<std::string>()));
+}
+
+Any Reader::readArray()
+{
+	i32 length = *readFixnum().as<i32>();
+
+	auto* array = new Array{};
 
     for (i32 i = 0; i < length; i++)
-        array.push_back(parse());
+        array->push_back(parse());
 
-    return array;
+	auto any = Any{ Type::Array, array };
+	mObjectCache.push_back(any);
+
+	return any;
 }
 
-Object Reader::readObject()
+Any Reader::readHash()
 {
+	auto* hash = new Hash{};
+
+	i32 entriesCount = *readFixnum().as<i32>();
+
+	for (i32 i = 0; i < entriesCount; i++)
+	{
+		auto key = parse();
+		auto value = parse();
+		(*hash)[key] = value;
+	}
+
+	auto any = Any{ Type::Hash, hash };
+	mObjectCache.push_back(any);
+
+	return any;
+}
+
+Any Reader::readObject()
+{
+	// cache
     auto className = parse();
 
     if (className.type() != Type::String)
         throw std::runtime_error(fmt::format("Invalid class name type: {}", className.type()));
 
-    Object object{ *className.as<std::string>() };
+	auto* object = new Object{ *className.as<std::string>() };
 
-    auto variablesCount = readFixnum();
+	auto variablesCount = *readFixnum().as<i32>();
 
     for (i32 i = 0; i < variablesCount; i++)
     {
@@ -180,86 +242,19 @@ Object Reader::readObject()
             throw std::runtime_error(fmt::format("Invalid key type: {}", key.type()));
 
         auto value = parse();
-        object[*key.as<std::string>()] = value;
+        (*object)[*key.as<std::string>()] = value;
     }
 
-    return object;
+	auto any = Any{ Type::Object, object };
+	mObjectCache.push_back(any);
+
+    return any;
 }
 
-Hash Reader::readHash()
+Any Reader::readLink()
 {
-    Hash hash;
-
-    i32 entriesCount = readFixnum();
-
-    for (i32 i = 0; i < entriesCount; i++)
-    {
-        auto key = parse();
-        auto value = parse();
-        hash[key] = value;
-    }
-
-    return hash;
-}
-
-std::string Reader::readSymlink()
-{
-    i32 cacheIndex = readFixnum();
-    return mSymbolCache[cacheIndex];
-}
-
-Any Reader::readUserDef()
-{
-    auto name = parse();
-
-    if (name.type() != Type::String)
-        throw std::runtime_error(fmt::format("Invalid name type: {}", name.type()));
-
-    i32 size = readFixnum();
-
-    if (*name.as<std::string>() == "Color")
-    {
-        auto red = read<double>();
-        auto green = read<double>();
-        auto blue = read<double>();
-        auto alpha = read<double>();
-
-        return Any{ Type::Color, new Color{red, green, blue, alpha} };
-    }
-    else if (*name.as<std::string>() == "Table")
-    {
-        i32 count = (size - 5 * sizeof(i32)) / sizeof(i16);
-
-        auto dimensions = read<i32>();
-        auto xSize = read<i32>();
-        auto ySize = read<i32>();
-        auto zSize = read<i32>();
-        auto totalSize = read<i32>();
-
-        std::vector<i16> data;
-        data.reserve(count);
-
-        for (i32 i = 0; i < count; i++)
-            data.push_back(read<i16>());
-
-        return Any{ Type::Table, new Table{dimensions, xSize, ySize, zSize, totalSize, std::move(data)} };
-    }
-    else if (*name.as<std::string>() == "Tone")
-    {
-        auto red = read<double>();
-        auto green = read<double>();
-        auto blue = read<double>();
-        auto grey = read<double>();
-
-        return Any{ Type::Tone, new Tone{red, green, blue, grey} };
-    }
-    else
-        throw std::runtime_error(fmt::format("Unsupported user defined class: {}", *name.as<std::string>()));
-}
-
-std::string Reader::readLink()
-{
-    // TODO: Fix me
-    i32 cacheIndex = readFixnum();
-    return fmt::format("LINK_{}_{}", cacheIndex, mObjectCache[cacheIndex].type());
+    // TODO: Implement this and make sure we have valid object cache
+	i32 cacheIndex = *readFixnum().as<i32>();
+	auto* tmp = new std::string{ fmt::format("LINK_{}_{}", cacheIndex, mObjectCache[cacheIndex].type()) };
+	return Any{ Type::String, tmp };
 }

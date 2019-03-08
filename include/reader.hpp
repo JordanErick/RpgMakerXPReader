@@ -11,16 +11,15 @@ public:
 
 private:
     void readVersion();
-    Array readArray();
-    i32 readFixnum();
-    Hash readHash();
-    Object readObject();
-    std::string readString();
-    std::string readSymbol();
-    std::string readSymlink();
+    Any readFixnum();
+    Any readString();
+    Any readSymbol();
+    Any readSymlink();
     Any readUserDef();
-
-    std::string readLink();
+    Any readArray();
+    Any readHash();
+    Any readObject();
+    Any readLink();
 
     template<typename T>
     T read()
