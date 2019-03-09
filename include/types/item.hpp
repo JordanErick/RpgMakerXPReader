@@ -62,7 +62,6 @@ public:
     bool               operator==(const Item& other) const;
     bool               operator!=(const Item& other) const;
     bool               operator<(const Item& other) const;
-
 private:
     i32                mUserAnimationID;
     i32                mTargetAnimationID;
@@ -89,4 +88,10 @@ private:
     i32                mRecoverSPRate;
     Scope              mScope;
     i32                mVariance;
+
+    friend void        to_json(json& j, const Item& o);
+    friend void        from_json(const json& j, Item& o);
 };
+
+void to_json(json& j, const Item& o);
+void from_json(const json& j, Item& o);

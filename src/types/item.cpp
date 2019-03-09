@@ -216,3 +216,63 @@ bool Item::operator<(const Item& other) const
 {
     return mID < other.mID;
 }
+
+void to_json(json& j, const Item& o)
+{
+    j = json{
+        {"user_animation_id", o.mUserAnimationID},
+        {"target_animation_id", o.mTargetAnimationID},
+        {"common_event_id", o.mCommonEventID},
+        {"consumable", o.mConsumable},
+        {"description", o.mDescription},
+        {"element_set", o.mElementSet},
+        {"hit", o.mHit},
+        {"icon_name", o.mIconName},
+        {"id", o.mID},
+        {"magical_defense", o.mMagicalDefense},
+        {"menu_se", o.mMenuSE},
+        {"minus_state_set", o.mMinusStateSet},
+        {"name", o.mName},
+        {"occasion", o.mOccasion},
+        {"parameter_points", o.mParameterPoints},
+        {"parameter_type", o.mParameterType},
+        {"physical_defense", o.mPhysicalDefense},
+        {"plus_state_set", o.mPlusStateSet},
+        {"price", o.mPrice},
+        {"recover_hp", o.mRecoverHP},
+        {"recover_hp_rate", o.mRecoverHPRate},
+        {"recover_sp", o.mRecoverSP},
+        {"recover_sp_rate", o.mRecoverSPRate},
+        {"scope", o.mScope},
+        {"variance", o.mVariance},
+    };
+}
+
+void from_json(const json& j, Item& o)
+{
+    j.at("user_animation_id").get_to(o.mUserAnimationID);
+    j.at("target_animation_id").get_to(o.mTargetAnimationID);
+    j.at("common_event_id").get_to(o.mCommonEventID);
+    j.at("consumable").get_to(o.mConsumable);
+    j.at("description").get_to(o.mDescription);
+    j.at("element_set").get_to(o.mElementSet);
+    j.at("hit").get_to(o.mHit);
+    j.at("icon_name").get_to(o.mIconName);
+    j.at("id").get_to(o.mID);
+    j.at("magical_defense").get_to(o.mMagicalDefense);
+    j.at("menu_se").get_to(o.mMenuSE);
+    j.at("minus_state_set").get_to(o.mMinusStateSet);
+    j.at("name").get_to(o.mName);
+    j.at("occasion").get_to(o.mOccasion);
+    j.at("parameter_points").get_to(o.mParameterPoints);
+    j.at("parameter_type").get_to(o.mParameterType);
+    j.at("physical_defense").get_to(o.mPhysicalDefense);
+    j.at("plus_state_set").get_to(o.mPlusStateSet);
+    j.at("price").get_to(o.mPrice);
+    j.at("recover_hp").get_to(o.mRecoverHP);
+    j.at("recover_hp_rate").get_to(o.mRecoverHPRate);
+    j.at("recover_sp").get_to(o.mRecoverSP);
+    j.at("recover_sp_rate").get_to(o.mRecoverSPRate);
+    j.at("scope").get_to(o.mScope);
+    j.at("variance").get_to(o.mVariance);
+}
