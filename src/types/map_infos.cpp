@@ -1,5 +1,10 @@
 #include "types\map_infos.hpp"
 
+MapInfos::MapInfos()
+: mMapInfos{}
+{
+}
+
 MapInfos::MapInfos(const Hash& hash)
 : mMapInfos{}
 {

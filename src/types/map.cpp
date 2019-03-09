@@ -1,5 +1,18 @@
 #include "types/map.hpp"
 
+Map::Map()
+: mAutoplayBGM{}
+, mAutoplayBGS{}
+, mBGM{}
+, mBGS{}
+, mData{}
+, mEncounterStep{}
+, mHeight{}
+, mTilesetID{}
+, mWidth{}
+{
+}
+
 Map::Map(const Object& object)
 : mAutoplayBGM{}
 , mAutoplayBGS{}

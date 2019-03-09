@@ -3,6 +3,7 @@
 class MapInfos
 {
 public:
+                                           MapInfos();
                                            MapInfos(const Hash& hash);
 
     MapInfo&                               operator[](i32 key);

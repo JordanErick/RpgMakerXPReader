@@ -1,5 +1,10 @@
 #include "types/items.hpp"
 
+Items::Items()
+: mItems{}
+{
+}
+
 Items::Items(const Array& array)
 : mItems{}
 {

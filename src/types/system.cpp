@@ -1,5 +1,43 @@
 #include "types/system.hpp"
 
+System::System()
+: mActorCollapseSE{}
+, mBattleBGM{}
+, mBattleEndME{}
+, mBattleStartSE{}
+, mBattleTransition{}
+, mBattlebackName{}
+, mBattlerHue{}
+, mBattlerName{}
+, mBuzzerSE{}
+, mCancelSE{}
+, mCursorSE{}
+, mDecisionSE{}
+, mEditMapID{}
+, mElements{}
+, mEnemyCollapseSE{}
+, mEquipSE{}
+, mEscapeSE{}
+, mGameoverME{}
+, mGameoverName{}
+, mLoadSE{}
+, mMagicNumber{}
+, mPartyMembers{}
+, mSaveSE{}
+, mShopSE{}
+, mStartMapID{}
+, mStartX{}
+, mStartY{}
+, mSwitches{}
+, mTestTroopID{}
+, mTitleBGM{}
+, mTitleName{}
+, mVariables{}
+, mWindowskinName{}
+, mWords{}
+{
+}
+
 System::System(const Object& object)
 : mActorCollapseSE{}
 , mBattleBGM{}

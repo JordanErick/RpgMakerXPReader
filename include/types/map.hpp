@@ -5,6 +5,7 @@
 class Map
 {
 public:
+                     Map();
                      Map(const Object& object);
 
     bool             autoplayBGM() const;

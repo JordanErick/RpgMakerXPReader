@@ -5,6 +5,7 @@
 class System
 {
 public:
+                                       System();
                                        System(const Object& object);
 
     const AudioFile&                   actorCollapseSE() const;

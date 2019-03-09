@@ -33,7 +33,7 @@ public:
         AllDeadAllies,
         User,
     };
-
+                       Item();
                        Item(const Object& object);
 
     i32                userAnimationID() const;

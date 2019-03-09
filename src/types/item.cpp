@@ -1,5 +1,31 @@
 #include "types/item.hpp"
 
+Item::Item()
+: mUserAnimationID{}
+, mTargetAnimationID{}
+, mCommonEventID{}
+, mConsumable{}
+, mDescription{}
+, mHit{}
+, mIconName{}
+, mID{}
+, mMagicalDefense{}
+, mMenuSE{}
+, mName{}
+, mOccasion{}
+, mParameterPoints{}
+, mParameterType{}
+, mPhysicalDefense{}
+, mPrice{}
+, mRecoverHP{}
+, mRecoverHPRate{}
+, mRecoverSP{}
+, mRecoverSPRate{}
+, mScope{}
+, mVariance{}
+{
+}
+
 Item::Item(const Object& object)
 : mUserAnimationID{}
 , mTargetAnimationID{}
