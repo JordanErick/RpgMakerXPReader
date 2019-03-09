@@ -22,4 +22,10 @@ public:
     size_t                            size() const;
 private:
     std::vector<Item>                 mItems;
+
+    friend void                       to_json(json& j, const Items& o);
+    friend void                       from_json(const json& j, Items& o);
 };
+
+void to_json(json& j, const Items& o);
+void from_json(const json& j, Items& o);

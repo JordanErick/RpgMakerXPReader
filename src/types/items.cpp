@@ -72,3 +72,13 @@ size_t Items::size() const
 {
     return mItems.size();
 }
+
+void to_json(json& j, const Items& o)
+{
+    j = json{ {"items", o.mItems} };
+}
+
+void from_json(const json& j, Items& o)
+{
+    j.at("items").get_to(o.mItems);
+}
