@@ -1,5 +1,5 @@
 #include "reader.hpp"
-#include "types/items.hpp"
+#include "types/map_infos.hpp"
 
 std::string whitespace(int count)
 {
@@ -155,7 +155,7 @@ int marshalToText(int argc, char** argv)
         Reader reader{ bytes };
         auto any = reader.parse();
 
-		Items items{ *any.as<Array>() }; // test
+        MapInfos mapInfos{ *any.as<Hash>() }; // test
 
         std::string output;
         writeToString(output, any);
