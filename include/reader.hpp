@@ -6,20 +6,20 @@
 class Reader
 {
 public:
-    Reader(const std::vector<u8>& bytes);
-    Any parse();
+                             Reader(const std::vector<u8>& bytes);
+    Any                      parse();
 
 private:
-    void readVersion();
-    Any readFixnum();
-    Any readString();
-    Any readSymbol();
-    Any readSymlink();
-    Any readUserDef();
-    Any readArray();
-    Any readHash();
-    Any readObject();
-    Any readLink();
+    void                     readVersion();
+    Any                      readFixnum();
+    Any                      readString();
+    Any                      readSymbol();
+    Any                      readSymlink();
+    Any                      readUserDef();
+    Any                      readArray();
+    Any                      readHash();
+    Any                      readObject();
+    Any                      readLink();
 
     template<typename T>
     T read()
@@ -34,8 +34,8 @@ private:
     }
 
 private:
-    size_t mIndex;
-    std::vector<u8> mBytes;
+    size_t                   mIndex;
+    std::vector<u8>          mBytes;
     std::vector<std::string> mSymbolCache;
-    std::vector<Any> mObjectCache;
+    std::vector<Any>         mObjectCache;
 };
