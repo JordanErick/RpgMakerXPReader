@@ -1,5 +1,8 @@
 #pragma once
 
+#include <json/json.hpp>
+using json = nlohmann::json;
+
 #include "any.hpp"
 #include "object.hpp"
 
@@ -17,4 +20,10 @@ private:
     std::string        mName;
     float              mPitch;
     float              mVolume;
+
+    friend void        to_json(json& j, const AudioFile& o);
+    friend void        from_json(const json& j, AudioFile& o);
 };
+
+void to_json(json& j, const AudioFile& o);
+void from_json(const json& j, AudioFile& o);
