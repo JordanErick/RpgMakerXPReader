@@ -17,7 +17,6 @@ public:
     i32              height() const;
     i32              tilesetID() const;
     i32              width() const;
-
 private:
     bool             mAutoplayBGM;
     bool             mAutoplayBGS;
@@ -28,4 +27,10 @@ private:
     i32              mHeight;
     i32              mTilesetID;
     i32              mWidth;
+
+    friend void      to_json(json& j, const Map& o);
+    friend void      from_json(const json& j, Map& o);
 };
+
+void to_json(json& j, const Map& o);
+void from_json(const json& j, Map& o);
