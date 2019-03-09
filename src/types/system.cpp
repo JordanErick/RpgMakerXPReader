@@ -59,7 +59,7 @@ System::System(const Object& object)
 
     mEnemyCollapseSE.load(*object["@enemy_collapse_se"].as<Object>());
     mEquipSE.load(*object["@equip_se"].as<Object>());
-	mEscapeSE.load(*object["@escape_se"].as<Object>());
+    mEscapeSE.load(*object["@escape_se"].as<Object>());
     mGameoverME.load(*object["@gameover_me"].as<Object>());
     mGameoverName = *object["@gameover_name"].as<std::string>();
     mLoadSE.load(*object["@load_se"].as<Object>());

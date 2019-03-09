@@ -93,100 +93,100 @@ const std::string& Item::description() const
 
 i32 Item::hit() const
 {
-	return mHit;
+    return mHit;
 }
 
 const std::string& Item::iconName() const
 {
-	return mIconName;
+    return mIconName;
 }
 
 i32 Item::ID() const
 {
-	return mID;
+    return mID;
 }
 
 i32 Item::magicalDefense() const
 {
-	return mMagicalDefense;
+    return mMagicalDefense;
 }
 
 const AudioFile& Item::menuSE() const
 {
-	return mMenuSE;
+    return mMenuSE;
 }
 
 const std::string& Item::name() const
 {
-	return mName;
+    return mName;
 }
 
 Item::Occasion Item::occasion() const
 {
-	return mOccasion;
+    return mOccasion;
 }
 
 i32 Item::parameterPoints() const
 {
-	return mParameterPoints;
+    return mParameterPoints;
 }
 
 Item::Parameter Item::parameterType() const
 {
-	return mParameterType;
+    return mParameterType;
 }
 
 i32 Item::physicalDefense() const
 {
-	return mPhysicalDefense;
+    return mPhysicalDefense;
 }
 
 i32 Item::price() const
 {
-	return mPrice;
+    return mPrice;
 }
 
 i32 Item::recoverHP() const
 {
-	return mRecoverHP;
+    return mRecoverHP;
 }
 
 i32 Item::recoverHPRate() const
 {
-	return mRecoverHPRate;
+    return mRecoverHPRate;
 }
 
 i32 Item::recoverSP() const
 {
-	return mRecoverSP;
+    return mRecoverSP;
 }
 
 i32 Item::recoverSPRate() const
 {
-	return mRecoverSPRate;
+    return mRecoverSPRate;
 }
 
 Item::Scope Item::scope() const
 {
-	return mScope;
+    return mScope;
 }
 
 i32 Item::variance() const
 {
-	return mVariance;
+    return mVariance;
 }
 
 bool Item::operator==(const Item& other) const
 {
-	return mID == other.mID;
+    return mID == other.mID;
 }
 
 bool Item::operator!=(const Item& other) const
 {
-	return !operator==(other);
+    return !operator==(other);
 }
 
 bool Item::operator<(const Item& other) const
 {
-	return mID < other.mID;
+    return mID < other.mID;
 }

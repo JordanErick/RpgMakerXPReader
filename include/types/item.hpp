@@ -34,7 +34,7 @@ public:
         User,
     };
 
-    Item(const Object& object);
+                       Item(const Object& object);
 
     i32                userAnimationID() const;
     i32                targetAnimationID() const;

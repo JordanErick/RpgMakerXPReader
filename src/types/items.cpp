@@ -25,7 +25,7 @@ Item& Items::operator[](size_t index)
 
 const Item& Items::operator[](size_t index) const
 {
-	return mItems.at(index);
+    return mItems.at(index);
 }
 
 std::vector<Item>::iterator Items::begin()

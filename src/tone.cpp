@@ -18,38 +18,38 @@ Tone::Tone(double red, double green, double blue, double grey)
 
 double Tone::red() const
 {
-	return mRed;
+    return mRed;
 }
 
 double Tone::green() const
 {
-	return mGreen;
+    return mGreen;
 }
 
 double Tone::blue() const
 {
-	return mBlue;
+    return mBlue;
 }
 
 double Tone::grey() const
 {
-	return mGrey;
+    return mGrey;
 }
 
 bool Tone::operator==(const Tone& other) const
 {
-	return mRed == other.mRed
-		&& mGreen == other.mGreen
-		&& mBlue == other.mBlue
-		&& mGrey == other.mGrey;
+    return mRed == other.mRed
+        && mGreen == other.mGreen
+        && mBlue == other.mBlue
+        && mGrey == other.mGrey;
 }
 
 bool Tone::operator!=(const Tone& other) const
 {
-	return !operator==(other);
+    return !operator==(other);
 }
 
 bool Tone::operator<(const Tone& other) const
 {
-	return mRed + mGreen + mBlue + mGrey < other.mRed + other.mGreen + other.mBlue + other.mGrey;
+    return mRed + mGreen + mBlue + mGrey < other.mRed + other.mGreen + other.mBlue + other.mGrey;
 }
