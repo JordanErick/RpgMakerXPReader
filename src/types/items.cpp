@@ -23,6 +23,11 @@ Item& Items::operator[](size_t index)
     return mItems[index];
 }
 
+const Item& Items::operator[](size_t index) const
+{
+	return mItems.at(index);
+}
+
 std::vector<Item>::iterator Items::begin()
 {
     return mItems.begin();
@@ -58,7 +63,7 @@ bool Items::operator<(const Items & other) const
     return mItems < other.mItems;
 }
 
-size_t Items::size()
+size_t Items::size() const
 {
     return mItems.size();
 }

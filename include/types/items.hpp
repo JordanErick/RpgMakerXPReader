@@ -6,6 +6,7 @@ public:
                                       Items(const Array& array);
 
     Item&                             operator[](size_t index);
+	const Item&                       operator[](size_t index) const;
 
     std::vector<Item>::iterator       begin();
     std::vector<Item>::const_iterator begin() const;
@@ -17,7 +18,7 @@ public:
     bool                              operator!=(const Items& other) const;
     bool                              operator<(const Items& other) const;
 
-    size_t                            size();
+	size_t                            size() const;
 
 private:
     std::vector<Item>                 mItems;
