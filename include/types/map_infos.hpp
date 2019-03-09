@@ -22,4 +22,10 @@ public:
 
 private:
     std::map<i32, MapInfo> mMapInfos;
+
+    friend void        to_json(json& j, const MapInfos& o);
+    friend void        from_json(const json& j, MapInfos& o);
 };
+
+void to_json(json& j, const MapInfos& o);
+void from_json(const json& j, MapInfos& o);

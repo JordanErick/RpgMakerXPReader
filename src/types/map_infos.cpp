@@ -70,3 +70,13 @@ size_t MapInfos::size() const
 {
     return mMapInfos.size();
 }
+
+void to_json(json& j, const MapInfos& o)
+{
+    j = json{ {"map_infos", o.mMapInfos} };
+}
+
+void from_json(const json& j, MapInfos& o)
+{
+    j.at("map_infos").get_to(o.mMapInfos);
+}
