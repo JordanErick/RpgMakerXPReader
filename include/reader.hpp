@@ -27,7 +27,7 @@ private:
         if (mIndex + sizeof(T) > mBytes.size())
             throw std::runtime_error("End of buffer");
 
-        T value = *((T*)(mBytes.data() + mIndex));
+        T value = *reinterpret_cast<T*>(mBytes.data() + mIndex);
         mIndex += sizeof(T);
 
         return value;
