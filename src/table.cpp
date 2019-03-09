@@ -69,3 +69,25 @@ bool Table::operator<(const Table& other) const
 {
     return mData < other.mData;
 }
+
+void to_json(json& j, const Table& o)
+{
+    j = json{
+        {"dimensions", o.mDimensions},
+        {"x_size", o.mXSize},
+        {"y_size", o.mYSize},
+        {"z_size", o.mZSize},
+        {"total_size", o.mTotalSize},
+        {"data", o.mData},
+    };
+}
+
+void from_json(const json& j, Table& o)
+{
+    j.at("dimensions").get_to(o.mDimensions);
+    j.at("x_size").get_to(o.mXSize);
+    j.at("y_size").get_to(o.mYSize);
+    j.at("z_size").get_to(o.mZSize);
+    j.at("total_size").get_to(o.mTotalSize);
+    j.at("data").get_to(o.mData);
+}

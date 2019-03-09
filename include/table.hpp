@@ -1,5 +1,8 @@
 #pragma once
 
+#include "json/json.hpp"
+using json = nlohmann::json;
+
 #include "utility.hpp"
 
 class Table
@@ -18,7 +21,6 @@ public:
     bool                    operator==(const Table& other) const;
     bool                    operator!=(const Table& other) const;
     bool                    operator<(const Table& other) const;
-
 private:
     i32                     mDimensions;
     i32                     mXSize;
@@ -26,4 +28,10 @@ private:
     i32                     mZSize;
     i32                     mTotalSize;
     std::vector<i16>        mData;
+
+    friend void             to_json(json& j, const Table& o);
+    friend void             from_json(const json& j, Table& o);
 };
+
+void to_json(json& j, const Table& o);
+void from_json(const json& j, Table& o);
