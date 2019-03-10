@@ -41,7 +41,6 @@ public:
     const std::string&                 titleName() const;
     const std::vector<std::string>&    variables() const;
     const std::string&                 windowskinName() const;
-
 private:
     AudioFile                          mActorCollapseSE;
     AudioFile                          mBattleBGM;
@@ -77,4 +76,10 @@ private:
     std::vector<std::string>           mVariables;
     std::string                        mWindowskinName;
     std::map<std::string, std::string> mWords;
+
+    friend void                        to_json(json& j, const System& o);
+    friend void                        from_json(const json& j, System& o);
 };
+
+void to_json(json& j, const System& o);
+void from_json(const json& j, System& o);
