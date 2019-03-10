@@ -23,7 +23,7 @@ std::vector<u8> loadFileIntoMemory(const std::string& filename)
     return bytes;
 }
 
-void writeStringToFile(const std::string & filename, const std::string & str)
+void writeStringToFile(const std::string& filename, const std::string& str)
 {
     FILE* file = fopen(filename.c_str(), "w");
 
