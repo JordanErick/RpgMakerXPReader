@@ -3,8 +3,8 @@
 class States
 {
 public:
-    States();
-    States(const Array& array);
+                                       States();
+                                       States(const Array& array);
 
     State&                             operator[](size_t index);
     const State&                       operator[](size_t index) const;
