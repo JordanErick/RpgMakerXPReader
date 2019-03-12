@@ -81,4 +81,3 @@ void from_json(const json& j, States& o)
 {
     JSON_GET(States);
 }
-
