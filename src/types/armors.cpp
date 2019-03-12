@@ -1,4 +1,4 @@
-#include "..\..\include\types\armors.hpp"
+#include "types\armors.hpp"
 
 Armors::Armors()
 : mArmors{}
@@ -75,10 +75,10 @@ size_t Armors::size() const
 
 void to_json(json& j, const Armors& o)
 {
-    j = json{ {"armors", o.mArmors} };
+    j = json{ JSON_SET(Armors) };
 }
 
 void from_json(const json& j, Armors& o)
 {
-    j.at("armors").get_to(o.mArmors);
+    JSON_GET(Armors);
 }

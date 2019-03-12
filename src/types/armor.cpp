@@ -164,41 +164,41 @@ bool Armor::operator<(const Armor& other) const
 void to_json(json& j, const Armor& o)
 {
     j = json{
-        {"agility_bonus", o.mAgilityBonus},
-        {"auto_state_id", o.mAutoStateID},
-        {"description", o.mDescription},
-        {"dexterity_bonus", o.mDexterityBonus},
-        {"evasion_correction", o.mEvasionCorrection},
-        {"guard_element_set", o.mGuardElementSet},
-        {"guard_state_set", o.mGuardStateSet},
-        {"icon_name", o.mIconName},
-        {"id", o.mID},
-        {"intelligence_bonus", o.mIntelligenceBonus},
-        {"kind", o.mKind},
-        {"magic_defense", o.mMagicDefense},
-        {"name", o.mName},
-        {"physical_defense", o.mPhysicalDefense},
-        {"price", o.mPrice},
-        {"strength_bonus", o.mStrengthBonus},
+        JSON_SET(AgilityBonus),
+        JSON_SET(AutoStateID),
+        JSON_SET(Description),
+        JSON_SET(DexterityBonus),
+        JSON_SET(EvasionCorrection),
+        JSON_SET(GuardElementSet),
+        JSON_SET(GuardStateSet),
+        JSON_SET(IconName),
+        JSON_SET(ID),
+        JSON_SET(IntelligenceBonus),
+        JSON_SET(Kind),
+        JSON_SET(MagicDefense),
+        JSON_SET(Name),
+        JSON_SET(PhysicalDefense),
+        JSON_SET(Price),
+        JSON_SET(StrengthBonus)
     };
 }
 
 void from_json(const json& j, Armor& o)
 {
-    j.at("agility_bonus").get_to(o.mAgilityBonus);
-    j.at("auto_state_id").get_to(o.mAutoStateID);
-    j.at("description").get_to(o.mDescription);
-    j.at("dexterity_bonus").get_to(o.mDexterityBonus);
-    j.at("evasion_correction").get_to(o.mEvasionCorrection);
-    j.at("guard_element_set").get_to(o.mGuardElementSet);
-    j.at("guard_state_set").get_to(o.mGuardStateSet);
-    j.at("icon_name").get_to(o.mIconName);
-    j.at("id").get_to(o.mID);
-    j.at("intelligence_bonus").get_to(o.mIntelligenceBonus);
-    j.at("kind").get_to(o.mKind);
-    j.at("magic_defense").get_to(o.mMagicDefense);
-    j.at("name").get_to(o.mName);
-    j.at("physical_defense").get_to(o.mPhysicalDefense);
-    j.at("price").get_to(o.mPrice);
-    j.at("strength_bonus").get_to(o.mStrengthBonus);
+    JSON_GET(AgilityBonus);
+    JSON_GET(AutoStateID);
+    JSON_GET(Description);
+    JSON_GET(DexterityBonus);
+    JSON_GET(EvasionCorrection);
+    JSON_GET(GuardElementSet);
+    JSON_GET(GuardStateSet);
+    JSON_GET(IconName);
+    JSON_GET(ID);
+    JSON_GET(IntelligenceBonus);
+    JSON_GET(Kind);
+    JSON_GET(MagicDefense);
+    JSON_GET(Name);
+    JSON_GET(PhysicalDefense);
+    JSON_GET(Price);
+    JSON_GET(StrengthBonus);
 }

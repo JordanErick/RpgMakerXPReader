@@ -302,77 +302,77 @@ const std::string& System::windowskinName() const
 void to_json(json& j, const System& o)
 {
     j = json{
-        {"actor_collapse_se", o.mActorCollapseSE},
-        {"battle_bgm", o.mBattleBGM},
-        {"battle_end_me", o.mBattleEndME},
-        {"battle_start_se", o.mBattleStartSE},
-        {"battle_transition", o.mBattleTransition},
-        {"battleback_name", o.mBattlebackName},
-        {"battle_hue", o.mBattlerHue},
-        {"battler_bame", o.mBattlerName},
-        {"buzzer_se", o.mBuzzerSE},
-        {"cancel_se", o.mCancelSE},
-        {"cursor_se", o.mCursorSE},
-        {"decision_se", o.mDecisionSE},
-        {"edit_map_id", o.mEditMapID},
-        {"elements", o.mElements},
-        {"enemy_collapse_se", o.mEnemyCollapseSE},
-        {"equip_se", o.mEquipSE},
-        {"escape_se", o.mEscapeSE},
-        {"gameover_me", o.mGameoverME},
-        {"gameover_name", o.mGameoverName},
-        {"load_se", o.mLoadSE},
-        {"magic_number", o.mMagicNumber},
-        {"party_members", o.mPartyMembers},
-        {"save_se", o.mSaveSE},
-        {"shop_se", o.mShopSE},
-        {"start_map_id", o.mStartMapID},
-        {"start_x", o.mStartX},
-        {"start_y", o.mStartY},
-        {"switches", o.mSwitches},
-        {"test_troop_id", o.mTestTroopID},
-        {"title_bgm", o.mTitleBGM},
-        {"title_name", o.mTitleName},
-        {"variables", o.mVariables},
-        {"windowskin_name", o.mWindowskinName},
-        {"words", o.mWords},
+        JSON_SET(ActorCollapseSE),
+        JSON_SET(BattleBGM),
+        JSON_SET(BattleEndME),
+        JSON_SET(BattleStartSE),
+        JSON_SET(BattleTransition),
+        JSON_SET(BattlebackName),
+        JSON_SET(BattlerHue),
+        JSON_SET(BattlerName),
+        JSON_SET(BuzzerSE),
+        JSON_SET(CancelSE),
+        JSON_SET(CursorSE),
+        JSON_SET(DecisionSE),
+        JSON_SET(EditMapID),
+        JSON_SET(Elements),
+        JSON_SET(EnemyCollapseSE),
+        JSON_SET(EquipSE),
+        JSON_SET(EscapeSE),
+        JSON_SET(GameoverME),
+        JSON_SET(GameoverName),
+        JSON_SET(LoadSE),
+        JSON_SET(MagicNumber),
+        JSON_SET(PartyMembers),
+        JSON_SET(SaveSE),
+        JSON_SET(ShopSE),
+        JSON_SET(StartMapID),
+        JSON_SET(StartX),
+        JSON_SET(StartY),
+        JSON_SET(Switches),
+        JSON_SET(TestTroopID),
+        JSON_SET(TitleBGM),
+        JSON_SET(TitleName),
+        JSON_SET(Variables),
+        JSON_SET(WindowskinName),
+        JSON_SET(Words)
     };
 }
 
 void from_json(const json& j, System& o)
 {
-    j.at("actor_collapse_se").get_to(o.mActorCollapseSE);
-    j.at("battle_bgm").get_to(o.mBattleBGM);
-    j.at("battle_end_me").get_to(o.mBattleEndME);
-    j.at("battle_start_se").get_to(o.mBattleStartSE);
-    j.at("battle_transition").get_to(o.mBattleTransition);
-    j.at("battleback_name").get_to(o.mBattlebackName);
-    j.at("battle_hue").get_to(o.mBattlerHue);
-    j.at("battler_bame").get_to(o.mBattlerName);
-    j.at("buzzer_se").get_to(o.mBuzzerSE);
-    j.at("cancel_se").get_to(o.mCancelSE);
-    j.at("cursor_se").get_to(o.mCursorSE);
-    j.at("decision_se").get_to(o.mDecisionSE);
-    j.at("edit_map_id").get_to(o.mEditMapID);
-    j.at("elements").get_to(o.mElements);
-    j.at("enemy_collapse_se").get_to(o.mEnemyCollapseSE);
-    j.at("equip_se").get_to(o.mEquipSE);
-    j.at("escape_se").get_to(o.mEscapeSE);
-    j.at("gameover_me").get_to(o.mGameoverME);
-    j.at("gameover_name").get_to(o.mGameoverName);
-    j.at("load_se").get_to(o.mLoadSE);
-    j.at("magic_number").get_to(o.mMagicNumber);
-    j.at("party_members").get_to(o.mPartyMembers);
-    j.at("save_se").get_to(o.mSaveSE);
-    j.at("shop_se").get_to(o.mShopSE);
-    j.at("start_map_id").get_to(o.mStartMapID);
-    j.at("start_x").get_to(o.mStartX);
-    j.at("start_y").get_to(o.mStartY);
-    j.at("switches").get_to(o.mSwitches);
-    j.at("test_troop_id").get_to(o.mTestTroopID);
-    j.at("title_bgm").get_to(o.mTitleBGM);
-    j.at("title_name").get_to(o.mTitleName);
-    j.at("variables").get_to(o.mVariables);
-    j.at("windowskin_name").get_to(o.mWindowskinName);
-    j.at("words").get_to(o.mWords);
+    JSON_GET(ActorCollapseSE);
+    JSON_GET(BattleBGM);
+    JSON_GET(BattleEndME);
+    JSON_GET(BattleStartSE);
+    JSON_GET(BattleTransition);
+    JSON_GET(BattlebackName);
+    JSON_GET(BattlerHue);
+    JSON_GET(BattlerName);
+    JSON_GET(BuzzerSE);
+    JSON_GET(CancelSE);
+    JSON_GET(CursorSE);
+    JSON_GET(DecisionSE);
+    JSON_GET(EditMapID);
+    JSON_GET(Elements);
+    JSON_GET(EnemyCollapseSE);
+    JSON_GET(EquipSE);
+    JSON_GET(EscapeSE);
+    JSON_GET(GameoverME);
+    JSON_GET(GameoverName);
+    JSON_GET(LoadSE);
+    JSON_GET(MagicNumber);
+    JSON_GET(PartyMembers);
+    JSON_GET(SaveSE);
+    JSON_GET(ShopSE);
+    JSON_GET(StartMapID);
+    JSON_GET(StartX);
+    JSON_GET(StartY);
+    JSON_GET(Switches);
+    JSON_GET(TestTroopID);
+    JSON_GET(TitleBGM);
+    JSON_GET(TitleName);
+    JSON_GET(Variables);
+    JSON_GET(WindowskinName);
+    JSON_GET(Words);
 }

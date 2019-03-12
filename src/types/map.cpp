@@ -86,27 +86,27 @@ i32 Map::width() const
 void to_json(json& j, const Map& o)
 {
     j = json{
-        {"autoplay_bgm", o.mAutoplayBGM},
-        {"autoplay_bgs", o.mAutoplayBGS},
-        {"bgm", o.mBGM},
-        {"bgs", o.mBGS},
-        {"data", o.mData},
-        {"encounter_step", o.mEncounterStep},
-        {"height", o.mHeight},
-        {"tileset_id", o.mTilesetID},
-        {"width", o.mWidth},
+        JSON_SET(AutoplayBGM),
+        JSON_SET(AutoplayBGS),
+        JSON_SET(BGM),
+        JSON_SET(BGS),
+        JSON_SET(Data),
+        JSON_SET(EncounterStep),
+        JSON_SET(Height),
+        JSON_SET(TilesetID),
+        JSON_SET(Width)
     };
 }
 
 void from_json(const json& j, Map& o)
 {
-    j.at("autoplay_bgm").get_to(o.mAutoplayBGM);
-    j.at("autoplay_bgs").get_to(o.mAutoplayBGS);
-    j.at("bgm").get_to(o.mBGM);
-    j.at("bgs").get_to(o.mBGS);
-    j.at("data").get_to(o.mData);
-    j.at("encounter_step").get_to(o.mEncounterStep);
-    j.at("height").get_to(o.mHeight);
-    j.at("tileset_id").get_to(o.mTilesetID);
-    j.at("width").get_to(o.mWidth);
+    JSON_GET(AutoplayBGM);
+    JSON_GET(AutoplayBGS);
+    JSON_GET(BGM);
+    JSON_GET(BGS);
+    JSON_GET(Data);
+    JSON_GET(EncounterStep);
+    JSON_GET(Height);
+    JSON_GET(TilesetID);
+    JSON_GET(Width);
 }

@@ -77,21 +77,21 @@ bool MapInfo::operator<(const MapInfo& other) const
 void to_json(json& j, const MapInfo& o)
 {
     j = json{
-        {"expanded",  o.mExpanded},
-        {"name",      o.mName},
-        {"order",     o.mOrder},
-        {"parent_id", o.mParentID},
-        {"scroll_x",  o.mScrollX},
-        {"scroll_y",  o.mScrollY},
+        JSON_SET(Expanded),
+        JSON_SET(Name),
+        JSON_SET(Order),
+        JSON_SET(ParentID),
+        JSON_SET(ScrollX),
+        JSON_SET(ScrollY)
     };
 }
 
 void from_json(const json& j, MapInfo& o)
 {
-    j.at("expanded").get_to(o.mExpanded);
-    j.at("name").get_to(o.mName);
-    j.at("order").get_to(o.mOrder);
-    j.at("parent_id").get_to(o.mParentID);
-    j.at("scroll_x").get_to(o.mScrollX);
-    j.at("scroll_y").get_to(o.mScrollY);
+    JSON_GET(Expanded);
+    JSON_GET(Name);
+    JSON_GET(Order);
+    JSON_GET(ParentID);
+    JSON_GET(ScrollX);
+    JSON_GET(ScrollY);
 }

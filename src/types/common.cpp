@@ -42,12 +42,16 @@ float AudioFile::volume() const
 
 void to_json(json& j, const AudioFile& o)
 {
-    j = json{ {"name", o.mName}, {"pitch", o.mPitch}, {"volume", o.mVolume} };
+    j = json{
+        JSON_SET(Name),
+        JSON_SET(Pitch),
+        JSON_SET(Volume)
+    };
 }
 
 void from_json(const json& j, AudioFile& o)
 {
-    j.at("name").get_to(o.mName);
-    j.at("pitch").get_to(o.mPitch);
-    j.at("volume").get_to(o.mVolume);
+    JSON_GET(Name);
+    JSON_GET(Pitch);
+    JSON_GET(Volume);
 }
