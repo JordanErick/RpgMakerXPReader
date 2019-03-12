@@ -3,6 +3,9 @@
 #include <json/json.hpp>
 using json = nlohmann::json;
 
+#define JSON_SET(name) {#name, o.m##name}
+#define JSON_GET(name) j.at(#name).get_to(o.m##name)
+
 #include "any.hpp"
 #include "object.hpp"
 
