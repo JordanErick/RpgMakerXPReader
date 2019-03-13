@@ -1,5 +1,17 @@
 #include "reader.hpp"
+#include "types/armors.hpp"
+#include "types/items.hpp"
+#include "types/map.hpp"
 #include "types/map_infos.hpp"
+#include "types/states.hpp"
+#include "types/system.hpp"
+#include "types/weapons.hpp"
+
+#include <chrono>
+#include <experimental/filesystem>
+#include "fmt/ostream.h"
+
+namespace fs = std::experimental::filesystem;
 
 std::string whitespace(int count)
 {
@@ -138,38 +150,152 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
     }
 }
 
-int marshalToText(int argc, char** argv)
+void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
 {
-    if (argc != 3)
+    fmt::print("Converting rxdata to json...\n\n");
+
+    for (const auto& entry : fs::directory_iterator(inputDir))
     {
-        fmt::print("Usage: marshal_to_cpp input_filename output_filename\n");
-        return 1;
+        if (entry.path().extension() == ".rxdata")
+        {
+            auto start = std::chrono::system_clock::now();
+
+            auto bytes = loadFileIntoMemory(entry.path().string());
+            Reader reader{ bytes };
+
+            auto any = reader.parse();
+            auto type = entry.path().stem();
+            json j;
+
+            if (type == "Actors")
+                ;
+            else if (type == "Animations")
+                ;
+            else if (type == "Armors")
+            {
+                j = Armors{ *any.as<Array>() };
+            }
+            else if (type == "Classes")
+                ;
+            else if (type == "CommonEvents")
+                ;
+            else if (type == "Enemies")
+                ;
+            else if (type == "Items")
+            {
+                j = Items{ *any.as<Array>() };
+            }
+            else if (type == "MapInfos")
+            {
+                j = MapInfos{ *any.as<Hash>() };
+            }
+            else if (type.string().rfind("Map") == 0)
+            {
+                j = Map{ *any.as<Object>() };
+            }
+            else if (type == "Scripts")
+                ;
+            else if (type == "Skills")
+                ;
+            else if (type == "States")
+            {
+                j = States{ *any.as<Array>() };
+            }
+            else if (type == "System")
+            {
+                j = System{ *any.as<Object>() };
+            }
+            else if (type == "Tilesets")
+                ;
+            else if (type == "Troops")
+                ;
+            else if (type == "Weapons")
+            {
+                j = Weapons{ *any.as<Array>() };
+            }
+
+            fs::path outputPath = outputDir;
+            outputPath /= entry.path().filename();
+            outputPath.replace_extension("json");
+            writeStringToFile(outputPath.string(), j.dump(4));
+
+            auto end = std::chrono::system_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+            fmt::print("'{}' took {}ms\n", entry.path().filename(), elapsed.count());
+        }
     }
 
-    const std::string inputFilename{ argv[1] };
-    const std::string outputFilename{ argv[2] };
-
-    {
-        auto bytes = loadFileIntoMemory(inputFilename);
-
-        Reader reader{ bytes };
-        auto any = reader.parse();
-
-        MapInfos mapInfos{ *any.as<Hash>() }; // test
-
-        std::string output;
-        writeToString(output, any);
-
-        writeStringToFile(outputFilename, output);
-    }
-  
-    return 0;
+    fmt::print("\n");
 }
 
+void rxdataToTxt(const fs::path& inputDir, const fs::path& outputDir)
+{
+    fmt::print("Converting rxdata to txt...\n\n");
 
+    for (const auto& entry : fs::directory_iterator(inputDir))
+    {
+        if (entry.path().extension() == ".rxdata")
+        {
+            auto start = std::chrono::system_clock::now();
+
+            auto bytes = loadFileIntoMemory(entry.path().string());
+            Reader reader{ bytes };
+
+            auto any = reader.parse();
+            auto type = entry.path().stem();
+
+            std::string output;
+            writeToString(output, any);
+            
+            fs::path outputPath = outputDir;
+            outputPath /= entry.path().filename();
+            outputPath.replace_extension("txt");
+            writeStringToFile(outputPath.string(), output);
+
+            auto end = std::chrono::system_clock::now();
+            auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+
+            fmt::print("'{}' took {}ms\n", entry.path().filename(), elapsed.count());
+        }
+    }
+
+    fmt::print("\n");
+}
 
 int main(int argc, char** argv)
 {
-    return marshalToText(argc, argv);
-    return 0;
+    if (argc != 4)
+    {
+        fmt::print("Usage: rmxp_reader input_dir output_dir json|txt\n");
+        return EXIT_FAILURE;
+    }
+
+    const fs::path inputDir{ argv[1] };
+    const fs::path outputDir{ argv[2] };
+    const std::string format = argv[3];
+
+    if (!fs::is_directory(inputDir))
+    {
+        fmt::print("'{}' is not a directory!\n", inputDir);
+        return EXIT_FAILURE;
+    }
+
+    if (!fs::is_directory(outputDir))
+    {
+        fmt::print("'{}' is not a directory!\n", outputDir);
+        return EXIT_FAILURE;
+    }
+
+    if (format == "json")
+        rxdataToJSON(inputDir, outputDir);
+    else if (format == "txt")
+        rxdataToTxt(inputDir, outputDir);
+    else
+    {
+        fmt::print("Invalid format!\n");
+        return EXIT_FAILURE;
+    }
+
+    return EXIT_SUCCESS;
 }
