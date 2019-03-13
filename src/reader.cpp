@@ -254,6 +254,6 @@ Any Reader::readLink()
 {
     // TODO: Implement this and make sure we have valid object cache
     i32 cacheIndex = *readFixnum().as<i32>();
-    auto* tmp = new std::string{ fmt::format("LINK_{}_{}", cacheIndex, mObjectCache[cacheIndex].type()) };
+    auto* tmp = new std::string{ fmt::format("LINK_{}", cacheIndex) };
     return Any{ Type::String, tmp };
 }
