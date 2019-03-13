@@ -1,8 +1,5 @@
 #pragma once
 
-#include "json/json.hpp"
-using json = nlohmann::json;
-
 #include "utility.hpp"
 
 class Table

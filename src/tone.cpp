@@ -53,3 +53,21 @@ bool Tone::operator<(const Tone& other) const
 {
     return mRed + mGreen + mBlue + mGrey < other.mRed + other.mGreen + other.mBlue + other.mGrey;
 }
+
+void to_json(json& j, const Tone& o)
+{
+    j = json{
+        JSON_SET(Red),
+        JSON_SET(Green),
+        JSON_SET(Blue),
+        JSON_SET(Grey)
+    };
+}
+
+void from_json(const json& j, Tone& o)
+{
+    JSON_GET(Red);
+    JSON_GET(Green);
+    JSON_GET(Blue);
+    JSON_GET(Grey);
+}

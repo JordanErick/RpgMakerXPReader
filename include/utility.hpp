@@ -3,7 +3,13 @@
 #pragma warning(disable: 4996)
 
 #define FMT_HEADER_ONLY
-#include "fmt/format.h"
+#include <fmt/format.h>
+
+#include <json/json.hpp>
+using json = nlohmann::json;
+
+#define JSON_SET(name) {#name, o.m##name}
+#define JSON_GET(name) j.at(#name).get_to(o.m##name)
 
 #include <algorithm>
 #include <conio.h>

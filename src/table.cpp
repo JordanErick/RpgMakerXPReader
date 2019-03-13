@@ -1,4 +1,5 @@
 #include "table.hpp"
+#include "..\include\tone.hpp"
 
 Table::Table()
 : mDimensions{}
@@ -73,21 +74,21 @@ bool Table::operator<(const Table& other) const
 void to_json(json& j, const Table& o)
 {
     j = json{
-        {"dimensions", o.mDimensions},
-        {"x_size", o.mXSize},
-        {"y_size", o.mYSize},
-        {"z_size", o.mZSize},
-        {"total_size", o.mTotalSize},
-        {"data", o.mData},
+        JSON_SET(Dimensions),
+        JSON_SET(XSize),
+        JSON_SET(YSize),
+        JSON_SET(ZSize),
+        JSON_SET(TotalSize),
+        JSON_SET(Data),
     };
 }
 
 void from_json(const json& j, Table& o)
 {
-    j.at("dimensions").get_to(o.mDimensions);
-    j.at("x_size").get_to(o.mXSize);
-    j.at("y_size").get_to(o.mYSize);
-    j.at("z_size").get_to(o.mZSize);
-    j.at("total_size").get_to(o.mTotalSize);
-    j.at("data").get_to(o.mData);
+    JSON_GET(Dimensions);
+    JSON_GET(XSize);
+    JSON_GET(YSize);
+    JSON_GET(ZSize);
+    JSON_GET(TotalSize);
+    JSON_GET(Data);
 }
