@@ -1,7 +1,7 @@
-workspace "MarshalToCpp"
+workspace "rmxp_reader"
   configurations {"Debug", "Release"}
 
-project "MarshalToCpp"
+project "rmxp_reader"
   kind "ConsoleApp"
   language "C++"
   targetdir "bin/%{cfg.buildcfg}"
