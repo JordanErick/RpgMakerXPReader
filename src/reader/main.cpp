@@ -1,11 +1,5 @@
 #include <reader/reader.hpp>
-#include <reader/types/armors.hpp>
-#include <reader/types/items.hpp>
-#include <reader/types/map.hpp>
-#include <reader/types/map_infos.hpp>
-#include <reader/types/states.hpp>
-#include <reader/types/system.hpp>
-#include <reader/types/weapons.hpp>
+#include <reader/types/types.hpp>
 
 #include <chrono>
 #include <experimental/filesystem>
