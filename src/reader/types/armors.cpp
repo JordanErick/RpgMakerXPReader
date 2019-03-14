@@ -1,4 +1,4 @@
-#include "types\armors.hpp"
+#include "reader/types/armors.hpp"
 
 Armors::Armors()
 : mArmors{}

@@ -1,4 +1,4 @@
-#include "types/item.hpp"
+#include "item.hpp"
 
 class Items
 {

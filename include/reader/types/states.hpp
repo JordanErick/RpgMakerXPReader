@@ -1,4 +1,4 @@
-#include "types/state.hpp"
+#include "state.hpp"
 
 class States
 {

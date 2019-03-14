@@ -1,4 +1,4 @@
-#include "types/common.hpp"
+#include "reader/types/common.hpp"
 
 AudioFile::AudioFile()
 : mName{ "" }

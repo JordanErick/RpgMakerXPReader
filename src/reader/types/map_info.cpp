@@ -1,4 +1,4 @@
-#include "types\map_info.hpp"
+#include "reader/types/map_info.hpp"
 
 MapInfo::MapInfo()
 : mExpanded{}

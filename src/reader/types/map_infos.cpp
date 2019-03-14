@@ -1,4 +1,4 @@
-#include "types\map_infos.hpp"
+#include "reader/types/map_infos.hpp"
 
 MapInfos::MapInfos()
 : mMapInfos{}

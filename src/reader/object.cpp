@@ -1,4 +1,4 @@
-#include "object.hpp"
+#include "reader/object.hpp"
 
 Object::Object(const std::string& className)
 : mClassName{ className }

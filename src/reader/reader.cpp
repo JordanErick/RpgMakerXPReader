@@ -1,4 +1,4 @@
-#include "reader.hpp"
+#include "reader/reader.hpp"
 
 Reader::Reader(const std::vector<u8>& bytes)
 : mIndex{0}

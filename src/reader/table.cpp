@@ -1,5 +1,5 @@
-#include "table.hpp"
-#include "..\include\tone.hpp"
+#include "reader/table.hpp"
+#include "reader/tone.hpp"
 
 Table::Table()
 : mDimensions{}

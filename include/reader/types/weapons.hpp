@@ -1,4 +1,4 @@
-#include "types/weapon.hpp"
+#include "weapon.hpp"
 
 class Weapons
 {

@@ -1,4 +1,4 @@
-#include "types\weapon.hpp"
+#include "reader/types/weapon.hpp"
 
 Weapon::Weapon()
 : mAgilityBonus{}

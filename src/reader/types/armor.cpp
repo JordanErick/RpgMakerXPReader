@@ -1,4 +1,4 @@
-#include "types\armor.hpp"
+#include "reader/types/armor.hpp"
 
 Armor::Armor()
 : mAgilityBonus{}

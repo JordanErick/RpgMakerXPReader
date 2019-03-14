@@ -1,4 +1,4 @@
-#include "types\state.hpp"
+#include "reader/types/state.hpp"
 
 State::State()
 : mAgilityPercentage{}

@@ -1,4 +1,4 @@
-#include "type.hpp"
+#include "reader/type.hpp"
 
 std::string toString(const Type& type)
 {

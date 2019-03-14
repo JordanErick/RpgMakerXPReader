@@ -1,4 +1,4 @@
-#include "types/item.hpp"
+#include "reader/types/item.hpp"
 
 Item::Item()
 : mUserAnimationID{}

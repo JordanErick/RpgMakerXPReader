@@ -1,4 +1,4 @@
-#include "types/map.hpp"
+#include "reader/types/map.hpp"
 
 Map::Map()
 : mAutoplayBGM{}

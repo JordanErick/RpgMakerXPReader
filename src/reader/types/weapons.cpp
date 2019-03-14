@@ -1,4 +1,4 @@
-#include "types\weapons.hpp"
+#include "reader/types/weapons.hpp"
 
 Weapons::Weapons()
 : mWeapons{}

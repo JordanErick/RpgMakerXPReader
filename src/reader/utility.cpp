@@ -1,4 +1,4 @@
-#include "utility.hpp"
+#include "reader/utility.hpp"
 
 std::vector<u8> loadFileIntoMemory(const std::string& filename)
 {

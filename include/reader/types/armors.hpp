@@ -1,4 +1,4 @@
-#include "types/armor.hpp"
+#include "armor.hpp"
 
 class Armors
 {

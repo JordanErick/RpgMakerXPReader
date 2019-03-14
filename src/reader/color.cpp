@@ -1,4 +1,4 @@
-#include "color.hpp"
+#include "reader/color.hpp"
 
 Color::Color()
 : mRed{}
