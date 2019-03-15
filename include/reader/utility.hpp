@@ -12,9 +12,6 @@ using json = nlohmann::json;
 #define JSON_GET(name) j.at(#name).get_to(o.m##name)
 
 #include <algorithm>
-#include <conio.h>
-#include <cstdint>
-#include <cstdio>
 #include <map>
 #include <string>
 #include <vector>
