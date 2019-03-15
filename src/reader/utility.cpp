@@ -2,24 +2,22 @@
 
 std::vector<u8> loadFileIntoMemory(const std::string& filename)
 {
-    FILE* file = fopen(filename.c_str(), "rb");
+    std::ifstream file{ filename, std::fstream::binary };
 
     if (!file)
         throw std::runtime_error(fmt::format("Unable to open '{}'", filename));
 
-    fseek(file, 0, SEEK_END);
+    file.seekg(0, std::fstream::end);
 
-    auto bytes = std::vector<u8>(ftell(file));
+    auto bytes = std::vector<u8>(static_cast<size_t>(file.tellg()));
 
-    fseek(file, 0, SEEK_SET);
+    file.seekg(0, std::fstream::beg);
 
-    if (fread(bytes.data(), sizeof(u8), bytes.size(), file) != bytes.size())
-    {
-        fclose(file);
+    file.read(reinterpret_cast<char*>(bytes.data()), bytes.size());
+
+    if(!file)
         throw std::runtime_error(fmt::format("Unable to read data from '{}'", filename));
-    }
 
-    fclose(file);
     return bytes;
 }
 
