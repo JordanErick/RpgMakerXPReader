@@ -1,3 +1,5 @@
+SFML_INSTALL_DIR = "C:/SFML/install"
+
 workspace "rmxp"
   configurations {"Debug", "Release"}
 
@@ -29,8 +31,8 @@ project "engine"
   removefiles "src/reader/main.cpp"
 
   includedirs "include"
-  includedirs "C:/SFML/install/include"
-  libdirs "C:/SFML/install/lib"
+  includedirs (SFML_INSTALL_DIR .. "/" .. "include")
+  libdirs (SFML_INSTALL_DIR .. "/" .. "lib")
 
   filter "configurations:Debug"
     defines "DEBUG"
