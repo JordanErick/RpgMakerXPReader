@@ -218,7 +218,7 @@ int main()
     sf::RenderWindow window{ sf::VideoMode{640, 480}, "Engine" };
 
     sf::Image autotile;
-    if (!autotile.loadFromFile("resources/autotile.png"))
+    if (!autotile.loadFromFile("resources/graphics/autotile.png"))
         throw std::runtime_error("Unable to find resource");
 
     auto expandedAutotile = expandAutotile(autotile);
