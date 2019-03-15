@@ -1,5 +1,5 @@
 #include <reader/reader.hpp>
-#include <reader/types/types.hpp>
+#include <reader/types.hpp>
 
 #include <chrono>
 #include <experimental/filesystem>

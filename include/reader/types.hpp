@@ -1,0 +1,15 @@
+#pragma once
+
+#include "types/armor.hpp"
+#include "types/armors.hpp"
+#include "types/common.hpp"
+#include "types/item.hpp"
+#include "types/items.hpp"
+#include "types/map.hpp"
+#include "types/map_info.hpp"
+#include "types/map_infos.hpp"
+#include "types/state.hpp"
+#include "types/states.hpp"
+#include "types/system.hpp"
+#include "types/weapon.hpp"
+#include "types/weapons.hpp"

@@ -1,7 +1,7 @@
 #define FMT_HEADER_ONLY
 #include <fmt/format.h>
 
-#include <reader/types/types.hpp>
+#include <reader/types.hpp>
 
 #include <SFML/Graphics.hpp>
 
