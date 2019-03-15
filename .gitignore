@@ -1,8 +1,7 @@
 .vs/
 /bin
-/Data
 /obj
-/output
+/resources
 *.sln
 *.vcxproj
 *.filters
