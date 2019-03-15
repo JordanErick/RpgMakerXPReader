@@ -2,7 +2,7 @@
 
 #include "types/armor.hpp"
 #include "types/armors.hpp"
-#include "types/common.hpp"
+#include "types/audio_file.hpp"
 #include "types/item.hpp"
 #include "types/items.hpp"
 #include "types/map.hpp"
