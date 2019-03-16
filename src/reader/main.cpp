@@ -154,7 +154,7 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
         {
             auto start = std::chrono::system_clock::now();
 
-            auto bytes = loadFileIntoMemory(entry.path().string());
+            auto bytes = loadFileIntoVector(entry.path().string());
             Reader reader{ bytes };
 
             auto any = reader.parse();
@@ -233,7 +233,7 @@ void rxdataToTxt(const fs::path& inputDir, const fs::path& outputDir)
         {
             auto start = std::chrono::system_clock::now();
 
-            auto bytes = loadFileIntoMemory(entry.path().string());
+            auto bytes = loadFileIntoVector(entry.path().string());
             Reader reader{ bytes };
 
             auto any = reader.parse();

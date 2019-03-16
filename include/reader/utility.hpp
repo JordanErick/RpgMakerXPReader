@@ -27,5 +27,6 @@ using i16 = int16_t;
 using i32 = int32_t;
 using i64 = int64_t;
 
-std::vector<u8> loadFileIntoMemory(const std::string& filename);
-void writeStringToFile(const std::string& filename, const std::string& str);
+std::vector<u8> loadFileIntoVector(const std::string& filename);
+std::string     loadFileIntoString(const std::string& filename);
+void            writeStringToFile(const std::string& filename, const std::string& str);
