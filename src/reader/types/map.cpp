@@ -1,6 +1,6 @@
 #include "reader/types/map.hpp"
 
-Map::Map()
+rpg::Map::Map()
 : mAutoplayBGM{}
 , mAutoplayBGS{}
 , mBGM{}
@@ -13,7 +13,7 @@ Map::Map()
 {
 }
 
-Map::Map(const Object& object)
+rpg::Map::Map(const Object& object)
 : mAutoplayBGM{}
 , mAutoplayBGS{}
 , mBGM{}
@@ -38,52 +38,52 @@ Map::Map(const Object& object)
     mWidth = *object["@width"].as<i32>();
 }
 
-bool Map::autoplayBGM() const
+bool rpg::Map::autoplayBGM() const
 {
     return mAutoplayBGM;
 }
 
-bool Map::autoplayBGS() const
+bool rpg::Map::autoplayBGS() const
 {
     return mAutoplayBGS;
 }
 
-const AudioFile& Map::BGM() const
+const rpg::AudioFile& rpg::Map::BGM() const
 {
     return mBGM;
 }
 
-const AudioFile& Map::BGS() const
+const rpg::AudioFile& rpg::Map::BGS() const
 {
     return mBGS;
 }
 
-const Table& Map::data() const
+const rpg::Table& rpg::Map::data() const
 {
     return mData;
 }
 
-i32 Map::encounterStep() const
+i32 rpg::Map::encounterStep() const
 {
     return mEncounterStep;
 }
 
-i32 Map::height() const
+i32 rpg::Map::height() const
 {
     return mHeight;
 }
 
-i32 Map::tilesetID() const
+i32 rpg::Map::tilesetID() const
 {
     return mTilesetID;
 }
 
-i32 Map::width() const
+i32 rpg::Map::width() const
 {
     return mWidth;
 }
 
-void to_json(json& j, const Map& o)
+void rpg::to_json(json& j, const Map& o)
 {
     j = json{
         JSON_SET(AutoplayBGM),
@@ -98,7 +98,7 @@ void to_json(json& j, const Map& o)
     };
 }
 
-void from_json(const json& j, Map& o)
+void rpg::from_json(const json& j, Map& o)
 {
     JSON_GET(AutoplayBGM);
     JSON_GET(AutoplayBGS);

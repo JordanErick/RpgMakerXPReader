@@ -1,6 +1,6 @@
 #include "reader/reader.hpp"
 
-Reader::Reader(const std::vector<u8>& bytes)
+rpg::Reader::Reader(const std::vector<u8>& bytes)
 : mIndex{0}
 , mBytes{bytes}
 , mSymbolCache{}
@@ -9,7 +9,7 @@ Reader::Reader(const std::vector<u8>& bytes)
     readVersion();
 }
 
-Any Reader::parse()
+rpg::Any rpg::Reader::parse()
 {
     auto type = read<u8>();
 
@@ -44,7 +44,7 @@ Any Reader::parse()
     }
 }
 
-void Reader::readVersion()
+void rpg::Reader::readVersion()
 {
     auto major = read<u8>();
     auto minor = read<u8>();
@@ -53,7 +53,7 @@ void Reader::readVersion()
         throw std::runtime_error(fmt::format("Invalid marshal version: {}.{]", major, minor));
 }
 
-Any Reader::readFixnum()
+rpg::Any rpg::Reader::readFixnum()
 {
     auto byte = read<i8>();
 
@@ -92,7 +92,7 @@ Any Reader::readFixnum()
     }
 }
 
-Any Reader::readString()
+rpg::Any rpg::Reader::readString()
 {
     i32 length = *readFixnum().as<i32>();
 
@@ -108,7 +108,7 @@ Any Reader::readString()
     return any;
 }
 
-Any Reader::readSymbol()
+rpg::Any rpg::Reader::readSymbol()
 {
     i32 length = *readFixnum().as<i32>();
 
@@ -124,13 +124,13 @@ Any Reader::readSymbol()
     return Any{ Type::String, value };
 }
 
-Any Reader::readSymlink()
+rpg::Any rpg::Reader::readSymlink()
 {
     i32 cacheIndex = *readFixnum().as<i32>();
     return { Type::String, new std::string{mSymbolCache[cacheIndex]} };
 }
 
-Any Reader::readUserDef()
+rpg::Any rpg::Reader::readUserDef()
 {
     auto name = parse();
 
@@ -188,7 +188,7 @@ Any Reader::readUserDef()
         throw std::runtime_error(fmt::format("Unsupported user defined class: {}", *name.as<std::string>()));
 }
 
-Any Reader::readArray()
+rpg::Any rpg::Reader::readArray()
 {
     i32 length = *readFixnum().as<i32>();
 
@@ -203,7 +203,7 @@ Any Reader::readArray()
     return any;
 }
 
-Any Reader::readHash()
+rpg::Any rpg::Reader::readHash()
 {
     auto* hash = new Hash{};
 
@@ -222,7 +222,7 @@ Any Reader::readHash()
     return any;
 }
 
-Any Reader::readObject()
+rpg::Any rpg::Reader::readObject()
 {
     auto className = parse();
 
@@ -250,7 +250,7 @@ Any Reader::readObject()
     return any;
 }
 
-Any Reader::readLink()
+rpg::Any rpg::Reader::readLink()
 {
     // TODO: Implement this and make sure we have valid object cache
     i32 cacheIndex = *readFixnum().as<i32>();

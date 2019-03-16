@@ -1,11 +1,11 @@
 #include "reader/types/weapons.hpp"
 
-Weapons::Weapons()
+rpg::Weapons::Weapons()
 : mWeapons{}
 {
 }
 
-Weapons::Weapons(const Array& array)
+rpg::Weapons::Weapons(const Array& array)
 : mWeapons{}
 {
     // Skip first element which seems to be equal to null all the time
@@ -23,62 +23,62 @@ Weapons::Weapons(const Array& array)
     }
 }
 
-Weapon& Weapons::operator[](size_t index)
+rpg::Weapon& rpg::Weapons::operator[](size_t index)
 {
     return mWeapons[index];
 }
 
-const Weapon& Weapons::operator[](size_t index) const
+const rpg::Weapon& rpg::Weapons::operator[](size_t index) const
 {
     return mWeapons.at(index);
 }
 
-std::vector<Weapon>::iterator Weapons::begin()
+std::vector<rpg::Weapon>::iterator rpg::Weapons::begin()
 {
     return mWeapons.begin();
 }
 
-std::vector<Weapon>::const_iterator Weapons::begin() const
+std::vector<rpg::Weapon>::const_iterator rpg::Weapons::begin() const
 {
     return mWeapons.begin();
 }
 
-std::vector<Weapon>::iterator Weapons::end()
+std::vector<rpg::Weapon>::iterator rpg::Weapons::end()
 {
     return mWeapons.end();
 }
 
-std::vector<Weapon>::const_iterator Weapons::end() const
+std::vector<rpg::Weapon>::const_iterator rpg::Weapons::end() const
 {
     return mWeapons.end();
 }
 
-bool Weapons::operator==(const Weapons& other) const
+bool rpg::Weapons::operator==(const Weapons& other) const
 {
     return mWeapons == other.mWeapons;
 }
 
-bool Weapons::operator!=(const Weapons& other) const
+bool rpg::Weapons::operator!=(const Weapons& other) const
 {
     return !operator==(other);
 }
 
-bool Weapons::operator<(const Weapons& other) const
+bool rpg::Weapons::operator<(const Weapons& other) const
 {
     return mWeapons < other.mWeapons;
 }
 
-size_t Weapons::size() const
+size_t rpg::Weapons::size() const
 {
     return mWeapons.size();
 }
 
-void to_json(json& j, const Weapons& o)
+void rpg::to_json(json& j, const Weapons& o)
 {
     j = json{ JSON_SET(Weapons) };
 }
 
-void from_json(const json& j, Weapons& o)
+void rpg::from_json(const json& j, Weapons& o)
 {
     JSON_GET(Weapons);
 }

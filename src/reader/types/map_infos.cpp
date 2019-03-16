@@ -1,11 +1,11 @@
 #include "reader/types/map_infos.hpp"
 
-MapInfos::MapInfos()
+rpg::MapInfos::MapInfos()
 : mMapInfos{}
 {
 }
 
-MapInfos::MapInfos(const Hash& hash)
+rpg::MapInfos::MapInfos(const Hash& hash)
 : mMapInfos{}
 {
     for (const auto& pair : hash)
@@ -26,62 +26,62 @@ MapInfos::MapInfos(const Hash& hash)
     }
 }
 
-MapInfo& MapInfos::operator[](i32 key)
+rpg::MapInfo& rpg::MapInfos::operator[](i32 key)
 {
     return mMapInfos[key];
 }
 
-const MapInfo& MapInfos::operator[](i32 key) const
+const rpg::MapInfo& rpg::MapInfos::operator[](i32 key) const
 {
     return mMapInfos.at(key);
 }
 
-std::map<i32, MapInfo>::iterator MapInfos::begin()
+std::map<i32, rpg::MapInfo>::iterator rpg::MapInfos::begin()
 {
     return mMapInfos.begin();
 }
 
-std::map<i32, MapInfo>::const_iterator MapInfos::begin() const
+std::map<i32, rpg::MapInfo>::const_iterator rpg::MapInfos::begin() const
 {
     return mMapInfos.begin();
 }
 
-std::map<i32, MapInfo>::iterator MapInfos::end()
+std::map<i32, rpg::MapInfo>::iterator rpg::MapInfos::end()
 {
     return mMapInfos.end();
 }
 
-std::map<i32, MapInfo>::const_iterator MapInfos::end() const
+std::map<i32, rpg::MapInfo>::const_iterator rpg::MapInfos::end() const
 {
     return mMapInfos.end();
 }
 
-bool MapInfos::operator==(const MapInfos& other) const
+bool rpg::MapInfos::operator==(const MapInfos& other) const
 {
     return mMapInfos == other.mMapInfos;
 }
 
-bool MapInfos::operator!=(const MapInfos& other) const
+bool rpg::MapInfos::operator!=(const MapInfos& other) const
 {
     return !operator==(other);
 }
 
-bool MapInfos::operator<(const MapInfos& other) const
+bool rpg::MapInfos::operator<(const MapInfos& other) const
 {
     return mMapInfos < other.mMapInfos;
 }
 
-size_t MapInfos::size() const
+size_t rpg::MapInfos::size() const
 {
     return mMapInfos.size();
 }
 
-void to_json(json& j, const MapInfos& o)
+void rpg::to_json(json& j, const MapInfos& o)
 {
     j = json{ JSON_SET(MapInfos) };
 }
 
-void from_json(const json& j, MapInfos& o)
+void rpg::from_json(const json& j, MapInfos& o)
 {
     JSON_GET(MapInfos);
 }

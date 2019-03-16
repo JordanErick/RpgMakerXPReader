@@ -1,6 +1,6 @@
 #include "reader/types/system.hpp"
 
-System::System()
+rpg::System::System()
 : mActorCollapseSE{}
 , mBattleBGM{}
 , mBattleEndME{}
@@ -38,7 +38,7 @@ System::System()
 {
 }
 
-System::System(const Object& object)
+rpg::System::System(const Object& object)
 : mActorCollapseSE{}
 , mBattleBGM{}
 , mBattleEndME{}
@@ -134,172 +134,172 @@ System::System(const Object& object)
         mWords[e.first.substr(1)] = *e.second.as<std::string>();
 }
 
-const AudioFile& System::actorCollapseSE() const
+const rpg::AudioFile& rpg::System::actorCollapseSE() const
 {
     return mActorCollapseSE;
 }
 
-const AudioFile& System::battleBGM() const
+const rpg::AudioFile& rpg::System::battleBGM() const
 {
     return mBattleBGM;
 }
 
-const AudioFile& System::battleEndME() const
+const rpg::AudioFile& rpg::System::battleEndME() const
 {
     return mBattleEndME;
 }
 
-const AudioFile& System::battleStartSE() const
+const rpg::AudioFile& rpg::System::battleStartSE() const
 {
     return mBattleStartSE;
 }
 
-const std::string& System::battleTransition() const
+const std::string& rpg::System::battleTransition() const
 {
     return mBattleTransition;
 }
 
-const std::string& System::battlebackName() const
+const std::string& rpg::System::battlebackName() const
 {
     return mBattlebackName;
 }
 
-i32 System::battlerHue() const
+i32 rpg::System::battlerHue() const
 {
     return mBattlerHue;
 }
 
-const std::string& System::battlerName() const
+const std::string& rpg::System::battlerName() const
 {
     return mBattlerName;
 }
 
-const AudioFile& System::buzzerSE() const
+const rpg::AudioFile& rpg::System::buzzerSE() const
 {
     return mBuzzerSE;
 }
 
-const AudioFile& System::cancelSE() const
+const rpg::AudioFile& rpg::System::cancelSE() const
 {
     return mCancelSE;
 }
 
-const AudioFile& System::cursorSE() const
+const rpg::AudioFile& rpg::System::cursorSE() const
 {
     return mCursorSE;
 }
 
-const AudioFile& System::decisionSE() const
+const rpg::AudioFile& rpg::System::decisionSE() const
 {
     return mDecisionSE;
 }
 
-i32 System::editMapID() const
+i32 rpg::System::editMapID() const
 {
     return mEditMapID;
 }
 
-const std::vector<std::string>& System::elements() const
+const std::vector<std::string>& rpg::System::elements() const
 {
     return mElements;
 }
 
-const AudioFile& System::enemyCollapseSE() const
+const rpg::AudioFile& rpg::System::enemyCollapseSE() const
 {
     return mEnemyCollapseSE;
 }
 
-const AudioFile& System::equipSE() const
+const rpg::AudioFile& rpg::System::equipSE() const
 {
     return mEquipSE;
 }
 
-const AudioFile& System::escapeSE() const
+const rpg::AudioFile& rpg::System::escapeSE() const
 {
     return mEscapeSE;
 }
 
-const AudioFile& System::gameoverME() const
+const rpg::AudioFile& rpg::System::gameoverME() const
 {
     return mGameoverME;
 }
 
-const std::string& System::gameoverName() const
+const std::string& rpg::System::gameoverName() const
 {
     return mGameoverName;
 }
 
-const AudioFile& System::loadSE() const
+const rpg::AudioFile& rpg::System::loadSE() const
 {
     return mLoadSE;
 }
 
-i32 System::magicNumber() const
+i32 rpg::System::magicNumber() const
 {
     return mMagicNumber;
 }
 
-const std::vector<i32>& System::partyMembers() const
+const std::vector<i32>& rpg::System::partyMembers() const
 {
     return mPartyMembers;
 }
 
-const AudioFile& System::saveSE() const
+const rpg::AudioFile& rpg::System::saveSE() const
 {
     return mSaveSE;
 }
 
-const AudioFile& System::shopSE() const
+const rpg::AudioFile& rpg::System::shopSE() const
 {
     return mShopSE;
 }
 
-i32 System::startMapID() const
+i32 rpg::System::startMapID() const
 {
     return mStartMapID;
 }
 
-i32 System::startX() const
+i32 rpg::System::startX() const
 {
     return mStartX;
 }
 
-i32 System::startY() const
+i32 rpg::System::startY() const
 {
     return mStartY;
 }
 
-const std::vector<std::string>& System::switches() const
+const std::vector<std::string>& rpg::System::switches() const
 {
     return mSwitches;
 }
 
-i32 System::testTroopID() const
+i32 rpg::System::testTroopID() const
 {
     return mTestTroopID;
 }
 
-const AudioFile& System::titleBGM() const
+const rpg::AudioFile& rpg::System::titleBGM() const
 {
     return mTitleBGM;
 }
 
-const std::string& System::titleName() const
+const std::string& rpg::System::titleName() const
 {
     return mTitleName;
 }
 
-const std::vector<std::string>& System::variables() const
+const std::vector<std::string>& rpg::System::variables() const
 {
     return mVariables;
 }
 
-const std::string& System::windowskinName() const
+const std::string& rpg::System::windowskinName() const
 {
     return mWindowskinName;
 }
 
-void to_json(json& j, const System& o)
+void rpg::to_json(json& j, const System& o)
 {
     j = json{
         JSON_SET(ActorCollapseSE),
@@ -339,7 +339,7 @@ void to_json(json& j, const System& o)
     };
 }
 
-void from_json(const json& j, System& o)
+void rpg::from_json(const json& j, System& o)
 {
     JSON_GET(ActorCollapseSE);
     JSON_GET(BattleBGM);

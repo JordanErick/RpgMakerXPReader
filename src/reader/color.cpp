@@ -1,6 +1,6 @@
 #include "reader/color.hpp"
 
-Color::Color()
+rpg::Color::Color()
 : mRed{}
 , mGreen{}
 , mBlue{}
@@ -8,7 +8,7 @@ Color::Color()
 {
 }
 
-Color::Color(double red, double green, double blue, double alpha)
+rpg::Color::Color(double red, double green, double blue, double alpha)
 : mRed{red}
 , mGreen{green}
 , mBlue{blue}
@@ -16,27 +16,27 @@ Color::Color(double red, double green, double blue, double alpha)
 {
 }
 
-double Color::red() const
+double rpg::Color::red() const
 {
     return mRed;
 }
 
-double Color::green() const
+double rpg::Color::green() const
 {
     return mGreen;
 }
 
-double Color::blue() const
+double rpg::Color::blue() const
 {
     return mBlue;
 }
 
-double Color::alpha() const
+double rpg::Color::alpha() const
 {
     return mAlpha;
 }
 
-bool Color::operator==(const Color& other) const
+bool rpg::Color::operator==(const Color& other) const
 {
     return mRed == other.mRed
         && mGreen == other.mGreen
@@ -44,17 +44,17 @@ bool Color::operator==(const Color& other) const
         && mAlpha == other.mAlpha;
 }
 
-bool Color::operator!=(const Color& other) const
+bool rpg::Color::operator!=(const Color& other) const
 {
     return !operator==(other);
 }
 
-bool Color::operator<(const Color& other) const
+bool rpg::Color::operator<(const Color& other) const
 {
     return mRed + mGreen + mBlue + mAlpha < other.mRed + other.mGreen + other.mBlue + other.mAlpha;
 }
 
-void to_json(json& j, const Color& o)
+void rpg::to_json(json& j, const Color& o)
 {
     j = json{
         JSON_SET(Red),
@@ -64,7 +64,7 @@ void to_json(json& j, const Color& o)
     };
 }
 
-void from_json(const json & j, Color & o)
+void rpg::from_json(const json& j, Color& o)
 {
     JSON_GET(Red);
     JSON_GET(Green);

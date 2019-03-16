@@ -1,6 +1,6 @@
 #include "reader/types/state.hpp"
 
-State::State()
+rpg::State::State()
 : mAgilityPercentage{}
 , mAnimationID{}
 , mAttackPercentage{}
@@ -32,7 +32,7 @@ State::State()
 {
 }
 
-State::State(const Object& object)
+rpg::State::State(const Object& object)
 : mAgilityPercentage{}
 , mAnimationID{}
 , mAttackPercentage{}
@@ -107,162 +107,162 @@ State::State(const Object& object)
     mZeroHP = *object["@zero_hp"].as<bool>();
 }
 
-i32 State::agilityPercentage() const
+i32 rpg::State::agilityPercentage() const
 {
     return mAgilityPercentage;
 }
 
-i32 State::animationID() const
+i32 rpg::State::animationID() const
 {
     return mAnimationID;
 }
 
-i32 State::attackPercentage() const
+i32 rpg::State::attackPercentage() const
 {
     return mAttackPercentage;
 }
 
-i32 State::autoReleaseProbability() const
+i32 rpg::State::autoReleaseProbability() const
 {
     return mAutoReleaseProbability;
 }
 
-bool State::battleOnly() const
+bool rpg::State::battleOnly() const
 {
     return mBattleOnly;
 }
 
-bool State::cantEvade() const
+bool rpg::State::cantEvade() const
 {
     return mCantEvade;
 }
 
-bool State::cantGetExperience() const
+bool rpg::State::cantGetExperience() const
 {
     return mCantGetExperience;
 }
 
-i32 State::dexterityPercentage() const
+i32 rpg::State::dexterityPercentage() const
 {
     return mDexterityPercentage;
 }
 
-i32 State::evasionCorrection() const
+i32 rpg::State::evasionCorrection() const
 {
     return mEvasionCorrection;
 }
 
-const std::vector<i32>& State::guardElementSet() const
+const std::vector<i32>& rpg::State::guardElementSet() const
 {
     return mGuardElementSet;
 }
 
-i32 State::hitPercentage() const
+i32 rpg::State::hitPercentage() const
 {
     return mHitPercentage;
 }
 
-i32 State::holdTurn() const
+i32 rpg::State::holdTurn() const
 {
     return mHoldTurn;
 }
 
-i32 State::ID() const
+i32 rpg::State::ID() const
 {
     return mID;
 }
 
-i32 State::intelligencePercentage() const
+i32 rpg::State::intelligencePercentage() const
 {
     return mIntelligencePercentage;
 }
 
-i32 State::maxHPPercentage() const
+i32 rpg::State::maxHPPercentage() const
 {
     return mMaxHPPercentage;
 }
 
-i32 State::maxSPPercentage() const
+i32 rpg::State::maxSPPercentage() const
 {
     return mMaxSPPercentage;
 }
 
-i32 State::magicDefensePercentage() const
+i32 rpg::State::magicDefensePercentage() const
 {
     return mMagicDefensePercentage;
 }
 
-const std::vector<i32>& State::minusStateSet() const
+const std::vector<i32>& rpg::State::minusStateSet() const
 {
     return mMinusStateSet;
 }
 
-const std::string& State::name() const
+const std::string& rpg::State::name() const
 {
     return mName;
 }
 
-bool State::nonresistance() const
+bool rpg::State::nonresistance() const
 {
     return mNonresistance;
 }
 
-i32 State::physicalDefensePercentage() const
+i32 rpg::State::physicalDefensePercentage() const
 {
     return mPhysicalDefensePercentage;
 }
 
-const std::vector<i32>& State::plusStateSet() const
+const std::vector<i32>& rpg::State::plusStateSet() const
 {
     return mPlusStateSet;
 }
 
-i32 State::rating() const
+i32 rpg::State::rating() const
 {
     return mRating;
 }
 
-State::Restriction State::restriction() const
+rpg::State::Restriction rpg::State::restriction() const
 {
     return mRestriction;
 }
 
-i32 State::shockReleaseProbability() const
+i32 rpg::State::shockReleaseProbability() const
 {
     return mShockReleaseProbability;
 }
 
-bool State::slipDamage() const
+bool rpg::State::slipDamage() const
 {
     return mSlipDamage;
 }
 
-i32 State::strengthPercentage() const
+i32 rpg::State::strengthPercentage() const
 {
     return mStrengthPercentage;
 }
 
-bool State::zeroHP() const
+bool rpg::State::zeroHP() const
 {
     return mZeroHP;
 }
 
-bool State::operator==(const State& other) const
+bool rpg::State::operator==(const State& other) const
 {
     return mID == other.mID;
 }
 
-bool State::operator!=(const State& other) const
+bool rpg::State::operator!=(const State& other) const
 {
     return !operator==(other);
 }
 
-bool State::operator<(const State& other) const
+bool rpg::State::operator<(const State& other) const
 {
     return mID < other.mID;
 }
 
-void to_json(json& j, const State& o)
+void rpg::to_json(json& j, const State& o)
 {
     j = json{
         JSON_SET(AgilityPercentage),
@@ -295,7 +295,7 @@ void to_json(json& j, const State& o)
     };
 }
 
-void from_json(const json& j, State& o)
+void rpg::from_json(const json& j, State& o)
 {
     JSON_GET(AgilityPercentage);
     JSON_GET(AttackPercentage);

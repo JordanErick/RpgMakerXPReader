@@ -1,11 +1,11 @@
 #include "reader/types/items.hpp"
 
-Items::Items()
+rpg::Items::Items()
 : mItems{}
 {
 }
 
-Items::Items(const Array& array)
+rpg::Items::Items(const Array& array)
 : mItems{}
 {
     // Skip first element which seems to be equal to null all the time
@@ -23,62 +23,62 @@ Items::Items(const Array& array)
     }
 }
 
-Item& Items::operator[](size_t index)
+rpg::Item& rpg::Items::operator[](size_t index)
 {
     return mItems[index];
 }
 
-const Item& Items::operator[](size_t index) const
+const rpg::Item& rpg::Items::operator[](size_t index) const
 {
     return mItems.at(index);
 }
 
-std::vector<Item>::iterator Items::begin()
+std::vector<rpg::Item>::iterator rpg::Items::begin()
 {
     return mItems.begin();
 }
 
-std::vector<Item>::const_iterator Items::begin() const
+std::vector<rpg::Item>::const_iterator rpg::Items::begin() const
 {
     return mItems.begin();
 }
 
-std::vector<Item>::iterator Items::end()
+std::vector<rpg::Item>::iterator rpg::Items::end()
 {
     return mItems.end();
 }
 
-std::vector<Item>::const_iterator Items::end() const
+std::vector<rpg::Item>::const_iterator rpg::Items::end() const
 {
     return mItems.end();
 }
 
-bool Items::operator==(const Items& other) const
+bool rpg::Items::operator==(const Items& other) const
 {
     return mItems == other.mItems;
 }
 
-bool Items::operator!=(const Items& other) const
+bool rpg::Items::operator!=(const Items& other) const
 {
     return !operator==(other);
 }
 
-bool Items::operator<(const Items & other) const
+bool rpg::Items::operator<(const Items & other) const
 {
     return mItems < other.mItems;
 }
 
-size_t Items::size() const
+size_t rpg::Items::size() const
 {
     return mItems.size();
 }
 
-void to_json(json& j, const Items& o)
+void rpg::to_json(json& j, const Items& o)
 {
     j = json{ JSON_SET(Items) };
 }
 
-void from_json(const json& j, Items& o)
+void rpg::from_json(const json& j, Items& o)
 {
     JSON_GET(Items);
 }

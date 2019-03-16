@@ -1,6 +1,6 @@
 #include "reader/types/weapon.hpp"
 
-Weapon::Weapon()
+rpg::Weapon::Weapon()
 : mAgilityBonus{}
 , mAttackerAnimation{}
 , mTargetAnimation{}
@@ -21,7 +21,7 @@ Weapon::Weapon()
 {
 }
 
-Weapon::Weapon(const Object& object)
+rpg::Weapon::Weapon(const Object& object)
 : mAgilityBonus{}
 , mAttackerAnimation{}
 , mTargetAnimation{}
@@ -74,107 +74,107 @@ Weapon::Weapon(const Object& object)
     mStrengthBonus = *object["@str_plus"].as<i32>();
 }
 
-i32 Weapon::agilityBonus() const
+i32 rpg::Weapon::agilityBonus() const
 {
     return mAgilityBonus;
 }
 
-i32 Weapon::attackerAnimation() const
+i32 rpg::Weapon::attackerAnimation() const
 {
     return mAttackerAnimation;
 }
 
-i32 Weapon::targetAnimation() const
+i32 rpg::Weapon::targetAnimation() const
 {
     return mTargetAnimation;
 }
 
-i32 Weapon::attackPower() const
+i32 rpg::Weapon::attackPower() const
 {
     return mAttackPower;
 }
 
-const std::string& Weapon::description() const
+const std::string& rpg::Weapon::description() const
 {
     return mDescription;
 }
 
-i32 Weapon::dexterityBonus() const
+i32 rpg::Weapon::dexterityBonus() const
 {
     return mDexterityBonus;
 }
 
-const std::vector<i32>& Weapon::elementSet() const
+const std::vector<i32>& rpg::Weapon::elementSet() const
 {
     return mElementSet;
 }
 
-const std::string& Weapon::iconName() const
+const std::string& rpg::Weapon::iconName() const
 {
     return mIconName;
 }
 
-i32 Weapon::ID() const
+i32 rpg::Weapon::ID() const
 {
     return mID;
 }
 
-i32 Weapon::intelligenceBonus() const
+i32 rpg::Weapon::intelligenceBonus() const
 {
     return mIntelligenceBonus;
 }
 
-i32 Weapon::magicDefense() const
+i32 rpg::Weapon::magicDefense() const
 {
     return mMagicDefense;
 }
 
-const std::vector<i32>& Weapon::minusStateSet() const
+const std::vector<i32>& rpg::Weapon::minusStateSet() const
 {
     return mMinusStateSet;
 }
 
-const std::string& Weapon::name() const
+const std::string& rpg::Weapon::name() const
 {
     return mName;
 }
 
-i32 Weapon::physicalDefense() const
+i32 rpg::Weapon::physicalDefense() const
 {
     return mPhysicalDefense;
 }
 
-const std::vector<i32>& Weapon::plusStateSet() const
+const std::vector<i32>& rpg::Weapon::plusStateSet() const
 {
     return mPlusStateSet;
 }
 
-i32 Weapon::price() const
+i32 rpg::Weapon::price() const
 {
     return mPrice;
 }
 
-i32 Weapon::strengthBonus() const
+i32 rpg::Weapon::strengthBonus() const
 {
     return mStrengthBonus;
 }
 
-bool Weapon::operator==(const Weapon& other) const
+bool rpg::Weapon::operator==(const Weapon& other) const
 {
     return mID == other.mID;
 }
 
-bool Weapon::operator!=(const Weapon& other) const
+bool rpg::Weapon::operator!=(const Weapon& other) const
 {
     return !operator==(other);
 }
 
-bool Weapon::operator<(const Weapon& other) const
+bool rpg::Weapon::operator<(const Weapon& other) const
 {
     return mID < other.mID;
 }
 
-void to_json(json& j, const Weapon& o)
+void rpg::to_json(json& j, const Weapon& o)
 {
     j = json{
         JSON_SET(AgilityBonus),
@@ -197,7 +197,7 @@ void to_json(json& j, const Weapon& o)
     };
 }
 
-void from_json(const json& j, Weapon& o)
+void rpg::from_json(const json& j, Weapon& o)
 {
     JSON_GET(AgilityBonus);
     JSON_GET(AttackerAnimation);

@@ -1,6 +1,6 @@
 #include "reader/type.hpp"
 
-std::string toString(const Type& type)
+std::string rpg::toString(const Type& type)
 {
     switch (type)
     {

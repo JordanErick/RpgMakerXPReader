@@ -2,24 +2,28 @@
 
 #include "../object.hpp"
 
-class AudioFile
+namespace rpg
 {
-public:
-                       AudioFile();
-                       AudioFile(const Object& object);
-    void               load(const Object& object);
+    class AudioFile
+    {
+    public:
+                           AudioFile();
+                           AudioFile(const Object& object);
 
-    const std::string& name() const;
-    float              pitch() const;
-    float              volume() const;
-private:
-    std::string        mName;
-    float              mPitch;
-    float              mVolume;
+        void               load(const Object& object);
 
-    friend void        to_json(json& j, const AudioFile& o);
-    friend void        from_json(const json& j, AudioFile& o);
-};
+        const std::string& name() const;
+        float              pitch() const;
+        float              volume() const;
+    private:
+        std::string        mName;
+        float              mPitch;
+        float              mVolume;
 
-void to_json(json& j, const AudioFile& o);
-void from_json(const json& j, AudioFile& o);
+        friend void        to_json(json& j, const AudioFile& o);
+        friend void        from_json(const json& j, AudioFile& o);
+    };
+
+    void to_json(json& j, const AudioFile& o);
+    void from_json(const json& j, AudioFile& o);
+}

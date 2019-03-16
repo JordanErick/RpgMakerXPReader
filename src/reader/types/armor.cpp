@@ -1,6 +1,6 @@
 #include "reader/types/armor.hpp"
 
-Armor::Armor()
+rpg::Armor::Armor()
 : mAgilityBonus{}
 , mAutoStateID{}
 , mDescription{}
@@ -20,7 +20,7 @@ Armor::Armor()
 {
 }
 
-Armor::Armor(const Object& object)
+rpg::Armor::Armor(const Object& object)
 : mAgilityBonus{}
 , mAutoStateID{}
 , mDescription{}
@@ -66,102 +66,102 @@ Armor::Armor(const Object& object)
     mStrengthBonus = *object["@str_plus"].as<i32>();
 }
 
-i32 Armor::agilityBonus() const
+i32 rpg::Armor::agilityBonus() const
 {
     return mAgilityBonus;
 }
 
-i32 Armor::autoStateID() const
+i32 rpg::Armor::autoStateID() const
 {
     return mAutoStateID;
 }
 
-const std::string& Armor::description() const
+const std::string& rpg::Armor::description() const
 {
     return mDescription;
 }
 
-i32 Armor::dexterityBonus() const
+i32 rpg::Armor::dexterityBonus() const
 {
     return mDexterityBonus;
 }
 
-i32 Armor::evasionCorrection() const
+i32 rpg::Armor::evasionCorrection() const
 {
     return mEvasionCorrection;
 }
 
-const std::vector<i32>& Armor::guardElementSet() const
+const std::vector<i32>& rpg::Armor::guardElementSet() const
 {
     return mGuardElementSet;
 }
 
-const std::vector<i32>& Armor::guardStateSet() const
+const std::vector<i32>& rpg::Armor::guardStateSet() const
 {
     return mGuardStateSet;
 }
 
-const std::string & Armor::iconName() const
+const std::string& rpg::Armor::iconName() const
 {
     return mIconName;
 }
 
-i32 Armor::ID() const
+i32 rpg::Armor::ID() const
 {
     return mID;
 }
 
-i32 Armor::intelligenceBonus() const
+i32 rpg::Armor::intelligenceBonus() const
 {
     return mIntelligenceBonus;
 }
 
-Armor::Kind Armor::kind() const
+rpg::Armor::Kind rpg::Armor::kind() const
 {
     return mKind;
 }
 
-i32 Armor::magicDefense() const
+i32 rpg::Armor::magicDefense() const
 {
     return mMagicDefense;
 }
 
-const std::string& Armor::name() const
+const std::string& rpg::Armor::name() const
 {
     return mName;
 }
 
-i32 Armor::physicalDefense() const
+i32 rpg::Armor::physicalDefense() const
 {
     return mPhysicalDefense;
 }
 
-i32 Armor::price() const
+i32 rpg::Armor::price() const
 {
     return mPrice;
 }
 
-i32 Armor::strengthBonus() const
+i32 rpg::Armor::strengthBonus() const
 {
     return mStrengthBonus;
 }
 
-bool Armor::operator==(const Armor& other) const
+bool rpg::Armor::operator==(const Armor& other) const
 {
     return mID == other.mID;
 }
 
-bool Armor::operator!=(const Armor& other) const
+bool rpg::Armor::operator!=(const Armor& other) const
 {
     return !operator==(other);
 }
 
-bool Armor::operator<(const Armor& other) const
+bool rpg::Armor::operator<(const Armor& other) const
 {
     return mID < other.mID;
 }
 
-void to_json(json& j, const Armor& o)
+void rpg::to_json(json& j, const Armor& o)
 {
     j = json{
         JSON_SET(AgilityBonus),
@@ -183,7 +183,7 @@ void to_json(json& j, const Armor& o)
     };
 }
 
-void from_json(const json& j, Armor& o)
+void rpg::from_json(const json& j, Armor& o)
 {
     JSON_GET(AgilityBonus);
     JSON_GET(AutoStateID);

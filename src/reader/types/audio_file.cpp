@@ -1,13 +1,13 @@
 #include "reader/types/audio_file.hpp"
 
-AudioFile::AudioFile()
+rpg::AudioFile::AudioFile()
 : mName{ "" }
 , mPitch{ 100.f }
 , mVolume{ 100.f }
 {
 }
 
-AudioFile::AudioFile(const Object& object)
+rpg::AudioFile::AudioFile(const Object& object)
 : mName{ "" }
 , mPitch{ 100.f }
 , mVolume{ 100.f }
@@ -15,7 +15,7 @@ AudioFile::AudioFile(const Object& object)
     load(object);
 }
 
-void AudioFile::load(const Object& object)
+void rpg::AudioFile::load(const Object& object)
 {
     if (object.className() != "RPG::AudioFile")
         throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
@@ -25,22 +25,22 @@ void AudioFile::load(const Object& object)
     mVolume = static_cast<float>(*object["@volume"].as<i32>());
 }
 
-const std::string& AudioFile::name() const
+const std::string& rpg::AudioFile::name() const
 {
     return mName;
 }
 
-float AudioFile::pitch() const
+float rpg::AudioFile::pitch() const
 {
     return mPitch;
 }
 
-float AudioFile::volume() const
+float rpg::AudioFile::volume() const
 {
     return mVolume;
 }
 
-void to_json(json& j, const AudioFile& o)
+void rpg::to_json(json& j, const AudioFile& o)
 {
     j = json{
         JSON_SET(Name),
@@ -49,7 +49,7 @@ void to_json(json& j, const AudioFile& o)
     };
 }
 
-void from_json(const json& j, AudioFile& o)
+void rpg::from_json(const json& j, AudioFile& o)
 {
     JSON_GET(Name);
     JSON_GET(Pitch);

@@ -1,19 +1,19 @@
 #include "reader/any.hpp"
 #include "reader/object.hpp"
 
-Any::Any()
+rpg::Any::Any()
 : mType{Type::Null}
 , mValue{nullptr}
 {
 }
 
-Any::Any(Type type, void* value)
+rpg::Any::Any(Type type, void* value)
 : mType{type}
 , mValue{value}
 {
 }
 
-Any::Any(const Any& other)
+rpg::Any::Any(const Any& other)
 : mType{other.mType}
 , mValue{nullptr}
 {
@@ -53,7 +53,7 @@ Any::Any(const Any& other)
     };
 }
 
-Any& Any::operator=(const Any& other)
+rpg::Any& rpg::Any::operator=(const Any& other)
 {
     destructor();
 
@@ -98,12 +98,12 @@ Any& Any::operator=(const Any& other)
     return *this;
 }
 
-Any::~Any()
+rpg::Any::~Any()
 {
     destructor();
 }
 
-bool Any::operator==(const Any& other) const
+bool rpg::Any::operator==(const Any& other) const
 {
     if (mType != other.mType) return false;
 
@@ -134,12 +134,12 @@ bool Any::operator==(const Any& other) const
     };
 }
 
-bool Any::operator!=(const Any& other) const
+bool rpg::Any::operator!=(const Any& other) const
 {
     return !operator==(other);
 }
 
-bool Any::operator<(const Any& other) const
+bool rpg::Any::operator<(const Any& other) const
 {
     if (mType != other.mType)
         return mType < other.mType;
@@ -171,17 +171,17 @@ bool Any::operator<(const Any& other) const
     };
 }
 
-Type Any::type() const
+rpg::Type rpg::Any::type() const
 {
     return mType;
 }
 
-void* Any::value() const
+void* rpg::Any::value() const
 {
     return mValue;
 }
 
-void Any::destructor()
+void rpg::Any::destructor()
 {
     switch (mType)
     {

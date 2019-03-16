@@ -1,7 +1,7 @@
 #include "reader/table.hpp"
 #include "reader/tone.hpp"
 
-Table::Table()
+rpg::Table::Table()
 : mDimensions{}
 , mXSize{}
 , mYSize{}
@@ -11,7 +11,7 @@ Table::Table()
 {
 }
 
-Table::Table(i32 dimensions, i32 xSize, i32 ySize, i32 zSize, i32 totalSize, const std::vector<i16>& data)
+rpg::Table::Table(i32 dimensions, i32 xSize, i32 ySize, i32 zSize, i32 totalSize, const std::vector<i16>& data)
 : mDimensions{ dimensions }
 , mXSize{ xSize }
 , mYSize{ ySize }
@@ -21,37 +21,37 @@ Table::Table(i32 dimensions, i32 xSize, i32 ySize, i32 zSize, i32 totalSize, con
 {
 }
 
-i32 Table::dimensions() const
+i32 rpg::Table::dimensions() const
 {
     return mDimensions;
 }
 
-i32 Table::xSize() const
+i32 rpg::Table::xSize() const
 {
     return mXSize;
 }
 
-i32 Table::ySize() const
+i32 rpg::Table::ySize() const
 {
     return mYSize;
 }
 
-i32 Table::zSize() const
+i32 rpg::Table::zSize() const
 {
     return mZSize;
 }
 
-i32 Table::totalSize() const
+i32 rpg::Table::totalSize() const
 {
     return mTotalSize;
 }
 
-const std::vector<i16>& Table::data() const
+const std::vector<i16>& rpg::Table::data() const
 {
     return mData;
 }
 
-bool Table::operator==(const Table& other) const
+bool rpg::Table::operator==(const Table& other) const
 {
     return mDimensions == other.mDimensions
         && mXSize == other.mXSize
@@ -61,17 +61,17 @@ bool Table::operator==(const Table& other) const
         && mData == other.mData;
 }
 
-bool Table::operator!=(const Table& other) const
+bool rpg::Table::operator!=(const Table& other) const
 {
     return !operator==(other);
 }
 
-bool Table::operator<(const Table& other) const
+bool rpg::Table::operator<(const Table& other) const
 {
     return mData < other.mData;
 }
 
-void to_json(json& j, const Table& o)
+void rpg::to_json(json& j, const Table& o)
 {
     j = json{
         JSON_SET(Dimensions),
@@ -83,7 +83,7 @@ void to_json(json& j, const Table& o)
     };
 }
 
-void from_json(const json& j, Table& o)
+void rpg::from_json(const json& j, Table& o)
 {
     JSON_GET(Dimensions);
     JSON_GET(XSize);

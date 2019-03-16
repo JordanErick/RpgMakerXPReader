@@ -1,6 +1,6 @@
 #include "reader/types/map_info.hpp"
 
-MapInfo::MapInfo()
+rpg::MapInfo::MapInfo()
 : mExpanded{}
 , mName{}
 , mOrder{}
@@ -10,7 +10,7 @@ MapInfo::MapInfo()
 {
 }
 
-MapInfo::MapInfo(const Object& object)
+rpg::MapInfo::MapInfo(const Object& object)
 : mExpanded{}
 , mName{}
 , mOrder{}
@@ -29,52 +29,52 @@ MapInfo::MapInfo(const Object& object)
     mScrollY = *object["@scroll_y"].as<i32>();
 }
 
-bool MapInfo::expanded() const
+bool rpg::MapInfo::expanded() const
 {
     return mExpanded;
 }
 
-const std::string& MapInfo::name() const
+const std::string& rpg::MapInfo::name() const
 {
     return mName;
 }
 
-i32 MapInfo::order() const
+i32 rpg::MapInfo::order() const
 {
     return mOrder;
 }
 
-i32 MapInfo::parentID() const
+i32 rpg::MapInfo::parentID() const
 {
     return mParentID;
 }
 
-i32 MapInfo::scrollX() const
+i32 rpg::MapInfo::scrollX() const
 {
     return mScrollX;
 }
 
-i32 MapInfo::scrollY() const
+i32 rpg::MapInfo::scrollY() const
 {
     return mScrollY;
 }
 
-bool MapInfo::operator==(const MapInfo& other) const
+bool rpg::MapInfo::operator==(const MapInfo& other) const
 {
     return mOrder == other.mOrder;
 }
 
-bool MapInfo::operator!=(const MapInfo& other) const
+bool rpg::MapInfo::operator!=(const MapInfo& other) const
 {
     return !operator==(other);
 }
 
-bool MapInfo::operator<(const MapInfo& other) const
+bool rpg::MapInfo::operator<(const MapInfo& other) const
 {
     return mOrder < other.mOrder;
 }
 
-void to_json(json& j, const MapInfo& o)
+void rpg::to_json(json& j, const MapInfo& o)
 {
     j = json{
         JSON_SET(Expanded),
@@ -86,7 +86,7 @@ void to_json(json& j, const MapInfo& o)
     };
 }
 
-void from_json(const json& j, MapInfo& o)
+void rpg::from_json(const json& j, MapInfo& o)
 {
     JSON_GET(Expanded);
     JSON_GET(Name);

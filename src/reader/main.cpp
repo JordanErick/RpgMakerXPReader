@@ -12,13 +12,13 @@ std::string whitespace(int count)
     return std::string(count, ' ');
 }
 
-void writeToString(std::string& str, const Any& any, int indent = 0)
+void writeToString(std::string& str, const rpg::Any& any, int indent = 0)
 {
     switch (any.type())
     {
-        case Type::Array:
+        case rpg::Type::Array:
         {
-            auto* array = any.as<Array>();
+            auto* array = any.as<rpg::Array>();
 
             if (array->empty())
             {
@@ -40,17 +40,17 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         } break;
             
-        case Type::Bool:
+        case rpg::Type::Bool:
             str += fmt::format("{}", *any.as<bool>());
             break;
 
-        case Type::Int:
+        case rpg::Type::Int:
             str += fmt::format("{}", *any.as<i32>());
             break;
 
-        case Type::Hash:
+        case rpg::Type::Hash:
         {
-            auto* hash = any.as<Hash>();
+            auto* hash = any.as<rpg::Hash>();
 
             str += "Hash{\n";
 
@@ -67,13 +67,13 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
             str += whitespace(indent) + "}";
         } break;
 
-        case Type::Null:
+        case rpg::Type::Null:
             str += fmt::format("nil");
             break;
 
-        case Type::Object:
+        case rpg::Type::Object:
         {
-            auto* object = any.as<Object>();
+            auto* object = any.as<rpg::Object>();
 
             str += fmt::format("{}(\n", object->className());
 
@@ -88,13 +88,13 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         } break;
 
-        case Type::String:
+        case rpg::Type::String:
             str += fmt::format("\"{}\"", *any.as<std::string>());
             break;
 
-        case Type::Color:
+        case rpg::Type::Color:
         {
-            auto* color = any.as<Color>();
+            auto* color = any.as<rpg::Color>();
 
             str += "Color[\n";
             str += whitespace(indent + 2) + fmt::format("'red' = {}\n", color->red());
@@ -105,9 +105,9 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         } break;
 
-        case Type::Table:
+        case rpg::Type::Table:
         {
-            auto* table = any.as<Table>();
+            auto* table = any.as<rpg::Table>();
 
             str += "Table[\n";
             str += whitespace(indent + 2) + fmt::format("'totalSize' = {}\n", table->totalSize());
@@ -126,9 +126,9 @@ void writeToString(std::string& str, const Any& any, int indent = 0)
 
         } break;
 
-        case Type::Tone:
+        case rpg::Type::Tone:
         {
-            auto* tone = any.as<Tone>();
+            auto* tone = any.as<rpg::Tone>();
 
             str += "Tone[\n";
             str += whitespace(indent + 2) + fmt::format("'red' = {}\n", tone->red());
@@ -155,7 +155,7 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
             auto start = std::chrono::system_clock::now();
 
             auto bytes = loadFileIntoVector(entry.path().string());
-            Reader reader{ bytes };
+            rpg::Reader reader{ bytes };
 
             auto any = reader.parse();
             auto type = entry.path().stem();
@@ -167,7 +167,7 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
                 ;
             else if (type == "Armors")
             {
-                j = Armors{ *any.as<Array>() };
+                j = rpg::Armors{ *any.as<rpg::Array>() };
             }
             else if (type == "Classes")
                 ;
@@ -177,15 +177,15 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
                 ;
             else if (type == "Items")
             {
-                j = Items{ *any.as<Array>() };
+                j = rpg::Items{ *any.as<rpg::Array>() };
             }
             else if (type == "MapInfos")
             {
-                j = MapInfos{ *any.as<Hash>() };
+                j = rpg::MapInfos{ *any.as<rpg::Hash>() };
             }
             else if (type.string().rfind("Map") == 0)
             {
-                j = Map{ *any.as<Object>() };
+                j = rpg::Map{ *any.as<rpg::Object>() };
             }
             else if (type == "Scripts")
                 ;
@@ -193,11 +193,11 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
                 ;
             else if (type == "States")
             {
-                j = States{ *any.as<Array>() };
+                j = rpg::States{ *any.as<rpg::Array>() };
             }
             else if (type == "System")
             {
-                j = System{ *any.as<Object>() };
+                j = rpg::System{ *any.as<rpg::Object>() };
             }
             else if (type == "Tilesets")
                 ;
@@ -205,7 +205,7 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
                 ;
             else if (type == "Weapons")
             {
-                j = Weapons{ *any.as<Array>() };
+                j = rpg::Weapons{ *any.as<rpg::Array>() };
             }
 
             fs::path outputPath = outputDir;
@@ -234,7 +234,7 @@ void rxdataToTxt(const fs::path& inputDir, const fs::path& outputDir)
             auto start = std::chrono::system_clock::now();
 
             auto bytes = loadFileIntoVector(entry.path().string());
-            Reader reader{ bytes };
+            rpg::Reader reader{ bytes };
 
             auto any = reader.parse();
             auto type = entry.path().stem();

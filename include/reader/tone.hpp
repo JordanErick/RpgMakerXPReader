@@ -2,30 +2,33 @@
 
 #include "utility.hpp"
 
-class Tone
+namespace rpg
 {
-public:
-                Tone();
-                Tone(double red, double green, double blue, double grey);
+    class Tone
+    {
+    public:
+                    Tone();
+                    Tone(double red, double green, double blue, double grey);
 
-    double      red() const;
-    double      green() const;
-    double      blue() const;
-    double      grey() const;
-	
-    bool        operator==(const Tone& other) const;
-    bool        operator!=(const Tone& other) const;
-    bool        operator<(const Tone& other) const;
+        double      red() const;
+        double      green() const;
+        double      blue() const;
+        double      grey() const;
 
-private:
-    double      mRed;
-    double      mGreen;
-    double      mBlue;
-    double      mGrey;
+        bool        operator==(const Tone& other) const;
+        bool        operator!=(const Tone& other) const;
+        bool        operator<(const Tone& other) const;
 
-    friend void to_json(json& j, const Tone& o);
-    friend void from_json(const json& j, Tone& o);
-};
+    private:
+        double      mRed;
+        double      mGreen;
+        double      mBlue;
+        double      mGrey;
 
-void to_json(json& j, const Tone& o);
-void from_json(const json& j, Tone& o);
+        friend void to_json(json& j, const Tone& o);
+        friend void from_json(const json& j, Tone& o);
+    };
+
+    void to_json(json& j, const Tone& o);
+    void from_json(const json& j, Tone& o);
+}

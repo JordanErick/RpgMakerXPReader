@@ -3,39 +3,42 @@
 #include "any.hpp"
 #include "object.hpp"
 
-class Reader
+namespace rpg
 {
-public:
-                             Reader(const std::vector<u8>& bytes);
-    Any                      parse();
-
-private:
-    void                     readVersion();
-    Any                      readFixnum();
-    Any                      readString();
-    Any                      readSymbol();
-    Any                      readSymlink();
-    Any                      readUserDef();
-    Any                      readArray();
-    Any                      readHash();
-    Any                      readObject();
-    Any                      readLink();
-
-    template<typename T>
-    T read()
+    class Reader
     {
-        if (mIndex + sizeof(T) > mBytes.size())
-            throw std::runtime_error("End of buffer");
+    public:
+                                 Reader(const std::vector<u8>& bytes);
+        Any                      parse();
 
-        T value = *reinterpret_cast<T*>(mBytes.data() + mIndex);
-        mIndex += sizeof(T);
+    private:
+        void                     readVersion();
+        Any                      readFixnum();
+        Any                      readString();
+        Any                      readSymbol();
+        Any                      readSymlink();
+        Any                      readUserDef();
+        Any                      readArray();
+        Any                      readHash();
+        Any                      readObject();
+        Any                      readLink();
 
-        return value;
-    }
+        template<typename T>
+        T read()
+        {
+            if (mIndex + sizeof(T) > mBytes.size())
+                throw std::runtime_error("End of buffer");
 
-private:
-    size_t                   mIndex;
-    std::vector<u8>          mBytes;
-    std::vector<std::string> mSymbolCache;
-    std::vector<Any>         mObjectCache;
-};
+            T value = *reinterpret_cast<T*>(mBytes.data() + mIndex);
+            mIndex += sizeof(T);
+
+            return value;
+        }
+
+    private:
+        size_t                   mIndex;
+        std::vector<u8>          mBytes;
+        std::vector<std::string> mSymbolCache;
+        std::vector<Any>         mObjectCache;
+    };
+}

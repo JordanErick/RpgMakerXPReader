@@ -1,6 +1,6 @@
 #include "reader/types/item.hpp"
 
-Item::Item()
+rpg::Item::Item()
 : mUserAnimationID{}
 , mTargetAnimationID{}
 , mCommonEventID{}
@@ -26,7 +26,7 @@ Item::Item()
 {
 }
 
-Item::Item(const Object& object)
+rpg::Item::Item(const Object& object)
 : mUserAnimationID{}
 , mTargetAnimationID{}
 , mCommonEventID{}
@@ -92,132 +92,132 @@ Item::Item(const Object& object)
     mVariance = *object["@variance"].as<i32>();
 }
 
-i32 Item::userAnimationID() const
+i32 rpg::Item::userAnimationID() const
 {
     return mUserAnimationID;
 }
 
-i32 Item::targetAnimationID() const
+i32 rpg::Item::targetAnimationID() const
 {
     return mTargetAnimationID;
 }
 
-i32 Item::commonEventID() const
+i32 rpg::Item::commonEventID() const
 {
     return mCommonEventID;
 }
 
-bool Item::consumable() const
+bool rpg::Item::consumable() const
 {
     return mConsumable;
 }
 
-const std::string& Item::description() const
+const std::string& rpg::Item::description() const
 {
     return mDescription;
 }
 
-i32 Item::hit() const
+i32 rpg::Item::hit() const
 {
     return mHit;
 }
 
-const std::string& Item::iconName() const
+const std::string& rpg::Item::iconName() const
 {
     return mIconName;
 }
 
-i32 Item::ID() const
+i32 rpg::Item::ID() const
 {
     return mID;
 }
 
-i32 Item::magicalDefense() const
+i32 rpg::Item::magicalDefense() const
 {
     return mMagicalDefense;
 }
 
-const AudioFile& Item::menuSE() const
+const rpg::AudioFile& rpg::Item::menuSE() const
 {
     return mMenuSE;
 }
 
-const std::string& Item::name() const
+const std::string& rpg::Item::name() const
 {
     return mName;
 }
 
-Item::Occasion Item::occasion() const
+rpg::Item::Occasion rpg::Item::occasion() const
 {
     return mOccasion;
 }
 
-i32 Item::parameterPoints() const
+i32 rpg::Item::parameterPoints() const
 {
     return mParameterPoints;
 }
 
-Item::Parameter Item::parameterType() const
+rpg::Item::Parameter rpg::Item::parameterType() const
 {
     return mParameterType;
 }
 
-i32 Item::physicalDefense() const
+i32 rpg::Item::physicalDefense() const
 {
     return mPhysicalDefense;
 }
 
-i32 Item::price() const
+i32 rpg::Item::price() const
 {
     return mPrice;
 }
 
-i32 Item::recoverHP() const
+i32 rpg::Item::recoverHP() const
 {
     return mRecoverHP;
 }
 
-i32 Item::recoverHPRate() const
+i32 rpg::Item::recoverHPRate() const
 {
     return mRecoverHPRate;
 }
 
-i32 Item::recoverSP() const
+i32 rpg::Item::recoverSP() const
 {
     return mRecoverSP;
 }
 
-i32 Item::recoverSPRate() const
+i32 rpg::Item::recoverSPRate() const
 {
     return mRecoverSPRate;
 }
 
-Item::Scope Item::scope() const
+rpg::Item::Scope rpg::Item::scope() const
 {
     return mScope;
 }
 
-i32 Item::variance() const
+i32 rpg::Item::variance() const
 {
     return mVariance;
 }
 
-bool Item::operator==(const Item& other) const
+bool rpg::Item::operator==(const Item& other) const
 {
     return mID == other.mID;
 }
 
-bool Item::operator!=(const Item& other) const
+bool rpg::Item::operator!=(const Item& other) const
 {
     return !operator==(other);
 }
 
-bool Item::operator<(const Item& other) const
+bool rpg::Item::operator<(const Item& other) const
 {
     return mID < other.mID;
 }
 
-void to_json(json& j, const Item& o)
+void rpg::to_json(json& j, const Item& o)
 {
     j = json{
         JSON_SET(UserAnimationID),
@@ -248,7 +248,7 @@ void to_json(json& j, const Item& o)
     };
 }
 
-void from_json(const json& j, Item& o)
+void rpg::from_json(const json& j, Item& o)
 {
     JSON_GET(UserAnimationID);
     JSON_GET(TargetAnimationID);
