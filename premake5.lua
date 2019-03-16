@@ -3,33 +3,13 @@ SFML_INSTALL_DIR = "C:/SFML/install"
 workspace "rmxp"
   configurations {"Debug", "Release"}
 
-project "reader"
+project "rmxp"
   kind "ConsoleApp"
   language "C++"
-  targetdir "bin/reader/%{cfg.buildcfg}"
+  targetdir "bin/%{cfg.buildcfg}"
 
-  files {"**.hpp", "**.h", "**.cpp"}
-  removefiles "include/game/**"
-  removefiles "src/game/**"
-
-  includedirs "include"
-
-  filter "configurations:Debug"
-    defines "DEBUG"
-    symbols "On"
-
-  filter "configurations:Release"
-    defines "NDEBUG"
-    optimize "On"
-
-project "engine"
-  kind "ConsoleApp"
-  language "C++"
-  targetdir "bin/engine/%{cfg.buildcfg}"
-
-  files {"**.hpp", "**.h", "**.cpp"}
-  removefiles "src/reader/main.cpp"
-
+  files {"**.hpp", "**.cpp"}
+  
   includedirs "include"
   includedirs (SFML_INSTALL_DIR .. "/" .. "include")
   libdirs (SFML_INSTALL_DIR .. "/" .. "lib")

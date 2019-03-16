@@ -1,9 +1,4 @@
-#define FMT_HEADER_ONLY
-#include <fmt/format.hpp>
-
-#include <reader/types.hpp>
-
-#include <SFML/Graphics.hpp>
+#include "game/game.hpp"
 
 sf::Image expandAutotile(const sf::Image& autotile)
 {
@@ -213,7 +208,7 @@ sf::Image expandAutotile(const sf::Image& autotile)
     return result;
 }
 
-int main()
+int run()
 {
     sf::RenderWindow window{ sf::VideoMode{640, 480}, "Engine" };
 

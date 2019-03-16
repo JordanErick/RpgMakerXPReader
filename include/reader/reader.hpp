@@ -1,7 +1,15 @@
 #pragma once
 
+#include <chrono>
+#include <experimental/filesystem>
+
 #include "any.hpp"
 #include "object.hpp"
+#include "types.hpp"
+
+#include "fmt/ostream.hpp"
+
+namespace fs = std::experimental::filesystem;
 
 namespace rpg
 {
@@ -42,3 +50,8 @@ namespace rpg
         std::vector<Any>         mObjectCache;
     };
 }
+
+std::string                      whitespace(int count);
+void                             writeToString(std::string& str, const rpg::Any& any, int indent = 0);
+void                             rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir);
+void                             rxdataToTxt(const fs::path& inputDir, const fs::path& outputDir);
