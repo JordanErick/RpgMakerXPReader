@@ -5,8 +5,8 @@
 //
 // For the license information refer to format.h.
 
-#ifndef FMT_OSTREAM_H_
-#define FMT_OSTREAM_H_
+#ifndef FMT_OSTREAM_HPP_
+#define FMT_OSTREAM_HPP_
 
 #include <ostream>
 #include "format.hpp"
@@ -143,4 +143,4 @@ inline typename std::enable_if<internal::is_string<S>::value>::type print(
 }
 FMT_END_NAMESPACE
 
-#endif  // FMT_OSTREAM_H_
+#endif  // FMT_OSTREAM_HPP_

@@ -25,8 +25,8 @@
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef FMT_FORMAT_H_
-#define FMT_FORMAT_H_
+#ifndef FMT_FORMAT_HPP_
+#define FMT_FORMAT_HPP_
 
 #include <stdint.h>
 #include <algorithm>
@@ -3335,7 +3335,7 @@ auto join(const Range& range, wstring_view sep)
 
   **Example**::
 
-    #include <fmt/format.h>
+    #include <fmt/format.hpp>
 
     std::string answer = fmt::to_string(42);
   \endrst
@@ -3672,7 +3672,7 @@ FMT_END_NAMESPACE
   **Example**::
 
     #define FMT_STRING_ALIAS 1
-    #include <fmt/format.h>
+    #include <fmt/format.hpp>
     // A compile-time error because 'd' is an invalid specifier for strings.
     std::string s = format(fmt("{:d}"), "foo");
   \endrst
@@ -3692,4 +3692,4 @@ FMT_END_NAMESPACE
 #  pragma GCC diagnostic pop
 #endif
 
-#endif  // FMT_FORMAT_H_
+#endif  // FMT_FORMAT_HPP_

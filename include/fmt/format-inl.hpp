@@ -5,8 +5,8 @@
 //
 // For the license information refer to format.h.
 
-#ifndef FMT_FORMAT_INL_H_
-#define FMT_FORMAT_INL_H_
+#ifndef FMT_FORMAT_INL_HPP_
+#define FMT_FORMAT_INL_HPP_
 
 #include "format.hpp"
 
@@ -867,4 +867,4 @@ FMT_END_NAMESPACE
 #  pragma warning(pop)
 #endif
 
-#endif  // FMT_FORMAT_INL_H_
+#endif  // FMT_FORMAT_INL_HPP_
