@@ -1,5 +1,5 @@
-#include "reader/table.hpp"
-#include "reader/tone.hpp"
+#include "reader/types/table.hpp"
+#include "reader/types/tone.hpp"
 
 rpg::Table::Table()
 : mDimensions{}

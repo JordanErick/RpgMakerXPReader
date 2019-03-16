@@ -1,10 +1,10 @@
 #pragma once
 
-#include "color.hpp"
-#include "utility.hpp"
-#include "table.hpp"
-#include "tone.hpp"
 #include "type.hpp"
+#include "types/color.hpp"
+#include "types/table.hpp"
+#include "types/tone.hpp"
+#include "utility.hpp"
 
 namespace rpg
 {

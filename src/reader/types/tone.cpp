@@ -1,4 +1,4 @@
-#include "reader/tone.hpp"
+#include "reader/types/tone.hpp"
 
 rpg::Tone::Tone()
 : mRed{}

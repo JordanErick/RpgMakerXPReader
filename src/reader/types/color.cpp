@@ -1,4 +1,4 @@
-#include "reader/color.hpp"
+#include "reader/types/color.hpp"
 
 rpg::Color::Color()
 : mRed{}

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "utility.hpp"
+#include "../utility.hpp"
 
 namespace rpg
 {
