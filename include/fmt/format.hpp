@@ -57,7 +57,7 @@
 #  define FMT_CUDA_VERSION 0
 #endif
 
-#include "core.h"
+#include "core.hpp"
 
 #if FMT_GCC_VERSION >= 406 || FMT_CLANG_VERSION
 #  pragma GCC diagnostic push
@@ -3682,7 +3682,7 @@ FMT_END_NAMESPACE
 
 #ifdef FMT_HEADER_ONLY
 #  define FMT_FUNC inline
-#  include "format-inl.h"
+#  include "format-inl.hpp"
 #else
 #  define FMT_FUNC
 #endif

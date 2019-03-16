@@ -1,5 +1,5 @@
 #define FMT_HEADER_ONLY
-#include <fmt/format.h>
+#include <fmt/format.hpp>
 
 #include <reader/types.hpp>
 

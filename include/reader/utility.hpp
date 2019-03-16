@@ -3,7 +3,7 @@
 #pragma warning(disable: 4996)
 
 #define FMT_HEADER_ONLY
-#include <fmt/format.h>
+#include <fmt/format.hpp>
 
 #include <json/json.hpp>
 using json = nlohmann::json;

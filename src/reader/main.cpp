@@ -3,7 +3,7 @@
 
 #include <chrono>
 #include <experimental/filesystem>
-#include "fmt/ostream.h"
+#include "fmt/ostream.hpp"
 
 namespace fs = std::experimental::filesystem;
 
