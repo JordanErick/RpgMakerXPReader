@@ -15,6 +15,8 @@
 #include "types/states.hpp"
 #include "types/system.hpp"
 #include "types/table.hpp"
+#include "types/tileset.hpp"
+#include "types/tilesets.hpp"
 #include "types/tone.hpp"
 #include "types/weapon.hpp"
 #include "types/weapons.hpp"

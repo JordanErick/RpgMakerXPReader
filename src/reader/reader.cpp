@@ -453,7 +453,9 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
                 j = rpg::System{ *any.as<rpg::Object>() };
             }
             else if (type == "Tilesets")
-                ;
+            {
+                j = rpg::Tilesets{ *any.as<rpg::Array>() };
+            }
             else if (type == "Troops")
                 ;
             else if (type == "Weapons")
