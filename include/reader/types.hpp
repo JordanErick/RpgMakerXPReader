@@ -1,5 +1,7 @@
 #pragma once
 
+#include "types/actor.hpp"
+#include "types/actors.hpp"
 #include "types/armor.hpp"
 #include "types/armors.hpp"
 #include "types/audio_file.hpp"

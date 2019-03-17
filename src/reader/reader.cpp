@@ -413,7 +413,9 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
             json j;
 
             if (type == "Actors")
-                ;
+            {
+                j = rpg::Actors{ *any.as<rpg::Array>() };
+            }
             else if (type == "Animations")
                 ;
             else if (type == "Armors")
