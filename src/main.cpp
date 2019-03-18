@@ -1,11 +1,8 @@
-#include "game/game.hpp"
 #include "reader/reader.hpp"
 
 int main(int argc, char** argv)
 {
-    if (argc == 1)
-        return run();
-    else if (argc == 4)
+    if (argc == 4)
     {
         const fs::path inputDir{ argv[1] };
         const fs::path outputDir{ argv[2] };
@@ -34,7 +31,7 @@ int main(int argc, char** argv)
         }
     }
     else
-        fmt::print("Usage: rmxp [input_dir output_dir json|txt]\n");
+        fmt::print("Usage: rmxp input_dir output_dir json|txt\n");
 
     return EXIT_SUCCESS;
 }
