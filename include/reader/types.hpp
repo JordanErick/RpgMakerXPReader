@@ -11,6 +11,8 @@
 #include "types/map.hpp"
 #include "types/map_info.hpp"
 #include "types/map_infos.hpp"
+#include "types/script.hpp"
+#include "types/scripts.hpp"
 #include "types/state.hpp"
 #include "types/states.hpp"
 #include "types/system.hpp"

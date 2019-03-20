@@ -189,7 +189,9 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
                 j = rpg::Map{ *any.as<rpg::Object>() };
             }
             else if (type == "Scripts")
-                ;
+            {
+                j = rpg::Scripts{ *any.as<rpg::Array>() };
+            }
             else if (type == "Skills")
                 ;
             else if (type == "States")
