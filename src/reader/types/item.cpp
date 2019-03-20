@@ -117,6 +117,11 @@ const std::string& rpg::Item::description() const
     return mDescription;
 }
 
+const std::vector<i32>& rpg::Item::elementSet() const
+{
+    return mElementSet;
+}
+
 i32 rpg::Item::hit() const
 {
     return mHit;
@@ -140,6 +145,11 @@ i32 rpg::Item::magicalDefense() const
 const rpg::AudioFile& rpg::Item::menuSE() const
 {
     return mMenuSE;
+}
+
+const std::vector<i32>& rpg::Item::minusStateSet() const
+{
+    return mMinusStateSet;
 }
 
 const std::string& rpg::Item::name() const
