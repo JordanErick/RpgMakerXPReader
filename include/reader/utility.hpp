@@ -11,6 +11,8 @@ using json = nlohmann::json;
 #define JSON_SET(name) {#name, o.m##name}
 #define JSON_GET(name) j.at(#name).get_to(o.m##name)
 
+#include <zlib/zlib.h>
+
 #include <algorithm>
 #include <fstream>
 #include <map>
@@ -29,4 +31,5 @@ using i64 = int64_t;
 
 std::vector<u8> loadFileIntoVector(const std::string& filename);
 std::string     loadFileIntoString(const std::string& filename);
+std::string     decompress(const std::string& str);
 void            writeStringToFile(const std::string& filename, const std::string& str);
