@@ -6,6 +6,8 @@
 #include "types/armors.hpp"
 #include "types/audio_file.hpp"
 #include "types/color.hpp"
+#include "types/enemies.hpp"
+#include "types/enemy.hpp"
 #include "types/item.hpp"
 #include "types/items.hpp"
 #include "types/map.hpp"

@@ -14,7 +14,28 @@ rpg::Enemy::Action::Action()
 }
 
 rpg::Enemy::Action::Action(const Object& object)
+: mBasic{}
+, mConditionHP{}
+, mConditionLevel{}
+, mConditionSwitchID{}
+, mConditionTurnA{}
+, mConditionTurnB{}
+, mKind{}
+, mRating{}
+, mSkillID{}
 {
+    if (object.className() != "RPG::Enemy::Action")
+        throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
+
+    mBasic = static_cast<Basic>(*object["@basic"].as<i32>());
+    mConditionHP = *object["@condition_hp"].as<i32>();
+    mConditionLevel = *object["@condition_level"].as<i32>();
+    mConditionSwitchID = *object["@condition_switch_id"].as<i32>();
+    mConditionTurnA = *object["@condition_turn_a"].as<i32>();
+    mConditionTurnB = *object["@condition_turn_b"].as<i32>();
+    mKind = static_cast<Kind>(*object["@kind"].as<i32>());
+    mRating = *object["@rating"].as<i32>();
+    mSkillID = *object["@skill_id"].as<i32>();
 }
 
 rpg::Enemy::Action::Basic rpg::Enemy::Action::basic() const

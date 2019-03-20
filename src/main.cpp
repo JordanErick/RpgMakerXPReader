@@ -175,7 +175,9 @@ void rxdataToJSON(const fs::path& inputDir, const fs::path& outputDir)
             else if (type == "CommonEvents")
                 ;
             else if (type == "Enemies")
-                ;
+            {
+                j = rpg::Enemies{ *any.as<rpg::Array>() };
+            }
             else if (type == "Items")
             {
                 j = rpg::Items{ *any.as<rpg::Array>() };
