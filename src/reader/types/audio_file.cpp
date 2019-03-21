@@ -1,16 +1,6 @@
 #include "reader/types/audio_file.hpp"
 
-rpg::AudioFile::AudioFile()
-: mName{ "" }
-, mPitch{ 100.f }
-, mVolume{ 100.f }
-{
-}
-
 rpg::AudioFile::AudioFile(const Object& object)
-: mName{ "" }
-, mPitch{ 100.f }
-, mVolume{ 100.f }
 {
     load(object);
 }
@@ -23,21 +13,6 @@ void rpg::AudioFile::load(const Object& object)
     mName = *object["@name"].as<std::string>();
     mPitch = static_cast<float>(*object["@pitch"].as<i32>());
     mVolume = static_cast<float>(*object["@volume"].as<i32>());
-}
-
-const std::string& rpg::AudioFile::name() const
-{
-    return mName;
-}
-
-float rpg::AudioFile::pitch() const
-{
-    return mPitch;
-}
-
-float rpg::AudioFile::volume() const
-{
-    return mVolume;
 }
 
 void rpg::to_json(json& j, const AudioFile& o)
