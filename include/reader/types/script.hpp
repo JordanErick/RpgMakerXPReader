@@ -9,9 +9,8 @@ namespace rpg
     {
     public:
                            Script();
-                           Script(i32 id, const Array& array);
+                           Script(const Array& array);
 
-        i32                ID() const;
         i32                magicNumber() const;
         const std::string& name() const;
         const std::string& code() const;
@@ -20,7 +19,6 @@ namespace rpg
         bool               operator!=(const Script& other) const;
         bool               operator<(const Script& other) const;
     private:
-        i32                mID;
         i32                mMagicNumber;
         std::string        mName;
         std::string        mCode;

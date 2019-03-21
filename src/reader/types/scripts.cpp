@@ -18,7 +18,7 @@ rpg::Scripts::Scripts(const Array& array)
         if (element.as<Array>()->size() != 3)
             throw std::runtime_error(fmt::format("Invalid array size: {}", element.as<Array>()->size()));
 
-        mScripts.push_back(Script{ static_cast<i32>(i), *element.as<Array>() });
+        mScripts.push_back(Script{ *element.as<Array>() });
     }
 }
 

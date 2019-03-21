@@ -1,27 +1,20 @@
 #include "reader\types\script.hpp"
 
 rpg::Script::Script()
-: mID{}
-, mMagicNumber{}
+: mMagicNumber{}
 , mName{}
 , mCode{}
 {
 }
 
-rpg::Script::Script(i32 id, const Array& array)
-: mID{id}
-, mMagicNumber{}
+rpg::Script::Script(const Array& array)
+: mMagicNumber{}
 , mName{}
 , mCode{}
 {
     mMagicNumber = *array[0].as<i32>();
     mName = *array[1].as<std::string>();
     mCode = decompress(*array[2].as<std::string>());
-}
-
-i32 rpg::Script::ID() const
-{
-    return mID;
 }
 
 i32 rpg::Script::magicNumber() const
@@ -41,7 +34,9 @@ const std::string& rpg::Script::code() const
 
 bool rpg::Script::operator==(const Script& other) const
 {
-    return mID == other.mID;
+    return mMagicNumber == other.mMagicNumber
+        && mName == other.mName
+        && mCode == other.mCode;
 }
 
 bool rpg::Script::operator!=(const Script& other) const
@@ -51,13 +46,12 @@ bool rpg::Script::operator!=(const Script& other) const
 
 bool rpg::Script::operator<(const Script& other) const
 {
-    return mID < other.mID;
+    return mMagicNumber < other.mMagicNumber;
 }
 
 void rpg::to_json(json& j, const Script& o)
 {
     j = json{
-        JSON_SET(ID),
         JSON_SET(MagicNumber),
         JSON_SET(Name),
         JSON_SET(Code)
@@ -66,7 +60,6 @@ void rpg::to_json(json& j, const Script& o)
 
 void rpg::from_json(const json& j, Script& o)
 {
-    JSON_GET(ID);
     JSON_GET(MagicNumber);
     JSON_GET(Name);
     JSON_GET(Code);
