@@ -1,42 +1,6 @@
 #include "reader/types/armor.hpp"
 
-rpg::Armor::Armor()
-: mAgilityBonus{}
-, mAutoStateID{}
-, mDescription{}
-, mDexterityBonus{}
-, mEvasionCorrection{}
-, mGuardElementSet{}
-, mGuardStateSet{}
-, mIconName{}
-, mID{}
-, mIntelligenceBonus{}
-, mKind{}
-, mMagicDefense{}
-, mName{}
-, mPhysicalDefense{}
-, mPrice{}
-, mStrengthBonus{}
-{
-}
-
 rpg::Armor::Armor(const Object& object)
-: mAgilityBonus{}
-, mAutoStateID{}
-, mDescription{}
-, mDexterityBonus{}
-, mEvasionCorrection{}
-, mGuardElementSet{}
-, mGuardStateSet{}
-, mIconName{}
-, mID{}
-, mIntelligenceBonus{}
-, mKind{}
-, mMagicDefense{}
-, mName{}
-, mPhysicalDefense{}
-, mPrice{}
-, mStrengthBonus{}
 {
     if (object.className() != "RPG::Armor")
         throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
@@ -64,86 +28,6 @@ rpg::Armor::Armor(const Object& object)
     mPhysicalDefense = *object["@pdef"].as<i32>();
     mPrice = *object["@price"].as<i32>();
     mStrengthBonus = *object["@str_plus"].as<i32>();
-}
-
-i32 rpg::Armor::agilityBonus() const
-{
-    return mAgilityBonus;
-}
-
-i32 rpg::Armor::autoStateID() const
-{
-    return mAutoStateID;
-}
-
-const std::string& rpg::Armor::description() const
-{
-    return mDescription;
-}
-
-i32 rpg::Armor::dexterityBonus() const
-{
-    return mDexterityBonus;
-}
-
-i32 rpg::Armor::evasionCorrection() const
-{
-    return mEvasionCorrection;
-}
-
-const std::vector<i32>& rpg::Armor::guardElementSet() const
-{
-    return mGuardElementSet;
-}
-
-const std::vector<i32>& rpg::Armor::guardStateSet() const
-{
-    return mGuardStateSet;
-}
-
-const std::string& rpg::Armor::iconName() const
-{
-    return mIconName;
-}
-
-i32 rpg::Armor::ID() const
-{
-    return mID;
-}
-
-i32 rpg::Armor::intelligenceBonus() const
-{
-    return mIntelligenceBonus;
-}
-
-rpg::Armor::Kind rpg::Armor::kind() const
-{
-    return mKind;
-}
-
-i32 rpg::Armor::magicDefense() const
-{
-    return mMagicDefense;
-}
-
-const std::string& rpg::Armor::name() const
-{
-    return mName;
-}
-
-i32 rpg::Armor::physicalDefense() const
-{
-    return mPhysicalDefense;
-}
-
-i32 rpg::Armor::price() const
-{
-    return mPrice;
-}
-
-i32 rpg::Armor::strengthBonus() const
-{
-    return mStrengthBonus;
 }
 
 bool rpg::Armor::operator==(const Armor& other) const
