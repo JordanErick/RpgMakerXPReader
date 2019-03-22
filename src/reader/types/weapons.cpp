@@ -1,12 +1,6 @@
 #include "reader/types/weapons.hpp"
 
-rpg::Weapons::Weapons()
-: mWeapons{}
-{
-}
-
 rpg::Weapons::Weapons(const Array& array)
-: mWeapons{}
 {
     // Skip first element which seems to be equal to null all the time
     for (size_t i = 1; i < array.size(); i++)

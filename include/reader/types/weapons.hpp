@@ -7,7 +7,7 @@ namespace rpg
     class Weapons
     {
     public:
-                                            Weapons();
+                                            Weapons() {}
                                             Weapons(const Array& array);
 
         Weapon&                             operator[](size_t index);
@@ -25,7 +25,7 @@ namespace rpg
 
         size_t                              size() const;
     private:
-        std::vector<Weapon>                 mWeapons;
+        std::vector<Weapon>                 mWeapons = {};
 
         friend void                         to_json(json& j, const Weapons& o);
         friend void                         from_json(const json& j, Weapons& o);
