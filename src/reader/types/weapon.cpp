@@ -1,44 +1,6 @@
 #include "reader/types/weapon.hpp"
 
-rpg::Weapon::Weapon()
-: mAgilityBonus{}
-, mAttackerAnimation{}
-, mTargetAnimation{}
-, mAttackPower{}
-, mDescription{}
-, mDexterityBonus{}
-, mElementSet{}
-, mIconName{}
-, mID{}
-, mIntelligenceBonus{}
-, mMagicDefense{}
-, mMinusStateSet{}
-, mName{}
-, mPhysicalDefense{}
-, mPlusStateSet{}
-, mPrice{}
-, mStrengthBonus{}
-{
-}
-
 rpg::Weapon::Weapon(const Object& object)
-: mAgilityBonus{}
-, mAttackerAnimation{}
-, mTargetAnimation{}
-, mAttackPower{}
-, mDescription{}
-, mDexterityBonus{}
-, mElementSet{}
-, mIconName{}
-, mID{}
-, mIntelligenceBonus{}
-, mMagicDefense{}
-, mMinusStateSet{}
-, mName{}
-, mPhysicalDefense{}
-, mPlusStateSet{}
-, mPrice{}
-, mStrengthBonus{}
 {
     if (object.className() != "RPG::Weapon")
         throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
@@ -72,91 +34,6 @@ rpg::Weapon::Weapon(const Object& object)
 
     mPrice = *object["@price"].as<i32>();
     mStrengthBonus = *object["@str_plus"].as<i32>();
-}
-
-i32 rpg::Weapon::agilityBonus() const
-{
-    return mAgilityBonus;
-}
-
-i32 rpg::Weapon::attackerAnimation() const
-{
-    return mAttackerAnimation;
-}
-
-i32 rpg::Weapon::targetAnimation() const
-{
-    return mTargetAnimation;
-}
-
-i32 rpg::Weapon::attackPower() const
-{
-    return mAttackPower;
-}
-
-const std::string& rpg::Weapon::description() const
-{
-    return mDescription;
-}
-
-i32 rpg::Weapon::dexterityBonus() const
-{
-    return mDexterityBonus;
-}
-
-const std::vector<i32>& rpg::Weapon::elementSet() const
-{
-    return mElementSet;
-}
-
-const std::string& rpg::Weapon::iconName() const
-{
-    return mIconName;
-}
-
-i32 rpg::Weapon::ID() const
-{
-    return mID;
-}
-
-i32 rpg::Weapon::intelligenceBonus() const
-{
-    return mIntelligenceBonus;
-}
-
-i32 rpg::Weapon::magicDefense() const
-{
-    return mMagicDefense;
-}
-
-const std::vector<i32>& rpg::Weapon::minusStateSet() const
-{
-    return mMinusStateSet;
-}
-
-const std::string& rpg::Weapon::name() const
-{
-    return mName;
-}
-
-i32 rpg::Weapon::physicalDefense() const
-{
-    return mPhysicalDefense;
-}
-
-const std::vector<i32>& rpg::Weapon::plusStateSet() const
-{
-    return mPlusStateSet;
-}
-
-i32 rpg::Weapon::price() const
-{
-    return mPrice;
-}
-
-i32 rpg::Weapon::strengthBonus() const
-{
-    return mStrengthBonus;
 }
 
 bool rpg::Weapon::operator==(const Weapon& other) const

@@ -7,48 +7,48 @@ namespace rpg
     class Weapon
     {
     public:
-                                Weapon();
+                                Weapon() {}
                                 Weapon(const Object& object);
 
-        i32                     agilityBonus() const;
-        i32                     attackerAnimation() const;
-        i32                     targetAnimation() const;
-        i32                     attackPower() const;
-        const std::string&      description() const;
-        i32                     dexterityBonus() const;
-        const std::vector<i32>& elementSet() const;
-        const std::string&      iconName() const;
-        i32                     ID() const;
-        i32                     intelligenceBonus() const;
-        i32                     magicDefense() const;
-        const std::vector<i32>& minusStateSet() const;
-        const std::string&      name() const;
-        i32                     physicalDefense() const;
-        const std::vector<i32>& plusStateSet() const;
-        i32                     price() const;
-        i32                     strengthBonus() const;
+        i32                     agilityBonus() const { return mAgilityBonus; }
+        i32                     attackerAnimation() const { return mAttackerAnimation; }
+        i32                     targetAnimation() const { return mTargetAnimation; }
+        i32                     attackPower() const { return mAttackPower; }
+        const std::string&      description() const { return mDescription; }
+        i32                     dexterityBonus() const { return mDexterityBonus; }
+        const std::vector<i32>& elementSet() const { return mElementSet; }
+        const std::string&      iconName() const { return mIconName; }
+        i32                     ID() const { return mID; }
+        i32                     intelligenceBonus() const { return mIntelligenceBonus; }
+        i32                     magicDefense() const { return mMagicDefense; }
+        const std::vector<i32>& minusStateSet() const { return mMinusStateSet; }
+        const std::string&      name() const { return mName; }
+        i32                     physicalDefense() const { return mPhysicalDefense; }
+        const std::vector<i32>& plusStateSet() const { return mPlusStateSet; }
+        i32                     price() const { return mPrice; }
+        i32                     strengthBonus() const { return mStrengthBonus; }
 
         bool                    operator==(const Weapon& other) const;
         bool                    operator!=(const Weapon& other) const;
         bool                    operator<(const Weapon& other) const;
     private:
-        i32 mAgilityBonus;
-        i32 mAttackerAnimation;
-        i32 mTargetAnimation;
-        i32 mAttackPower;
-        std::string mDescription;
-        i32 mDexterityBonus;
-        std::vector<i32> mElementSet;
-        std::string mIconName;
-        i32 mID;
-        i32 mIntelligenceBonus;
-        i32 mMagicDefense;
-        std::vector<i32> mMinusStateSet;
-        std::string mName;
-        i32 mPhysicalDefense;
-        std::vector<i32> mPlusStateSet;
-        i32 mPrice;
-        i32 mStrengthBonus;
+        i32                     mAgilityBonus = 0;
+        i32                     mAttackerAnimation = 0;
+        i32                     mTargetAnimation = 0;
+        i32                     mAttackPower = 0;
+        std::string             mDescription = "";
+        i32                     mDexterityBonus = 0;
+        std::vector<i32>        mElementSet = {};
+        std::string             mIconName = "";
+        i32                     mID = 0;
+        i32                     mIntelligenceBonus = 0;
+        i32                     mMagicDefense = 0;
+        std::vector<i32>        mMinusStateSet = {};
+        std::string             mName = "";
+        i32                     mPhysicalDefense = 0;
+        std::vector<i32>        mPlusStateSet = {};
+        i32                     mPrice = 0;
+        i32                     mStrengthBonus = 0;
 
         friend void             to_json(json& j, const Weapon& o);
         friend void             from_json(const json& j, Weapon& o);
