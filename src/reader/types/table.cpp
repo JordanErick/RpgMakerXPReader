@@ -1,13 +1,12 @@
 #include "reader/types/table.hpp"
-#include "reader/types/tone.hpp"
 
-rpg::Table::Table()
-: mDimensions{}
-, mXSize{}
-, mYSize{}
-, mZSize{}
-, mTotalSize{}
-, mData{}
+rpg::Table::Table(i32 dimensions, i32 xSize, i32 ySize, i32 zSize, i32 totalSize)
+: mDimensions{ dimensions }
+, mXSize{ xSize }
+, mYSize{ ySize }
+, mZSize{ zSize }
+, mTotalSize{ totalSize }
+, mData(totalSize, 0)
 {
 }
 
@@ -21,34 +20,34 @@ rpg::Table::Table(i32 dimensions, i32 xSize, i32 ySize, i32 zSize, i32 totalSize
 {
 }
 
-i32 rpg::Table::dimensions() const
+i16& rpg::Table::operator[](size_t index)
 {
-    return mDimensions;
+    return mData[index];
 }
 
-i32 rpg::Table::xSize() const
+const i16& rpg::Table::operator[](size_t index) const
 {
-    return mXSize;
+    return mData.at(index);
 }
 
-i32 rpg::Table::ySize() const
+std::vector<i16>::iterator rpg::Table::begin()
 {
-    return mYSize;
+    return mData.begin();
 }
 
-i32 rpg::Table::zSize() const
+std::vector<i16>::const_iterator rpg::Table::begin() const
 {
-    return mZSize;
+    return mData.begin();
 }
 
-i32 rpg::Table::totalSize() const
+std::vector<i16>::iterator rpg::Table::end()
 {
-    return mTotalSize;
+    return mData.end();
 }
 
-const std::vector<i16>& rpg::Table::data() const
+std::vector<i16>::const_iterator rpg::Table::end() const
 {
-    return mData;
+    return mData.end();
 }
 
 bool rpg::Table::operator==(const Table& other) const
@@ -69,6 +68,11 @@ bool rpg::Table::operator!=(const Table& other) const
 bool rpg::Table::operator<(const Table& other) const
 {
     return mData < other.mData;
+}
+
+size_t rpg::Table::size() const
+{
+    return mData.size();
 }
 
 void rpg::to_json(json& j, const Table& o)

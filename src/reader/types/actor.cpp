@@ -1,54 +1,20 @@
 #include "reader\types\actor.hpp"
 
 rpg::Actor::Actor()
-: mShieldFix{}
-, mShieldID{}
-, mHelmetFix{}
-, mHelmetID{}
-, mBodyArmorFix{}
-, mBodyArmorID{}
-, mAccessoryFix{}
-, mAccessoryID{}
-, mBattlerHue{}
-, mBattlerName{}
-, mCharacterHue{}
-, mCharacterName{}
-, mClassID{}
-, mExperienceBasis{}
-, mExperienceInflation{}
-, mFinalLevel{}
-, mID{}
-, mInitialLevel{}
-, mName{}
-, mParameters{}
-, mWeaponFix{}
-, mWeaponID{}
+: mParameters{2, 6, 100, 1, 600}
 {
+    for (size_t i = 1; i <= 99; i++)
+    {
+        mParameters[6 * i + 0] = static_cast<i16>(500 + i * 50); // MaxHP
+        mParameters[6 * i + 1] = static_cast<i16>(500 + i * 50); // MaxSP
+        mParameters[6 * i + 2] = static_cast<i16>(50 + i * 5); // Strength
+        mParameters[6 * i + 3] = static_cast<i16>(50 + i * 5); // Dexterity
+        mParameters[6 * i + 4] = static_cast<i16>(50 + i * 5); // Agility
+        mParameters[6 * i + 5] = static_cast<i16>(50 + i * 5); // Intelligence
+    }
 }
 
 rpg::Actor::Actor(const Object& object)
-: mShieldFix{}
-, mShieldID{}
-, mHelmetFix{}
-, mHelmetID{}
-, mBodyArmorFix{}
-, mBodyArmorID{}
-, mAccessoryFix{}
-, mAccessoryID{}
-, mBattlerHue{}
-, mBattlerName{}
-, mCharacterHue{}
-, mCharacterName{}
-, mClassID{}
-, mExperienceBasis{}
-, mExperienceInflation{}
-, mFinalLevel{}
-, mID{}
-, mInitialLevel{}
-, mName{}
-, mParameters{}
-, mWeaponFix{}
-, mWeaponID{}
 {
     if (object.className() != "RPG::Actor")
         throw std::runtime_error(fmt::format("Invalid class name: {}", object.className()));
@@ -75,116 +41,6 @@ rpg::Actor::Actor(const Object& object)
     mParameters = *object["@parameters"].as<Table>();
     mWeaponFix = *object["@weapon_fix"].as<bool>();
     mWeaponID = *object["@weapon_id"].as<i32>();
-}
-
-bool rpg::Actor::shieldFix() const
-{
-    return mShieldFix;
-}
-
-i32 rpg::Actor::shieldID() const
-{
-    return mShieldID;
-}
-
-bool rpg::Actor::helmetFix() const
-{
-    return mHelmetFix;
-}
-
-i32 rpg::Actor::helmetID() const
-{
-    return mHelmetID;
-}
-
-bool rpg::Actor::bodyArmorFix() const
-{
-    return mBodyArmorFix;
-}
-
-i32 rpg::Actor::bodyArmorID() const
-{
-    return mBodyArmorID;
-}
-
-bool rpg::Actor::accessoryFix() const
-{
-    return mAccessoryFix;
-}
-
-i32 rpg::Actor::accessoryID() const
-{
-    return mAccessoryID;
-}
-
-i32 rpg::Actor::battlerHue() const
-{
-    return mBattlerHue;
-}
-
-const std::string& rpg::Actor::battlerName() const
-{
-    return mBattlerName;
-}
-
-i32 rpg::Actor::characterHue() const
-{
-    return mCharacterHue;
-}
-
-const std::string& rpg::Actor::characterName() const
-{
-    return mCharacterName;
-}
-
-i32 rpg::Actor::classID() const
-{
-    return mClassID;
-}
-
-i32 rpg::Actor::experienceBasis() const
-{
-    return mExperienceBasis;
-}
-
-i32 rpg::Actor::experienceInflation() const
-{
-    return mExperienceInflation;
-}
-
-i32 rpg::Actor::finalLevel() const
-{
-    return mFinalLevel;
-}
-
-i32 rpg::Actor::ID() const
-{
-    return mID;
-}
-
-i32 rpg::Actor::initialLevel() const
-{
-    return mInitialLevel;
-}
-
-const std::string& rpg::Actor::name() const
-{
-    return mName;
-}
-
-const rpg::Table& rpg::Actor::parameters() const
-{
-    return mParameters;
-}
-
-bool rpg::Actor::weaponFix() const
-{
-    return mWeaponFix;
-}
-
-i32 rpg::Actor::weaponID() const
-{
-    return mWeaponID;
 }
 
 bool rpg::Actor::operator==(const Actor& other) const
