@@ -1,0 +1,3 @@
+Tilesets: ID: 1 'Gralssland' instead of 'Grassland'
+Armors: ID: 4  'Mythirl Shield' instead of 'Mythril Shield'
+        ID: 26 'Ring of Dextality' instead of 'Ring of Dexterity'
