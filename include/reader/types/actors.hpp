@@ -7,7 +7,7 @@ namespace rpg
     class Actors
     {
     public:
-                                           Actors();
+                                           Actors() {}
                                            Actors(const Array& array);
 
         Actor&                             operator[](size_t index);
@@ -25,7 +25,7 @@ namespace rpg
 
         size_t                             size() const;
     private:
-        std::vector<Actor>                 mActors;
+        std::vector<Actor>                 mActors = {};
 
         friend void                        to_json(json& j, const Actors& o);
         friend void                        from_json(const json& j, Actors& o);

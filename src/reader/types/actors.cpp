@@ -1,12 +1,6 @@
 #include "reader\types\actors.hpp"
 
-rpg::Actors::Actors()
-: mActors{}
-{
-}
-
 rpg::Actors::Actors(const Array& array)
-: mActors{}
 {
     // Skip first element which seems to be equal to null all the time
     for (size_t i = 1; i < array.size(); i++)
