@@ -1,12 +1,6 @@
 #include "reader/types/armors.hpp"
 
-rpg::Armors::Armors()
-: mArmors{}
-{
-}
-
 rpg::Armors::Armors(const Array& array)
-: mArmors{}
 {
     // Skip first element which seems to be equal to null all the time
     for (size_t i = 1; i < array.size(); i++)

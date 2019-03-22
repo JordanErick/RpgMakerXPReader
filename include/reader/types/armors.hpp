@@ -7,7 +7,7 @@ namespace rpg
     class Armors
     {
     public:
-                                           Armors();
+                                           Armors() {}
                                            Armors(const Array& array);
 
         Armor&                             operator[](size_t index);
@@ -25,7 +25,7 @@ namespace rpg
 
         size_t                             size() const;
     private:
-        std::vector<Armor>                 mArmors;
+        std::vector<Armor>                 mArmors = {};
 
         friend void                        to_json(json& j, const Armors& o);
         friend void                        from_json(const json& j, Armors& o);
