@@ -1,4 +1,4 @@
-#include "reader\types\actor.hpp"
+#include "reader/types/actor.hpp"
 
 rpg::Actor::Actor()
 : mParameters{2, 6, 100, 1, 600}

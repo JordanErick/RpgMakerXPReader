@@ -1,4 +1,4 @@
-#include "reader\types\actors.hpp"
+#include "reader/types/actors.hpp"
 
 rpg::Actors::Actors(const Array& array)
 {
