@@ -1,4 +1,4 @@
-#include "reader\types\tileset.hpp"
+#include "reader/types/tileset.hpp"
 
 rpg::Tileset::Tileset()
 : mAutotileNames{}

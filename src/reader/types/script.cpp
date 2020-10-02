@@ -1,4 +1,4 @@
-#include "reader\types\script.hpp"
+#include "reader/types/script.hpp"
 
 rpg::Script::Script()
 : mMagicNumber{}

@@ -1,4 +1,4 @@
-#include "reader\types\enemies.hpp"
+#include "reader/types/enemies.hpp"
 
 rpg::Enemies::Enemies()
 : mEnemies{}

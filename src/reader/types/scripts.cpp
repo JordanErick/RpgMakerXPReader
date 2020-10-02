@@ -1,4 +1,4 @@
-#include "reader\types\scripts.hpp"
+#include "reader/types/scripts.hpp"
 
 rpg::Scripts::Scripts()
 : mScripts{}

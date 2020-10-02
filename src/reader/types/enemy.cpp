@@ -1,4 +1,4 @@
-#include "reader\types\enemy.hpp"
+#include "reader/types/enemy.hpp"
 
 rpg::Enemy::Action::Action()
 : mBasic{}
