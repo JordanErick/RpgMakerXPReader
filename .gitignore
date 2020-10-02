@@ -1,9 +1,11 @@
 .vs/
 .vscode/
-/bin
-/obj
-/resources
+bin/
+obj/
+project/
 *.sln
 *.vcxproj
 *.filters
 *.user
+Makefile
+rmxp.make
