@@ -25,7 +25,7 @@ namespace rpg
         i32                     evasionCorrection() const { return mEvasionCorrection; }
         const std::vector<i32>& guardElementSet() const { return mGuardElementSet; }
         const std::vector<i32>& guardStateSet() const { return mGuardStateSet; }
-        const std::string&      iconName() const { mIconName; }
+        const std::string&      iconName() const { return mIconName; }
         i32                     ID() const { return mID; }
         i32                     intelligenceBonus() const { return mIntelligenceBonus; }
         Kind                    kind() const { return mKind; }
