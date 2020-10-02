@@ -1,5 +1,6 @@
 workspace "rmxp"
   configurations {"Debug", "Release"}
+  cppdialect "C++17"
 
 project "rmxp"
   kind "ConsoleApp"
