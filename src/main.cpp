@@ -1,10 +1,10 @@
 #include <chrono>
-#include <experimental/filesystem>
+#include <filesystem>
 
 #include "reader/reader.hpp"
 #include "fmt/ostream.hpp"
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 std::string whitespace(int count)
 {
