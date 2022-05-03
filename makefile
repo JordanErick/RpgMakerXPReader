@@ -1,6 +1,6 @@
 IDIR =./include ./include/zlib
 CXX=g++
-CFLAGS=-I$(IDIR)
+CFLAGS=-I$(IDIR) -D NDEBUG
 
 ODIR=obj
 LDIR =./
