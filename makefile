@@ -7,14 +7,14 @@ LDIR =./
 
 LIBS=-lm
 
-_DEPS = hellomake.h
+_DEPS = %.h %.hpp
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = hellomake.o hellofunc.o 
+_OBJ = rpgmk.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 
-$(ODIR)/%.o: %.c $(DEPS)
+$(ODIR)/%.o: %.c %.cpp $(DEPS)
 	$(CXX) -c -o $@ $< $(CFLAGS)
 
 rpgxp: $(OBJ)
